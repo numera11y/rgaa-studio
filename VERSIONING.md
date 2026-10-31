@@ -16,7 +16,7 @@ RGAA Studio utilise **Semantic Versioning 2.0.0**. Le numéro de version applica
 Pour préparer une publication :
 
 1. Mettre à jour `Version` et les métadonnées numériques dans `Directory.Build.props`.
-2. Ajouter une entrée datée dans `CHANGELOG.md` et déplacer le travail terminé de `[Non publié]`.
+2. Ajouter une entrée datée dans `CHANGELOG.md` et déplacer le travail terminé de `[À venir]`.
 3. Exécuter restore, build et `RgaaStudio.Core.Checks`.
 4. Construire les paquets et vérifier `SHA256SUMS.txt` ainsi que leurs notices.
 5. Créer le tag `v<Version>` et une GitHub Release marquée *pre-release* si la version contient un suffixe.

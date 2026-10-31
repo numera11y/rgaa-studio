@@ -2,7 +2,9 @@
 
 Les changements notables de RGAA Studio sont consignés dans ce fichier. Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les versions suivent [Semantic Versioning](https://semver.org/lang/fr/).
 
-## [Non publié]
+## [À venir]
+
+Cette section regroupe les changements déjà apportés au code mais qui ne sont pas encore inclus dans une version publiée.
 
 ## [1.0.0-preview.1] - 2026-10-31
 
@@ -26,5 +28,5 @@ Les changements notables de RGAA Studio sont consignés dans ce fichier. Le form
 - L’installateur Windows n’est pas signé.
 - Les paquets Linux ont été assemblés sous Ubuntu 24.04 WSL, mais l’installation et le rendu doivent encore être validés sur Ubuntu 26.04 et Fedora 44.
 
-[Non publié]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.1...HEAD
+[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.1...HEAD
 [1.0.0-preview.1]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.1
