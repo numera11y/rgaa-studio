@@ -1,11 +1,18 @@
 param(
-    [string]$Version = '1.0.0-preview.1',
+    [string]$Version = '',
     [string]$LinuxDistro = 'Ubuntu-24.04',
     [string]$WebView2InstallerPath = ''
 )
 
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
+if ([string]::IsNullOrWhiteSpace($Version)) {
+    $versionPropertiesPath = Join-Path $repositoryRoot 'Directory.Build.props'
+    if (-not (Test-Path -LiteralPath $versionPropertiesPath)) { throw "Shared version properties not found at $versionPropertiesPath" }
+    [xml]$versionProperties = [System.IO.File]::ReadAllText($versionPropertiesPath)
+    $Version = [string]$versionProperties.Project.PropertyGroup.Version
+    if ([string]::IsNullOrWhiteSpace($Version)) { throw "Version is missing from $versionPropertiesPath" }
+}
 $artifactRoot = Join-Path $repositoryRoot 'artifacts'
 if (-not (Test-Path -LiteralPath $artifactRoot)) {
     throw "Expected build output directory is missing: $artifactRoot"

@@ -1,6 +1,6 @@
 # Community preview packages
 
-The packaging script publishes `1.0.0-preview.1` as:
+The packaging script reads the default version from the root `Directory.Build.props` and packages the Windows x64, Debian/Ubuntu amd64 and Linux x86_64 builds as:
 
 - a self-contained .NET Windows x64 ZIP with per-user install/uninstall PowerShell scripts;
 - a branded Windows setup executable that installs or updates the current release per user;
@@ -13,7 +13,7 @@ Run from the repository root on Windows with .NET SDK 10, NSIS 3.13 and WSL enab
 .\tools\packaging\Build-Release.ps1
 ```
 
-Install the Windows setup compiler with `winget install --id NSIS.NSIS --exact`. The default WSL distribution is `Ubuntu-24.04`; it needs `dpkg-deb` and `rpmbuild` (`sudo apt install rpm`). To select another installed WSL distribution or preview version:
+Install the Windows setup compiler with `winget install --id NSIS.NSIS --exact`. The default WSL distribution is `Ubuntu-24.04`; it needs `dpkg-deb` and `rpmbuild` (`sudo apt install rpm`). To select another installed WSL distribution or override the shared version:
 
 ```powershell
 .\tools\packaging\Build-Release.ps1 -LinuxDistro Ubuntu-24.04 -Version 1.0.0-preview.1
