@@ -105,12 +105,15 @@ public sealed class EmbeddedAuditDatabase : IDisposable
     }
 
     public StoredAuditEvidence AddEvidence(string auditId, string pageId, string source, string selectedElementTag,
-        string selectedElementText, string captureMethod, string context, byte[]? imageData = null, string imageMimeType = "")
+        string selectedElementText, string captureMethod, string context, byte[]? imageData = null, string imageMimeType = "",
+        string criterionId = "", string findingId = "")
     {
         if (!TryGetAudit(auditId, out var audit) || audit.IsArchived)
             throw new InvalidOperationException("L’audit est introuvable ou archivé.");
         if (!TryNormalizeGuid(pageId, out var normalizedPageId) || audit.Pages.FirstOrDefault(item => item.Id == normalizedPageId) is not { } page)
             throw new ArgumentException("La page sélectionnée ne figure pas dans cet audit.", nameof(pageId));
+        if (!string.IsNullOrWhiteSpace(findingId) && page.Findings.All(finding => finding.Id != findingId.Trim()))
+            throw new ArgumentException("Le constat associé ne figure pas sur cette page.", nameof(findingId));
         if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(context))
             throw new ArgumentException("Une preuve doit avoir une source et un contenu.");
         if (imageData is { Length: > 8_000_000 })
@@ -123,6 +126,8 @@ public sealed class EmbeddedAuditDatabase : IDisposable
             Id = Guid.NewGuid().ToString("D"),
             AuditId = audit.Id,
             AuditPageId = page.Id,
+            CriterionId = criterionId.Trim(),
+            FindingId = findingId.Trim(),
             Source = source.Trim(),
             Page = page.Name,
             Url = page.Url,
@@ -272,6 +277,7 @@ public sealed class EmbeddedAuditDatabase : IDisposable
             return 0;
 
         audit.Pages.AddRange(pagesToAdd);
+        audit.PageScopeRevision++;
         audit.UpdatedAtUtc = DateTime.UtcNow;
         RunTransaction(() => _audits.Update(audit));
         return pagesToAdd.Count;
@@ -284,6 +290,7 @@ public sealed class EmbeddedAuditDatabase : IDisposable
         var removed = audit.Pages.RemoveAll(page => page.Id == normalizedPageId);
         if (removed == 0)
             return false;
+        audit.PageScopeRevision++;
         audit.UpdatedAtUtc = DateTime.UtcNow;
         RunTransaction(() => _audits.Update(audit));
         return true;
@@ -306,7 +313,8 @@ public sealed class EmbeddedAuditDatabase : IDisposable
             throw new ArgumentException("La page sélectionnée ne figure pas dans cet audit.", nameof(pageId));
         if (string.IsNullOrWhiteSpace(ruleId) || string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(description))
             throw new ArgumentException("Le constat doit contenir une règle, un titre et une description.");
-        if (page.Findings.Any(finding => finding.SourceRuleId == ruleId))
+        if (page.Findings.Any(finding => finding.SourceRuleId == ruleId &&
+            string.Equals(finding.Locator, locator.Trim(), StringComparison.OrdinalIgnoreCase)))
             return false;
 
         var now = DateTime.UtcNow;
@@ -419,6 +427,216 @@ public sealed class EmbeddedAuditDatabase : IDisposable
             .ToArray();
     }
 
+    public IReadOnlyList<AuditCriterion> GetAuditCriteria(string auditId)
+    {
+        if (!TryNormalizeGuid(auditId, out var normalizedAuditId) || _audits.FindById(normalizedAuditId) is not { } audit)
+            return [];
+        var reference = _references.FindById(audit.ReferenceVersionId) ??
+            _references.FindOne(item => item.StableId == audit.ReferenceStableId);
+        if (reference is null || !string.Equals(reference.CatalogStatus, "Importé", StringComparison.OrdinalIgnoreCase))
+            return [];
+
+        var storedCriteria = reference.Themes.SelectMany(theme => theme.Criteria.Select(criterion => (Theme: theme, Criterion: criterion)))
+            .OrderBy(item => item.Theme.Position).ThenBy(item => item.Criterion.Position).ToArray();
+        if (storedCriteria.Length == 0 || reference.ExpectedCriterionCount is not int expectedCount || expectedCount != storedCriteria.Length)
+            return [];
+
+        if (string.Equals(audit.ReferenceFrameworkId, "wcag", StringComparison.OrdinalIgnoreCase))
+        {
+            var targetLevel = audit.TargetLevel switch { "A" => 1, "AA" => 2, "AAA" => 3, _ => 0 };
+            if (targetLevel == 0 || storedCriteria.Any(item => item.Criterion.Level is not ("A" or "AA" or "AAA")))
+                return [];
+            storedCriteria = storedCriteria.Where(item => item.Criterion.Level switch
+            {
+                "A" => true,
+                "AA" => targetLevel >= 2,
+                "AAA" => targetLevel >= 3,
+                _ => false
+            }).ToArray();
+        }
+
+        if (storedCriteria.Any(item => string.IsNullOrWhiteSpace(item.Criterion.Code)) ||
+            storedCriteria.Select(item => item.Criterion.Code).Distinct(StringComparer.OrdinalIgnoreCase).Count() != storedCriteria.Length)
+            return [];
+
+        return storedCriteria.Select(item => new AuditCriterion(item.Criterion.Code, item.Criterion.Code, item.Criterion.Title,
+            item.Theme.Number, item.Theme.Title, item.Criterion.Tests.Count, item.Criterion.Level,
+            item.Criterion.TechnicalNote, item.Criterion.ParticularCases,
+            item.Criterion.Tests.OrderBy(test => test.Position).Select(test => new AuditCriterionTest(
+                test.Id, test.Code, test.Question, test.Requirements, test.Methodology)).ToArray())).ToArray();
+    }
+
+    public AuditReviewProgress GetReviewProgress(string auditId)
+    {
+        var criteria = GetAuditCriteria(auditId);
+        var pages = GetPages(auditId);
+        if (!TryNormalizeGuid(auditId, out var normalizedAuditId) || _audits.FindById(normalizedAuditId) is not { } audit ||
+            pages.Count == 0 || criteria.Count == 0)
+            return new AuditReviewProgress(false, 0, 0, 0, 0);
+
+        var pageIds = pages.Select(page => page.Id).ToHashSet(StringComparer.Ordinal);
+        var criterionIds = criteria.Select(criterion => criterion.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var decisions = ReadDecisions(auditId);
+        var latestApplicabilities = decisions
+            .Where(decision => decision.EventType == "PageApplicability" && pageIds.Contains(decision.AuditPageId) && criterionIds.Contains(decision.CriterionId))
+            .GroupBy(decision => (decision.AuditPageId, decision.CriterionId))
+            .Select(group => group.OrderBy(decision => decision.UpdatedAt).Last())
+            .ToArray();
+        var latestLotDecisions = decisions.Where(decision => decision.EventType == "LotDecision" && criterionIds.Contains(decision.CriterionId))
+            .GroupBy(decision => decision.CriterionId, StringComparer.OrdinalIgnoreCase)
+            .Select(group => group.OrderBy(decision => decision.UpdatedAt).Last())
+            .ToArray();
+        var criteriaById = criteria.ToDictionary(criterion => criterion.Id, StringComparer.OrdinalIgnoreCase);
+        var completed = latestLotDecisions.Count(decision => decision.ReviewComplete &&
+            criteriaById.TryGetValue(decision.CriterionId, out var criterion) &&
+            IsLotDecisionCurrentAndConsistent(decision, pages, latestApplicabilities, criterion, audit.PageScopeRevision));
+        return new AuditReviewProgress(true, completed, criteria.Count, latestApplicabilities.Length, criteria.Count * pages.Count);
+    }
+
+    public AuditDecisionEvent? GetLatestLotCriterionDecision(string auditId, string criterionId) =>
+        ReadDecisions(auditId).LastOrDefault(decision => decision.EventType == "LotDecision" &&
+            string.Equals(decision.CriterionId, criterionId, StringComparison.OrdinalIgnoreCase));
+
+    public AuditDecisionEvent? GetPageCriterionApplicability(string auditId, string pageId, string criterionId) =>
+        ReadDecisions(auditId).LastOrDefault(decision => decision.EventType == "PageApplicability" &&
+            decision.AuditPageId == pageId && string.Equals(decision.CriterionId, criterionId, StringComparison.OrdinalIgnoreCase));
+
+    public AuditDecisionEvent AppendPageCriterionDecision(string auditId, string pageId, string criterionId,
+        string humanDecision, string? justification = null, string applicability = "Applicable")
+    {
+        if (!TryGetAudit(auditId, out var audit))
+            throw new ArgumentException("Le dossier d’audit n’existe pas.", nameof(auditId));
+        if (!TryNormalizeGuid(pageId, out var normalizedPageId) || audit.Pages.FirstOrDefault(page => page.Id == normalizedPageId) is not { } page)
+            throw new ArgumentException("La page sélectionnée ne figure pas dans cet audit.", nameof(pageId));
+        if (string.IsNullOrWhiteSpace(criterionId))
+            throw new ArgumentException("Indiquez le critère ou la règle évaluée.", nameof(criterionId));
+        if (!AllowedDecisions.Contains(humanDecision))
+            throw new ArgumentException("Choisissez un résultat de revue.", nameof(humanDecision));
+        if (applicability is not ("Applicable" or "Non applicable" or "Indéterminée"))
+            throw new ArgumentException("Déterminez si le critère est applicable à cette page.", nameof(applicability));
+        if ((humanDecision == "Non applicable") != (applicability == "Non applicable") ||
+            (applicability == "Indéterminée" && humanDecision != "Non vérifiable"))
+            throw new ArgumentException("Le résultat choisi doit correspondre à l’applicabilité déclarée.", nameof(applicability));
+
+        var normalizedJustification = justification?.Trim() ?? string.Empty;
+        if (humanDecision is "Non applicable" or "Non vérifiable" && normalizedJustification.Length == 0)
+            throw new ArgumentException("Une justification est obligatoire pour ce résultat.", nameof(justification));
+
+        var stored = new StoredDecisionEvent
+        {
+            Id = Guid.NewGuid().ToString("D"), AuditId = audit.Id, AuditPageId = page.Id,
+            CriterionId = criterionId.Trim(), Page = page.Name, RuleSuggestion = criterionId.Trim(),
+            HumanDecision = humanDecision, Justification = normalizedJustification, Applicability = applicability,
+            UpdatedAtUtc = DateTime.UtcNow
+        };
+        RunTransaction(() =>
+        {
+            _decisions.Insert(stored);
+            audit.UpdatedAtUtc = stored.UpdatedAtUtc;
+            _audits.Update(audit);
+        });
+        return ToDecisionEvent(stored);
+    }
+
+    public AuditDecisionEvent AppendPageCriterionApplicability(string auditId, string pageId, string criterionId,
+        string applicability, string? justification = null)
+    {
+        if (!TryGetAudit(auditId, out var audit) || audit.IsArchived)
+            throw new InvalidOperationException("L’audit est introuvable ou archivé.");
+        if (!TryNormalizeGuid(pageId, out var normalizedPageId) || audit.Pages.FirstOrDefault(page => page.Id == normalizedPageId) is not { } page)
+            throw new ArgumentException("La page sélectionnée ne figure pas dans cet audit.", nameof(pageId));
+        if (!GetAuditCriteria(auditId).Any(criterion => criterion.Id.Equals(criterionId?.Trim(), StringComparison.OrdinalIgnoreCase)))
+            throw new ArgumentException("Choisissez un critère du référentiel associé à cet audit.", nameof(criterionId));
+        if (applicability is not ("Applicable" or "Non applicable" or "Indéterminée"))
+            throw new ArgumentException("Déterminez l’applicabilité du critère sur cette page.", nameof(applicability));
+
+        var normalizedJustification = justification?.Trim() ?? string.Empty;
+        if (applicability is "Non applicable" or "Indéterminée" && normalizedJustification.Length == 0)
+            throw new ArgumentException("Une justification est obligatoire pour cet état d’applicabilité.", nameof(justification));
+
+        var stored = new StoredDecisionEvent
+        {
+            Id = Guid.NewGuid().ToString("D"), AuditId = audit.Id, EventType = "PageApplicability",
+            AuditPageId = page.Id, CriterionId = criterionId.Trim(), Page = page.Name,
+            RuleSuggestion = criterionId.Trim(), Applicability = applicability, Justification = normalizedJustification,
+            ReviewComplete = true, UpdatedAtUtc = DateTime.UtcNow
+        };
+        RunTransaction(() =>
+        {
+            _decisions.Insert(stored);
+            audit.UpdatedAtUtc = stored.UpdatedAtUtc;
+            _audits.Update(audit);
+        });
+        return ToDecisionEvent(stored);
+    }
+
+    public AuditDecisionEvent AppendLotCriterionDecision(string auditId, string criterionId, string humanDecision, string? justification = null)
+    {
+        if (!TryGetAudit(auditId, out var audit) || audit.IsArchived)
+            throw new InvalidOperationException("L’audit est introuvable ou archivé.");
+        if (!GetAuditCriteria(auditId).Any(criterion => criterion.Id.Equals(criterionId?.Trim(), StringComparison.OrdinalIgnoreCase)))
+            throw new ArgumentException("Choisissez un critère du référentiel associé à cet audit.", nameof(criterionId));
+        if (!AllowedDecisions.Contains(humanDecision))
+            throw new ArgumentException("Choisissez un résultat pour le lot de pages.", nameof(humanDecision));
+        var normalizedJustification = justification?.Trim() ?? string.Empty;
+        if (humanDecision is "Non applicable" or "Non vérifiable" && normalizedJustification.Length == 0)
+            throw new ArgumentException("Une justification est obligatoire pour ce résultat.", nameof(justification));
+
+        var latestApplicabilities = GetLatestCriterionPageApplicabilities(auditId, criterionId.Trim());
+        if (!IsLotDecisionSupported(humanDecision, audit.Pages, latestApplicabilities))
+            throw new ArgumentException("Complétez d’abord l’applicabilité sur chaque page et vérifiez sa cohérence avec le résultat du lot.", nameof(humanDecision));
+
+        var stored = new StoredDecisionEvent
+        {
+            Id = Guid.NewGuid().ToString("D"), AuditId = audit.Id, EventType = "LotDecision",
+            AuditPageScopeRevision = audit.PageScopeRevision,
+            CriterionId = criterionId.Trim(), Page = "Ensemble du lot", RuleSuggestion = criterionId.Trim(),
+            HumanDecision = humanDecision, Justification = normalizedJustification,
+            ApplicabilitySnapshotJson = CreateApplicabilitySnapshot(latestApplicabilities),
+            UpdatedAtUtc = DateTime.UtcNow
+        };
+        RunTransaction(() =>
+        {
+            _decisions.Insert(stored);
+            audit.UpdatedAtUtc = stored.UpdatedAtUtc;
+            _audits.Update(audit);
+        });
+        return ToDecisionEvent(stored);
+    }
+
+    public AuditDecisionEvent CompleteLotCriterionReview(string auditId, string criterionId)
+    {
+        if (!TryGetAudit(auditId, out var audit) || audit.IsArchived)
+            throw new InvalidOperationException("L’audit est introuvable ou archivé.");
+        var latest = GetLatestLotCriterionDecision(auditId, criterionId);
+        if (latest is null)
+            throw new InvalidOperationException("Enregistrez d’abord le résultat du critère pour le lot.");
+        if (latest.ReviewComplete)
+            throw new InvalidOperationException("La revue de ce critère est déjà terminée.");
+        var pageApplicabilities = GetLatestCriterionPageApplicabilities(auditId, criterionId);
+        var criterion = GetAuditCriteria(auditId).FirstOrDefault(item => item.Id.Equals(criterionId, StringComparison.OrdinalIgnoreCase));
+        if (criterion is null || !IsLotDecisionCurrentAndConsistent(latest, audit.Pages, pageApplicabilities, criterion,
+                audit.PageScopeRevision, requireReviewComplete: false))
+            throw new InvalidOperationException("Les pages ou les contrôles ont changé. Vérifiez le résultat du lot avant de terminer la revue.");
+
+        var completed = new StoredDecisionEvent
+        {
+            Id = Guid.NewGuid().ToString("D"), AuditId = latest.AuditId, EventType = "LotDecision",
+            AuditPageScopeRevision = latest.AuditPageScopeRevision,
+            CriterionId = latest.CriterionId, Page = latest.Page, RuleSuggestion = latest.RuleSuggestion,
+            HumanDecision = latest.HumanDecision, Justification = latest.Justification,
+            ApplicabilitySnapshotJson = latest.ApplicabilitySnapshotJson,
+            ReviewComplete = true, UpdatedAtUtc = DateTime.UtcNow
+        };
+        RunTransaction(() =>
+        {
+            _decisions.Insert(completed);
+            audit.UpdatedAtUtc = completed.UpdatedAtUtc;
+            _audits.Update(audit);
+        });
+        return ToDecisionEvent(completed);
+    }
+
     public AuditDecisionEvent AppendDecision(string auditId, string page, string ruleSuggestion, string humanDecision, string? justification = null)
     {
         if (!TryGetAudit(auditId, out var audit))
@@ -442,6 +660,7 @@ public sealed class EmbeddedAuditDatabase : IDisposable
             RuleSuggestion = ruleSuggestion.Trim(),
             HumanDecision = humanDecision,
             Justification = normalizedJustification,
+            Applicability = humanDecision == "Non applicable" ? "Non applicable" : humanDecision == "Non vérifiable" ? "Indéterminée" : "Applicable",
             UpdatedAtUtc = DateTime.UtcNow
         };
 
@@ -475,8 +694,38 @@ public sealed class EmbeddedAuditDatabase : IDisposable
             RuleSuggestion = latest.RuleSuggestion,
             HumanDecision = latest.HumanDecision,
             Justification = latest.Justification,
+            Applicability = latest.Applicability,
             ReviewComplete = true,
             UpdatedAtUtc = DateTime.UtcNow
+        };
+        RunTransaction(() =>
+        {
+            _decisions.Insert(completed);
+            audit.UpdatedAtUtc = completed.UpdatedAtUtc;
+            _audits.Update(audit);
+        });
+        return ToDecisionEvent(completed);
+    }
+
+    public AuditDecisionEvent CompletePageCriterionReview(string auditId, string pageId, string criterionId)
+    {
+        if (!TryGetAudit(auditId, out var audit))
+            throw new ArgumentException("Le dossier d’audit n’existe pas.", nameof(auditId));
+        if (!TryNormalizeGuid(pageId, out var normalizedPageId) || audit.Pages.FirstOrDefault(page => page.Id == normalizedPageId) is not { } page)
+            throw new ArgumentException("La page sélectionnée ne figure pas dans cet audit.", nameof(pageId));
+        var latest = _decisions.Find(document => document.AuditId == audit.Id && document.AuditPageId == page.Id && document.CriterionId == criterionId.Trim())
+            .OrderBy(document => document.UpdatedAtUtc).LastOrDefault();
+        if (latest is null)
+            throw new InvalidOperationException("Enregistrez une décision pour ce critère avant de terminer sa revue.");
+        if (latest.ReviewComplete)
+            throw new InvalidOperationException("La revue de ce critère est déjà terminée.");
+
+        var completed = new StoredDecisionEvent
+        {
+            Id = Guid.NewGuid().ToString("D"), AuditId = latest.AuditId, AuditPageId = page.Id,
+            CriterionId = latest.CriterionId, Page = latest.Page, RuleSuggestion = latest.RuleSuggestion,
+            HumanDecision = latest.HumanDecision, Justification = latest.Justification, Applicability = latest.Applicability,
+            ReviewComplete = true, UpdatedAtUtc = DateTime.UtcNow
         };
         RunTransaction(() =>
         {
@@ -617,6 +866,65 @@ public sealed class EmbeddedAuditDatabase : IDisposable
 
     private static bool IsGuidD(string id) => Guid.TryParseExact(id, "D", out _);
 
+    private IReadOnlyList<AuditDecisionEvent> GetLatestCriterionPageApplicabilities(string auditId, string criterionId)
+    {
+        var pageIds = GetPages(auditId).Select(page => page.Id).ToHashSet(StringComparer.Ordinal);
+        return ReadDecisions(auditId)
+            .Where(decision => decision.EventType == "PageApplicability" && pageIds.Contains(decision.AuditPageId) &&
+                string.Equals(decision.CriterionId, criterionId, StringComparison.OrdinalIgnoreCase))
+            .GroupBy(decision => decision.AuditPageId, StringComparer.Ordinal)
+            .Select(group => group.OrderBy(decision => decision.UpdatedAt).Last())
+            .OrderBy(decision => decision.AuditPageId, StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    private static string CreateApplicabilitySnapshot(IReadOnlyList<AuditDecisionEvent> pageApplicabilities) =>
+        System.Text.Json.JsonSerializer.Serialize(pageApplicabilities.OrderBy(item => item.AuditPageId, StringComparer.Ordinal)
+            .Select(item => item.Id).ToArray());
+
+    private static bool IsLotDecisionSupported(string result, IReadOnlyList<StoredAuditPage> pages,
+        IReadOnlyList<AuditDecisionEvent> pageApplicabilities)
+    {
+        if (pages.Count == 0 || pageApplicabilities.Count != pages.Count ||
+            pages.Any(page => pageApplicabilities.All(item => item.AuditPageId != page.Id)))
+            return false;
+
+        return result switch
+        {
+            "Conforme" => pageApplicabilities.Any(item => item.Applicability == "Applicable") &&
+                pageApplicabilities.All(item => item.Applicability != "Indéterminée"),
+            "Non conforme" => pageApplicabilities.Any(item => item.Applicability == "Applicable"),
+            "Non applicable" => pageApplicabilities.All(item => item.Applicability == "Non applicable"),
+            "Non vérifiable" => pageApplicabilities.Any(item => item.Applicability is "Applicable" or "Indéterminée"),
+            _ => false
+        };
+    }
+
+    private static bool IsLotDecisionCurrentAndConsistent(AuditDecisionEvent decision, IReadOnlyList<StoredAuditPage> pages,
+        IReadOnlyList<AuditDecisionEvent> latestApplicabilities, AuditCriterion criterion, int currentPageScopeRevision,
+        bool requireReviewComplete = true)
+    {
+        if ((requireReviewComplete && !decision.ReviewComplete) || decision.AuditPageScopeRevision != currentPageScopeRevision)
+            return false;
+        var criterionApplicabilities = latestApplicabilities
+            .Where(item => string.Equals(item.CriterionId, decision.CriterionId, StringComparison.OrdinalIgnoreCase)).ToArray();
+        return decision.ApplicabilitySnapshotJson == CreateApplicabilitySnapshot(criterionApplicabilities) &&
+            criterionApplicabilities.All(item => item.UpdatedAt <= decision.UpdatedAt) &&
+            !HasSupportingPageDataChangedSince(decision, pages, criterion) &&
+            IsLotDecisionSupported(decision.HumanDecision, pages, criterionApplicabilities);
+    }
+
+    private static bool HasSupportingPageDataChangedSince(AuditDecisionEvent decision, IReadOnlyList<StoredAuditPage> pages,
+        AuditCriterion criterion)
+    {
+        var testIds = criterion.Tests.Select(test => test.Id).ToHashSet(StringComparer.Ordinal);
+        return pages.Any(page =>
+            page.TestResults.Any(result => testIds.Contains(result.ReferenceTestId) &&
+                new DateTimeOffset(DateTime.SpecifyKind(result.UpdatedAtUtc, DateTimeKind.Utc)) > decision.UpdatedAt) ||
+            page.Findings.Any(finding => (finding.SourceRuleId == criterion.Id || testIds.Contains(finding.ReferenceTestId)) &&
+                new DateTimeOffset(DateTime.SpecifyKind(finding.CreatedAtUtc, DateTimeKind.Utc)) > decision.UpdatedAt));
+    }
+
     private static bool IsPriorityPage(StoredAuditPage page) => page.IsPriority ||
         page.SamplingReason is "Accueil" or "Contact" or "Mentions légales" or "Déclaration d’accessibilité" or "Plan du site";
 
@@ -636,17 +944,41 @@ public sealed class EmbeddedAuditDatabase : IDisposable
         document.IsArchived,
         document.ArchivedAtUtc is { } archivedAt
             ? new DateTimeOffset(DateTime.SpecifyKind(archivedAt, DateTimeKind.Utc))
-            : null);
+            : null,
+        document.PageScopeRevision);
 
-    private static AuditDecisionEvent ToDecisionEvent(StoredDecisionEvent document) => new(
-        document.Id,
-        document.AuditId,
-        document.Page,
-        document.RuleSuggestion,
-        document.HumanDecision,
-        document.Justification,
-        document.ReviewComplete,
-        new DateTimeOffset(DateTime.SpecifyKind(document.UpdatedAtUtc, DateTimeKind.Utc)));
+    private static AuditDecisionEvent ToDecisionEvent(StoredDecisionEvent document)
+    {
+        var applicability = document.Applicability;
+        if (applicability is not ("Applicable" or "Non applicable" or "Indéterminée"))
+            applicability = document.HumanDecision switch
+            {
+                "Non applicable" => "Non applicable",
+                "Non vérifiable" => "Indéterminée",
+                "Conforme" or "Non conforme" => "Applicable",
+                _ => "À déterminer"
+            };
+
+        var eventType = document.EventType;
+        if (string.IsNullOrWhiteSpace(eventType) || eventType == "LegacyDecision")
+            eventType = string.IsNullOrWhiteSpace(document.AuditPageId) ? "LegacyDecision" : "LegacyPageDecision";
+
+        return new AuditDecisionEvent(
+            document.Id,
+            document.AuditId,
+            document.Page,
+            document.RuleSuggestion,
+            document.HumanDecision,
+            document.Justification,
+            document.ReviewComplete,
+            new DateTimeOffset(DateTime.SpecifyKind(document.UpdatedAtUtc, DateTimeKind.Utc)),
+            document.AuditPageId ?? string.Empty,
+            document.CriterionId ?? string.Empty,
+            applicability,
+            eventType,
+            document.AuditPageScopeRevision,
+            document.ApplicabilitySnapshotJson ?? "[]");
+    }
 
     private static string ValidateSiteUrl(string value)
     {

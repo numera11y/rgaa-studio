@@ -280,6 +280,21 @@
       <Setter Property="BorderBrush" Value="#214B9A" />
       <Setter Property="BorderThickness" Value="2" />
     </Style>
+    <Style Selector="Button.lot-criterion-item">
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="Padding" Value="10,8" />
+    </Style>
+    <Style Selector="Button.lot-criterion-item:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+    </Style>
+    <Style Selector="Button.lot-criterion-item:focus">
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
     <Style Selector="Button.page-tools">
       <Setter Property="Height" Value="34" />
       <Setter Property="Padding" Value="12,6" />
@@ -296,6 +311,28 @@
       <Setter Property="Background" Value="#E9EFF9" />
       <Setter Property="BorderBrush" Value="#214B9A" />
       <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.criteria-nav">
+      <Setter Property="Height" Value="34" />
+      <Setter Property="Padding" Value="12,6" />
+      <Setter Property="Background" Value="#FFFDF7" />
+      <Setter Property="Foreground" Value="#171F3B" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="Button.criteria-nav:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+    </Style>
+    <Style Selector="Button.criteria-nav[Tag=True]">
+      <Setter Property="Background" Value="#D5E1F5" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+    </Style>
+    <Style Selector="Button.criteria-nav:focus">
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="2" />
     </Style>
     <Style Selector="Button.aria-tree-item">
       <Setter Property="Background" Value="Transparent" />
@@ -594,7 +631,7 @@
             </Grid>
           </Border>
           <Border x:Name="PageScopePanel" Grid.Column="0" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8" Padding="16">
-            <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" RowSpacing="10">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" RowSpacing="8">
               <Grid Grid.Row="0" ColumnDefinitions="*,32">
                 <StackPanel Spacing="3">
                   <TextBlock Text="Pages du dossier" FontSize="15" FontWeight="SemiBold" Foreground="#171F3B" />
@@ -603,9 +640,28 @@
                 <Button x:Name="CollapsePageScopeButton" Grid.Column="1" Classes="audit-actions" Width="32" Height="32" Click="CollapsePageScope_Click" ToolTip.Tip="Replier la liste des pages" AutomationProperties.Name="Replier la liste des pages en languette" />
                 <svg:Svg Grid.Column="1" Path="/Assets/chevron-left.svg" Width="14" Height="14" CurrentColor="#171F3B" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
               </Grid>
-              <Button x:Name="AuditOverviewButton" Grid.Row="1" Classes="page-tools" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Tag="True" Content="Vue d’ensemble" Click="AuditOverview_Click" AutomationProperties.Name="Afficher le tableau de bord de l’audit" />
-              <Button Grid.Row="2" HorizontalAlignment="Stretch" Content="Ajouter des pages" Click="FindAdditionalPages_Click" AutomationProperties.Name="Rechercher des pages candidates à ajouter à cet audit" />
-              <Border Grid.Row="3" Background="Transparent">
+              <Button x:Name="AuditOverviewButton" Grid.Row="1" Classes="page-tools" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Tag="True" Click="AuditOverview_Click" AutomationProperties.Name="Afficher le tableau de bord de l’audit">
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                  <svg:Svg Path="/Assets/house.svg" Width="16" Height="16" CurrentColor="#171F3B" />
+                  <TextBlock Text="Vue d’ensemble" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+              <StackPanel Grid.Row="2" Spacing="1">
+                <Button x:Name="OpenCriteriaBoardButton" Classes="criteria-nav" Tag="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="OpenCriterionBoard_Click" AutomationProperties.Name="Évaluer les critères sur l’ensemble du lot de pages">
+                  <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <svg:Svg Path="/Assets/criteria.svg" Width="16" Height="16" CurrentColor="#171F3B" />
+                    <TextBlock Text="Critères du lot" VerticalAlignment="Center" />
+                  </StackPanel>
+                </Button>
+                <TextBlock x:Name="CriterionLotProgressSummary" Margin="36,0,8,5" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+              </StackPanel>
+              <Button Grid.Row="3" Classes="secondary" Height="34" Padding="12,6" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="FindAdditionalPages_Click" AutomationProperties.Name="Rechercher des pages candidates à ajouter à cet audit">
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                  <svg:Svg Path="/Assets/plus.svg" Width="16" Height="16" CurrentColor="#171F3B" />
+                  <TextBlock Text="Ajouter des pages" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+              <Border Grid.Row="4" Background="Transparent">
                 <Grid>
                   <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding AuditPages}">
@@ -631,7 +687,7 @@
                   <TextBlock x:Name="EmptyAuditPages" Text="Aucune page n’a encore été ajoutée." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="False" />
                 </Grid>
               </Border>
-              <TextBlock Grid.Row="4" Text="25 pages supplémentaires maximum par audit." FontSize="10" Foreground="#555E70" TextWrapping="Wrap" />
+              <TextBlock Grid.Row="5" Text="25 pages supplémentaires maximum par audit." FontSize="10" Foreground="#555E70" TextWrapping="Wrap" />
             </Grid>
           </Border>
           <Border Grid.Column="2" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8" ClipToBounds="True">
@@ -645,7 +701,14 @@
                       <svg:Svg Path="/Assets/chevron-down.svg" Width="13" Height="13" CurrentColor="#171F3B" />
                     </StackPanel>
                   </Button>
+                  <Button x:Name="OpenCriteriaBoardToolbarButton" Classes="page-tools" Click="OpenCriterionBoard_Click" AutomationProperties.Name="Ouvrir la revue des critères pour l’ensemble du lot">
+                    <StackPanel Orientation="Horizontal" Spacing="7" VerticalAlignment="Center">
+                      <svg:Svg Path="/Assets/criteria.svg" Width="16" Height="16" CurrentColor="#171F3B" />
+                      <TextBlock Text="Critères du lot" VerticalAlignment="Center" />
+                    </StackPanel>
+                  </Button>
                   <TextBlock x:Name="DashboardToolbarLabel" Text="Vue d’ensemble de l’audit" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" VerticalAlignment="Center" IsVisible="False" />
+                  <TextBlock x:Name="CriterionBoardToolbarLabel" Text="Critères du lot" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" VerticalAlignment="Center" IsVisible="False" />
                   <Button x:Name="RunAxeScanButton" Classes="page-tools" Click="RunAxeScan_Click" ToolTip.Tip="Lancer une analyse axe-core de la page sélectionnée" AutomationProperties.Name="Lancer une analyse axe-core de la page sélectionnée" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="7" HorizontalAlignment="Center" VerticalAlignment="Center">
                       <svg:Svg Path="/Assets/search.svg" Width="15" Height="15" CurrentColor="#171F3B" VerticalAlignment="Center" />
@@ -679,6 +742,16 @@
                           <TextBlock Text="Cette progression indique les pages ouvertes dans l’outil, pas une conformité ni une couverture complète des critères." FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
                         </StackPanel>
                       </Border>
+                      <Border x:Name="DashboardCriterionProgressPanel" Background="#E7F3EC" CornerRadius="6" Padding="16">
+                        <StackPanel Spacing="8">
+                          <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Revue des critères du référentiel" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                            <TextBlock x:Name="DashboardCriterionProgressText" Grid.Column="1" FontSize="12" FontWeight="SemiBold" Foreground="#245B3E" />
+                          </Grid>
+                          <ProgressBar x:Name="DashboardCriterionProgress" Minimum="0" Maximum="100" Height="8" AutomationProperties.Name="Progression des critères ayant un résultat confirmé pour l’ensemble du lot" />
+                          <TextBlock x:Name="DashboardApplicabilitySummary" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                        </StackPanel>
+                      </Border>
                       <ItemsControl ItemsSource="{Binding DashboardMetrics}">
                         <ItemsControl.ItemsPanel>
                           <ItemsPanelTemplate>
@@ -710,6 +783,116 @@
                       <TextBlock Text="Les compteurs reflètent les résultats, constats et preuves actuellement enregistrés dans ce dossier." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" />
                     </StackPanel>
                   </ScrollViewer>
+                </Border>
+                <Border x:Name="CriterionBoardPanel" Grid.ColumnSpan="2" IsVisible="False" Background="#FFFDF7" Padding="18" AutomationProperties.Name="Revue des critères sur l’ensemble du lot de pages">
+                  <Grid ColumnDefinitions="320,*" ColumnSpacing="16" RowDefinitions="Auto,*" RowSpacing="12">
+                    <Grid Grid.ColumnSpan="2" ColumnDefinitions="*,Auto" Margin="2,0,2,4">
+                      <StackPanel Spacing="3">
+                        <TextBlock Text="Critères du lot" FontSize="22" FontWeight="SemiBold" Foreground="#171F3B" />
+                        <TextBlock x:Name="CriterionBoardSubtitle" FontSize="12" Foreground="#45536D" TextWrapping="Wrap" />
+                      </StackPanel>
+                      <Button x:Name="ReturnFromCriteriaButton" Grid.Column="1" Classes="page-tools" Content="Retour à la page" Click="ReturnToPage_Click" VerticalAlignment="Top" />
+                    </Grid>
+                    <Border Grid.Row="1" Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="5" Padding="12">
+                      <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="9">
+                        <TextBox x:Name="CriterionSearchBox" PlaceholderText="Rechercher un code, un intitulé ou un test" TextChanged="CriterionSearch_TextChanged" AutomationProperties.Name="Rechercher dans les critères du référentiel" />
+                        <ComboBox Grid.Row="1" x:Name="CriterionThemeFilter" ItemsSource="{Binding CriterionThemes}" SelectionChanged="CriterionThemeFilter_SelectionChanged" AutomationProperties.Name="Filtrer les critères par thème">
+                          <ComboBox.ItemTemplate>
+                            <DataTemplate><TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis" /></DataTemplate>
+                          </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" x:Name="FilteredCriterionCountText" FontSize="10" Foreground="#555E70" AutomationProperties.LiveSetting="Polite" />
+                        <Grid Grid.Row="3">
+                          <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <ItemsControl ItemsSource="{Binding FilteredAuditCriteria}">
+                              <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                  <Grid>
+                                    <Border Background="#D5E1F5" BorderBrush="#214B9A" BorderThickness="1" CornerRadius="4" IsVisible="{Binding IsSelected}" />
+                                    <Button Classes="lot-criterion-item" Tag="{Binding Id}" Click="LotCriterion_Click" AutomationProperties.Name="{Binding AccessibleName}">
+                                      <StackPanel Spacing="3">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                          <TextBlock Text="{Binding Code}" FontSize="11" FontWeight="Bold" Foreground="#214B9A" />
+                                          <TextBlock Grid.Column="1" Text="{Binding ReviewStatus}" FontSize="10" Foreground="#555E70" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        <TextBlock Text="{Binding Title}" FontSize="11" Foreground="#171F3B" TextWrapping="Wrap" MaxLines="2" />
+                                        <TextBlock Text="{Binding ThemeLabel}" FontSize="9" Foreground="#555E70" TextTrimming="CharacterEllipsis" />
+                                      </StackPanel>
+                                    </Button>
+                                  </Grid>
+                                </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                          </ScrollViewer>
+                          <TextBlock x:Name="NoFilteredCriteria" Text="Aucun critère ne correspond à cette recherche." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="False" />
+                        </Grid>
+                      </Grid>
+                    </Border>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                      <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel x:Name="SelectedCriterionContent" Spacing="14" Margin="2,0,8,12" IsVisible="False">
+                          <StackPanel Spacing="4">
+                            <TextBlock x:Name="SelectedCriterionHeading" FontSize="19" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                            <TextBlock x:Name="SelectedCriterionTheme" FontSize="11" Foreground="#214B9A" />
+                            <TextBlock x:Name="SelectedCriterionSummary" FontSize="12" Foreground="#45536D" TextWrapping="Wrap" />
+                            <TextBlock x:Name="CriterionTestsText" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                          </StackPanel>
+                          <Border Height="1" Background="#D8DAD9" />
+                          <StackPanel Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                              <TextBlock Text="Applicabilité et éléments par page" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                              <TextBlock x:Name="CriterionPageCoverageText" Grid.Column="1" FontSize="11" FontWeight="SemiBold" Foreground="#45536D" AutomationProperties.LiveSetting="Polite" />
+                            </Grid>
+                            <TextBlock Text="Déterminez si le critère s’applique sur chaque page du lot. Les constats et preuves restent liés à leur page." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" />
+                            <ItemsControl ItemsSource="{Binding CriterionPageReviews}">
+                              <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                  <Border Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,6">
+                                    <Grid ColumnDefinitions="*,220" ColumnSpacing="12">
+                                      <StackPanel Spacing="3" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding PageName}" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding PagePath}" FontSize="10" Foreground="#555E70" TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding ContextSummary}" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                                        <Button Classes="page-tools" Content="Ouvrir cette page" HorizontalAlignment="Left" Click="OpenCriterionPage_Click" AutomationProperties.Name="{Binding OpenPageAccessibleName}" />
+                                      </StackPanel>
+                                      <StackPanel Grid.Column="1" Spacing="5">
+                                        <ComboBox ItemsSource="{Binding ApplicabilityOptions}" SelectedItem="{Binding Applicability, Mode=TwoWay}" AutomationProperties.Name="{Binding ApplicabilityAccessibleName}" />
+                                        <TextBox Text="{Binding Justification, Mode=TwoWay}" PlaceholderText="Justification si nécessaire" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="48" IsVisible="{Binding NeedsJustification}" AutomationProperties.Name="{Binding JustificationAccessibleName}" />
+                                        <Button Classes="secondary" Content="Enregistrer l’état de cette page" HorizontalAlignment="Stretch" Tag="{Binding PageId}" Click="SavePageApplicability_Click" IsEnabled="{Binding CanSave}" AutomationProperties.Name="{Binding SaveAccessibleName}" />
+                                        <Button Classes="page-tools" Content="Annuler les changements" HorizontalAlignment="Stretch" Click="DiscardPageApplicabilityChanges_Click" IsVisible="{Binding IsDirty}" AutomationProperties.Name="{Binding DiscardAccessibleName}" />
+                                      </StackPanel>
+                                    </Grid>
+                                  </Border>
+                                </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                          </StackPanel>
+                          <Border Height="1" Background="#D8DAD9" />
+                          <Border Background="#E9EFF9" CornerRadius="5" Padding="14">
+                            <StackPanel Spacing="8">
+                              <TextBlock Text="Résultat unique pour le lot" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                              <TextBlock Text="Choisissez une conclusion après avoir examiné les pages applicables. Une décision non applicable exige que le critère ne s’applique à aucune page du lot." FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                              <ComboBox x:Name="LotCriterionDecisionCombo" ItemsSource="{Binding LotDecisionOptions}" AutomationProperties.Name="Résultat du critère pour l’ensemble du lot">
+                                <ComboBox.ItemTemplate>
+                                  <DataTemplate><TextBlock Text="{Binding}" /></DataTemplate>
+                                </ComboBox.ItemTemplate>
+                              </ComboBox>
+                              <TextBox x:Name="LotCriterionJustificationBox" PlaceholderText="Justification pour Non applicable ou Non vérifiable" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="60" AutomationProperties.Name="Justification du résultat global du critère" />
+                              <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Button x:Name="SaveLotCriterionDecisionButton" Classes="primary" Content="Enregistrer le résultat du lot" Click="SaveLotCriterionDecision_Click" />
+                                <Button x:Name="CompleteLotCriterionButton" Classes="secondary" Content="Terminer la revue" Click="CompleteLotCriterion_Click" IsEnabled="False" />
+                              </StackPanel>
+                              <TextBlock x:Name="LotCriterionReviewStatus" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                            </StackPanel>
+                          </Border>
+                        </StackPanel>
+                      </ScrollViewer>
+                      <StackPanel x:Name="NoSelectedCriterion" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="6" MaxWidth="360">
+                        <TextBlock Text="Choisissez un critère" FontSize="17" FontWeight="SemiBold" Foreground="#171F3B" HorizontalAlignment="Center" />
+                        <TextBlock Text="Recherchez par code ou intitulé, ou filtrez par thème. Le résultat portera sur le lot entier ; les éléments observés resteront associés à chaque page." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" TextAlignment="Center" />
+                      </StackPanel>
+                    </Grid>
+                  </Grid>
                 </Border>
                 <edit:TextEditor x:Name="SourceCodeView" Grid.ColumnSpan="2" IsVisible="False" IsReadOnly="True" ShowLineNumbers="True" LineNumbersForeground="#555E70" WordWrap="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FFFDF7" Foreground="#171F3B" FontFamily="Consolas" FontSize="12" AutomationProperties.Name="Code source HTML, numéroté et coloré" />
                 <Border x:Name="SemanticTreePanel" Grid.Column="1" IsVisible="False" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1,0,0,0" Padding="12" AutomationProperties.Name="Balises HTML5 et anomalies de placement">
@@ -876,11 +1059,34 @@
               </Grid>
             </Grid>
           </Border>
-          <Border x:Name="SidePanel" Grid.Column="4" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8" Padding="18" AutomationProperties.AutomationId="AuditDecisionPanel" AutomationProperties.Name="Panneau de décision et d’inspection">
+          <Border x:Name="SidePanel" Grid.Column="4" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8" Padding="18" AutomationProperties.AutomationId="PageInspectionPanel" AutomationProperties.Name="Panneau d’inspection de la page sélectionnée">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
               <StackPanel Spacing="9">
-                <TextBlock Text="Inspection" FontSize="17" FontWeight="SemiBold" Foreground="#171F3B" />
-                <TextBlock Text="La décision de conformité appartient à l’auditeur." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
+                <TextBlock Text="Inspection de la page" FontSize="17" FontWeight="SemiBold" Foreground="#171F3B" />
+                <Border Background="#E9EFF9" CornerRadius="5" Padding="12">
+                  <StackPanel Spacing="7">
+                    <TextBlock x:Name="PageAuditSpecificSummary" Text="Les constats, mesures et preuves sont conservés sur la page concernée. Le résultat du critère se décide pour tout le lot." FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                    <Button Classes="secondary" Content="Évaluer les critères du lot" HorizontalAlignment="Stretch" Click="OpenCriterionBoard_Click" />
+                  </StackPanel>
+                </Border>
+                <Border x:Name="PageCriterionContextPanel" IsVisible="False" Background="#E7F3EC" BorderBrush="#B8D8C6" BorderThickness="1" CornerRadius="5" Padding="12">
+                  <StackPanel Spacing="7">
+                    <TextBlock Text="Critère suivi depuis le lot" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <TextBlock x:Name="PageCriterionContextHeading" FontSize="12" FontWeight="SemiBold" Foreground="#214B9A" TextWrapping="Wrap" />
+                    <TextBlock x:Name="PageCriterionApplicabilityText" FontSize="11" Foreground="#245B3E" TextWrapping="Wrap" />
+                    <TextBlock x:Name="PageCriterionLotOutcomeText" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                    <TextBlock Text="Tests de ce critère sur la page" FontSize="11" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <TextBlock x:Name="PageCriterionTestsText" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                    <TextBlock x:Name="PageCriterionFindingsText" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                    <TextBlock x:Name="PageCriterionEvidenceText" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                    <TextBlock Text="Ajouter un constat à cette page" FontSize="11" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <TextBox x:Name="PageCriterionObservationInput" PlaceholderText="Décrire l’observation" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="52" AutomationProperties.Name="Observation liée au critère sur cette page" />
+                    <TextBox x:Name="PageCriterionLocatorInput" PlaceholderText="Élément, emplacement ou sélecteur (facultatif)" AutomationProperties.Name="Emplacement de l’observation sur la page" />
+                    <Button Classes="secondary" Content="Enregistrer le constat sur cette page" HorizontalAlignment="Stretch" Click="AddPageCriterionFinding_Click" />
+                    <TextBlock x:Name="PageCriterionFindingStatus" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    <Button Classes="page-tools" Content="Revenir au critère du lot" HorizontalAlignment="Left" Click="ReturnToCriterionBoard_Click" />
+                  </StackPanel>
+                </Border>
                 <Border Background="#FFF4D9" BorderBrush="#E8D39D" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,2,0,4">
                   <TextBlock x:Name="BrowserSafetyNote" Text="Sans dossier ouvert, le navigateur affiche la page d’exemple. Dans un audit, seules les pages HTTPS sélectionnées du site peuvent s’ouvrir." FontSize="12" Foreground="#6A5016" TextWrapping="Wrap" />
                 </Border>
@@ -961,28 +1167,8 @@
                     <TextBlock x:Name="NoInspectionEvidence" Text="Aucune preuve ajoutée pour cet élément." FontSize="10" Foreground="#555E70" />
                   </StackPanel>
                 </Border>
-                <Border Height="1" Background="#E3E7EF" Margin="0,3" />
-                <TextBlock Text="Analyse automatisée axe-core" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
-                <TextBlock Text="Les résultats sont des pistes à vérifier manuellement ; ils ne déterminent pas la conformité." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" />
-                <Border Height="1" Background="#E3E7EF" Margin="0,3" />
-                <TextBlock Text="Décision humaine" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
-                <TextBlock Text="Critère ou contrôle" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
-                <TextBox x:Name="RuleBox" PlaceholderText="Saisir le critère examiné" AutomationProperties.Name="Critère ou contrôle examiné" />
-                <TextBlock Text="Résultat de conformité" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
-                <ComboBox x:Name="DecisionCombo" Height="40" HorizontalAlignment="Stretch" AutomationProperties.Name="Résultat décidé par l’auditeur">
-                  <ComboBoxItem Content="Choisir un résultat…" IsSelected="True" />
-                  <ComboBoxItem Content="Conforme" />
-                  <ComboBoxItem Content="Non conforme" />
-                  <ComboBoxItem Content="Non applicable" />
-                  <ComboBoxItem Content="Non vérifiable" />
-                </ComboBox>
-                <TextBlock Text="Justification (obligatoire pour les deux derniers résultats)" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
-                <TextBox x:Name="JustificationBox" PlaceholderText="Ajouter une justification si nécessaire" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="66" VerticalContentAlignment="Top" AutomationProperties.Name="Justification, obligatoire pour Non applicable et Non vérifiable" />
-                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,3,0,0">
-                  <Button x:Name="SaveReviewButton" Classes="primary" Content="Enregistrer" Click="SaveReview_Click" />
-                  <Button x:Name="CompleteReviewButton" Content="Terminer la revue" IsEnabled="False" Click="CompleteReview_Click" />
-                </StackPanel>
-                <TextBlock x:Name="ReviewStatus" FontSize="12" Foreground="#555E70" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                <TextBlock Text="Analyse automatisée axe-core" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock Text="Les détections sont des indices attachés à cette page ; elles ne constituent pas le résultat du lot." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" />
               </StackPanel>
             </ScrollViewer>
           </Border>

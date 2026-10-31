@@ -24,6 +24,7 @@ public sealed class StoredAuditDocument
     public byte[]? FaviconData { get; set; }
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAtUtc { get; set; } = DateTime.UtcNow;
+    public int PageScopeRevision { get; set; }
     public List<StoredAuditPage> Pages { get; set; } = [];
     public List<StoredAuditEvidence> Evidence { get; set; } = [];
 }
@@ -33,6 +34,8 @@ public sealed class StoredAuditEvidence
     [BsonId(false)] public string Id { get; set; } = Guid.NewGuid().ToString("D");
     public string AuditId { get; set; } = string.Empty;
     public string AuditPageId { get; set; } = string.Empty;
+    public string CriterionId { get; set; } = string.Empty;
+    public string FindingId { get; set; } = string.Empty;
     public string Source { get; set; } = string.Empty;
     public string Page { get; set; } = string.Empty;
     public string Url { get; set; } = string.Empty;
@@ -177,6 +180,7 @@ public sealed class StoredCatalogCriterion
     [BsonId(false)] public string Id { get; set; } = Guid.NewGuid().ToString("D");
     public int? LegacySqliteId { get; set; }
     public string Code { get; set; } = string.Empty;
+    public string Level { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string TechnicalNote { get; set; } = string.Empty;
     public string ParticularCases { get; set; } = string.Empty;
@@ -207,10 +211,16 @@ internal sealed class StoredDecisionEvent
 {
     [BsonId(false)] public string Id { get; set; } = Guid.NewGuid().ToString("D");
     public string AuditId { get; set; } = string.Empty;
+    public int AuditPageScopeRevision { get; set; }
+    public string EventType { get; set; } = "LegacyDecision";
+    public string AuditPageId { get; set; } = string.Empty;
+    public string CriterionId { get; set; } = string.Empty;
     public string Page { get; set; } = string.Empty;
     public string RuleSuggestion { get; set; } = string.Empty;
     public string HumanDecision { get; set; } = string.Empty;
     public string Justification { get; set; } = string.Empty;
+    public string Applicability { get; set; } = "À déterminer";
+    public string ApplicabilitySnapshotJson { get; set; } = "[]";
     public bool ReviewComplete { get; set; }
     public DateTime UpdatedAtUtc { get; set; } = DateTime.UtcNow;
 }

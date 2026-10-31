@@ -15,13 +15,13 @@ L’utilisateur veut produire un PDF client, un ODT modifiable de ce même rappo
 2. Les preuves sont choisies explicitement avant inclusion dans le PDF client.
 3. Les quatre types de preuves suivants sont pris en charge dans le besoin v1 : notes, étapes de reproduction, captures d’écran et extraits DOM/élément de page.
 4. L’ODT est une version modifiable du même rapport que le PDF. Le client/organisation figure dans le PDF ; il n’est pas nécessaire dans l’ODT ni le JSON.
-5. L’audit n’est « terminé » que lorsque toutes les règles concernant la page (et toutes les pages du périmètre pour un lot) sont marquées comme validées par l’utilisateur ; le conseil recommande que ce statut signifie « revue effectuée », jamais « conformité assurée ».
+5. L’audit n’est « terminé » que lorsque chaque critère du lot a reçu un résultat confirmé après revue des pages applicables ; le conseil recommande que ce statut signifie « revue effectuée », jamais « conformité assurée ».
 
 ## Recommandations et portée
 
 - Générer PDF et ODT depuis le même état du rapport. Une modification ODT externe ne modifie pas l’audit canonique.
 - Distinguer dans l’interface et les exports les détections automatiques, les conclusions humaines et l’avancement de revue. Une absence de détection automatique ou une vérification non effectuée ne vaut pas conformité.
-- Exiger une justification pour « non applicable » et « non vérifiable » ; les règles non examinées restent en attente et rendent le rapport incomplet.
+- Exiger une justification pour « non applicable » et « non vérifiable » ; un critère reste en attente tant que l’applicabilité n’est pas déterminée sur chaque page et qu’un résultat global n’est pas confirmé.
 - Rattacher chaque preuve à l’audit, à la page et au critère/constat concernés, avec type et contexte observable (URL/date/état quand disponible). Ne pas traiter un extrait DOM ou une capture comme preuve de conformité à lui seul.
 - À la sélection des preuves, afficher les pièces choisies et un aperçu accessible avant génération. Captures/DOM peuvent contenir des données client/personnelles ; prévoir un moyen de les examiner, d’omettre ou de masquer les zones sensibles avant export. Cette protection est une recommandation de sécurité/UX à valider par prototype.
 - Le champ client apparaît dans le PDF client ; il est exclu de l’ODT et du JSON selon la préférence utilisateur.
@@ -42,6 +42,6 @@ Critères à tester : contenu identique PDF/ODT hors choix explicitement différ
 
 ## Statut des inputs
 
-- **Confirmé par l’utilisateur :** rapports d’étape autorisés si incomplet clairement signalé ; preuve explicitement sélectionnée pour le PDF ; quatre formes de preuve ; ODT modifiable du même rapport ; complétude par validation de toutes les règles/pages du périmètre.
+- **Confirmé par l’utilisateur :** rapports d’étape autorisés si incomplet clairement signalé ; preuve explicitement sélectionnée pour le PDF ; quatre formes de preuve ; ODT modifiable du même rapport ; complétude par décision unique de chaque critère sur le lot après examen des pages.
 - **Recommandé par le conseil :** libellé « Rapport d’étape — incomplet », preuves aperçues/masquables, justifications pour non applicable/non vérifiable, état de revue distinct du résultat et aucun score de conformité automatique.
 - **À préciser :** libellé final français des états, règle exacte de justification et état « non vérifiable », politique de preuves dans JSON, niveau de masquage/caviardage et si la même sélection de preuves est appliquée au PDF et à l’ODT.

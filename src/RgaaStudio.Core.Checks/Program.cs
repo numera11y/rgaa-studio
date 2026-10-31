@@ -55,7 +55,21 @@ try
             FrameworkId = "rgaa",
             FrameworkName = "RGAA",
             VersionCode = "4.1.2",
-            CatalogStatus = "Importé"
+            CatalogStatus = "Importé",
+            ExpectedCriterionCount = 2,
+            Themes =
+            [
+                new StoredCatalogTheme
+                {
+                    Number = "1", Title = "Images", Position = 1,
+                    Criteria =
+                    [
+                        new StoredCatalogCriterion { Code = "1.1", Title = "Chaque image porteuse d’information a-t-elle une alternative textuelle ?", Position = 1,
+                            Tests = [new StoredCatalogTest { Code = "1.1.1", Question = "Présence de l’alternative" }] },
+                        new StoredCatalogCriterion { Code = "1.2", Title = "Chaque image de décoration est-elle ignorée ?", Position = 2 }
+                    ]
+                }
+            ]
         });
         store.StoreReferenceVersion(new StoredReferenceVersion
         {
@@ -63,7 +77,22 @@ try
             FrameworkId = "wcag",
             FrameworkName = "WCAG",
             VersionCode = "2.2",
-            CatalogStatus = "Importé"
+            CatalogStatus = "Importé",
+            ExpectedCriterionCount = 4,
+            Themes =
+            [
+                new StoredCatalogTheme
+                {
+                    Number = "1", Title = "Perceptible", Position = 1,
+                    Criteria =
+                    [
+                        new StoredCatalogCriterion { Code = "1.1.1", Title = "Non-text Content", Level = "A", Position = 1 },
+                        new StoredCatalogCriterion { Code = "1.2.1", Title = "Audio-only and Video-only", Level = "A", Position = 2 },
+                        new StoredCatalogCriterion { Code = "1.4.3", Title = "Contrast (Minimum)", Level = "AA", Position = 3 },
+                        new StoredCatalogCriterion { Code = "1.4.6", Title = "Contrast (Enhanced)", Level = "AAA", Position = 4 }
+                    ]
+                }
+            ]
         });
 
         SitePageCandidate[] selectedPages =
@@ -82,6 +111,21 @@ try
         Check(store.Get(rgaa.Id)?.Id == rgaa.Id, "dossier can be resumed by GUID D");
         Check(Guid.TryParseExact(rgaa.Id, "D", out _), "audit ID is stored as GUID D");
         Check(store.GetPages(rgaa.Id).Count == 2, "selected audit pages are persisted");
+        Check(store.GetAuditCriteria(rgaa.Id).Count == 2 && store.GetAuditCriteria(rgaa.Id)[0].TestCount == 1,
+            "the exact imported reference catalogue exposes its criteria and nested test counts");
+        Check(store.GetAuditCriteria(wcag.Id).Count == 3 && store.GetAuditCriteria(wcag.Id).All(criterion => criterion.Level is "A" or "AA"),
+            "a WCAG AA audit only includes criteria at level A and AA in its progress denominator");
+        store.StoreReferenceVersion(new StoredReferenceVersion
+        {
+            StableId = "rgaa:incomplete-check", FrameworkId = "rgaa", FrameworkName = "RGAA", VersionCode = "incomplete-check",
+            CatalogStatus = "Importé", ExpectedCriterionCount = 2,
+            Themes = [new StoredCatalogTheme { Number = "1", Title = "Images", Criteria = [new StoredCatalogCriterion { Code = "1.1", Title = "Image" }] }]
+        });
+        var incompleteCatalogAudit = store.Create(new NewAudit("https://incomplete.example/", "RGAA", "incomplete-check", null),
+            [new SitePageCandidate("Accueil", "https://incomplete.example/", "Accueil", true)], null);
+        Check(store.GetAuditCriteria(incompleteCatalogAudit.Id).Count == 0 && !store.GetReviewProgress(incompleteCatalogAudit.Id).IsAvailable,
+            "a catalog whose actual count differs from its declared complete count disables the global percentage");
+        Check(store.DeleteAudit(incompleteCatalogAudit.Id), "temporary incomplete-catalog fixture can be removed cleanly");
         Check(store.MarkPageOpened(rgaa.Id, store.GetPages(rgaa.Id).Single(page => page.Name == "Accueil").Id), "opening a page records its audit activity");
         Check(store.GetPages(rgaa.Id).Single(page => page.Name == "Accueil").LastOpenedAtUtc is not null, "page activity is persisted for the audit overview");
         Check(store.GetFaviconData(rgaa.Id)?.SequenceEqual(favicon) == true, "favicon bytes are persisted with their audit");
@@ -91,6 +135,8 @@ try
             "semantic finding can be added to the selected audit page");
         Check(!store.AddSemanticFindingToAudit(rgaa.Id, homePage.Id, "html5.main.duplicate", "Élément main en double", "Un second élément main est présent sur la page.", "main:nth-of-type(2)"),
             "the same semantic rule is not duplicated on a page");
+        Check(store.AddSemanticFindingToAudit(rgaa.Id, homePage.Id, "html5.main.duplicate", "Élément main en double", "Un autre élément main est présent sur la page.", "main:nth-of-type(3)"),
+            "multiple findings for one rule can be recorded when they concern different elements");
         store.SaveAxeSuggestions(rgaa.Id, homePage.Id,
         [
             new StoredAuditSuggestion { RuleId = "image-alt", Outcome = "Violation", Summary = "Image alternative · 1 élément", AnalyzerVersion = "4.13.0", EvidenceJson = "[]" },
@@ -103,10 +149,13 @@ try
         [new StoredAuditSuggestion { RuleId = "image-alt", Outcome = "Violation", Summary = "Image alternative · 1 élément", AnalyzerVersion = "4.13.0", EvidenceJson = "[]" }]);
         Check(store.GetPages(rgaa.Id).Single(page => page.Id == homePage.Id).Suggestions.Single(item => item.RuleId == "image-alt").ReviewStatus == "Retenu",
             "rerunning axe preserves an auditor's review status for a matching rule");
+        var homeFindingId = store.GetPages(rgaa.Id).Single(page => page.Id == homePage.Id).Findings[0].Id;
         var proof = store.AddEvidence(rgaa.Id, homePage.Id, "axe-core · image-alt", "IMG", "Logo", "DOM HTML",
-            "<img src=\"logo.svg\" alt=\"\">", [1, 2, 3], "image/png");
+            "<img src=\"logo.svg\" alt=\"\">", [1, 2, 3], "image/png", "image-alt", homeFindingId);
         Check(store.GetEvidence(rgaa.Id, homePage.Id).Single().Id == proof.Id && proof.ImageData?.SequenceEqual(new byte[] { 1, 2, 3 }) == true,
             "page evidence context and image bytes persist with the audit");
+        Check(proof.CriterionId == "image-alt" && proof.FindingId == homeFindingId,
+            "evidence can be tied to its criterion and specific finding");
         Check(store.GetEvidenceCount(rgaa.Id) == 1, "audit evidence count is available for its overview");
         Check(store.SetArchived(rgaa.Id, true), "audit can be archived");
         Check(store.List().Count == 1 && store.List(includeArchived: true).Single().IsArchived, "archive is hidden from active list and remains in archive list");
@@ -118,9 +167,56 @@ try
         var completed = store.CompleteLatestReview(rgaa.Id);
         Check(completed.ReviewComplete && store.ReadDecisions(rgaa.Id).Count == 2, "review completion is an append-only event");
         ExpectInvalidOperation(() => store.CompleteLatestReview(rgaa.Id));
+        var pages = store.GetPages(rgaa.Id);
+        var secondPage = pages.Single(page => page.Id != homePage.Id);
+        ExpectArgument(() => store.AppendLotCriterionDecision(rgaa.Id, "1.1", "Non conforme"));
+        store.AppendPageCriterionApplicability(rgaa.Id, homePage.Id, "1.1", "Applicable");
+        store.AppendPageCriterionApplicability(rgaa.Id, secondPage.Id, "1.1", "Applicable");
+        var lotFinding = store.AppendLotCriterionDecision(rgaa.Id, "1.1", "Non conforme");
+        var completedLotFinding = store.CompleteLotCriterionReview(rgaa.Id, "1.1");
+        Check(lotFinding.EventType == "LotDecision" && string.IsNullOrEmpty(lotFinding.AuditPageId) &&
+              completedLotFinding.ReviewComplete && completedLotFinding.CriterionId == "1.1",
+            "one lot-level criterion decision is stored separately from page applicability");
+        var reviewProgress = store.GetReviewProgress(rgaa.Id);
+        Check(reviewProgress.IsAvailable && reviewProgress.CompletedCriteria == 1 && reviewProgress.TotalCriteria == 2 &&
+              reviewProgress.PageApplicabilitiesRecorded == 2 && reviewProgress.TotalPageApplicabilities == 4,
+            $"lot progress counts each criterion once while page applicability is tracked separately ({reviewProgress})");
+        Check(store.AddSemanticFindingToAudit(rgaa.Id, homePage.Id, "1.1", "Échec observé sur la page d’accueil", "Un élément concerné échoue au test.", "img:nth-of-type(4)"),
+            "a criterion-specific page finding can be added after the lot result");
+        Check(store.GetReviewProgress(rgaa.Id).CompletedCriteria == 0,
+            "a new criterion-specific page finding marks the saved lot result as stale");
+        store.AppendLotCriterionDecision(rgaa.Id, "1.1", "Non conforme");
+        store.CompleteLotCriterionReview(rgaa.Id, "1.1");
+
+        store.AppendPageCriterionApplicability(rgaa.Id, secondPage.Id, "1.1", "Indéterminée", "Un état nécessaire n’était pas accessible.");
+        var changedApplicabilityProgress = store.GetReviewProgress(rgaa.Id);
+        Check(changedApplicabilityProgress.CompletedCriteria == 0,
+            $"changing page applicability reopens the corresponding lot-level criterion review ({changedApplicabilityProgress})");
+        ExpectArgument(() => store.AppendLotCriterionDecision(rgaa.Id, "1.1", "Conforme"));
+        store.AppendPageCriterionApplicability(rgaa.Id, secondPage.Id, "1.1", "Applicable");
+        store.AppendLotCriterionDecision(rgaa.Id, "1.1", "Non conforme");
+        store.CompleteLotCriterionReview(rgaa.Id, "1.1");
+
+        ExpectArgument(() => store.AppendPageCriterionApplicability(rgaa.Id, homePage.Id, "1.2", "Non applicable"));
+        store.AppendPageCriterionApplicability(rgaa.Id, homePage.Id, "1.2", "Non applicable", "Aucune image concernée sur cette page.");
+        store.AppendPageCriterionApplicability(rgaa.Id, secondPage.Id, "1.2", "Non applicable", "Aucune image concernée sur cette page.");
+        store.AppendLotCriterionDecision(rgaa.Id, "1.2", "Non applicable", "Aucune page du lot ne contient ce type d’image.");
+        store.CompleteLotCriterionReview(rgaa.Id, "1.2");
+        var completedProgress = store.GetReviewProgress(rgaa.Id);
+        Check(completedProgress.CompletedCriteria == 2 && completedProgress.PageApplicabilitiesRecorded == 4,
+            "all criteria complete only after a lot result and applicability on every page");
+        Check(store.GetReviewProgress(wcag.Id).IsAvailable, "a complete level-scoped catalogue enables WCAG review progress");
         var addedCount = store.AddPagesToAudit(rgaa.Id,
             [new SitePageCandidate("Contact", "https://audit.example/contact", "Contact", true)]);
         Check(addedCount == 1 && store.GetPages(rgaa.Id).Count == 3, "newly selected page is added to an existing audit");
+        Check(store.GetReviewProgress(rgaa.Id).CompletedCriteria == 0,
+            "expanding the page lot invalidates lot-level criteria whose per-page applicability is now incomplete");
+        var addedContact = store.GetPages(rgaa.Id).Single(page => page.Name == "Contact");
+        Check(store.RemovePageFromAudit(rgaa.Id, addedContact.Id) && store.GetReviewProgress(rgaa.Id).CompletedCriteria == 0,
+            "removing a page changes the audited-scope revision and keeps the previous lot result stale");
+        Check(store.AddPagesToAudit(rgaa.Id,
+            [new SitePageCandidate("Contact", "https://audit.example/contact", "Contact", true)]) == 1 && store.GetPages(rgaa.Id).Count == 3,
+            "a page can be re-added after scope removal with a fresh page identity");
         Check(store.AddPagesToAudit(rgaa.Id,
             [new SitePageCandidate("Contact", "https://audit.example/contact", "Contact", true)]) == 0,
             "an already included page is not added a second time");
@@ -149,10 +245,18 @@ try
               reopened.GetPages(archivedAudit.Id).All(page => page.Name != "Page manuelle 1") &&
               reopened.GetPages(archivedAudit.Id).Single(page => page.Name == "Accueil").LastOpenedAtUtc is not null,
             "selected pages, page activity, manual additions and page deletion persist after reopening");
-        Check(reopened.GetPages(archivedAudit.Id).Single(page => page.Name == "Accueil").Findings.Single().RequiresAuditorReview,
+        Check(reopened.GetPages(archivedAudit.Id).Single(page => page.Name == "Accueil").Findings.Count == 3 &&
+              reopened.GetPages(archivedAudit.Id).Single(page => page.Name == "Accueil").Findings.All(finding => finding.RequiresAuditorReview),
             "HTML semantic findings remain explicitly marked for auditor review");
+        Check(reopened.GetEvidence(archivedAudit.Id, reopened.GetPages(archivedAudit.Id).Single(page => page.Name == "Accueil").Id)
+                  .Single().CriterionId == "image-alt" && reopened.GetReviewProgress(archivedAudit.Id).CompletedCriteria == 0 &&
+              reopened.GetLatestLotCriterionDecision(archivedAudit.Id, "1.2") is { HumanDecision: "Non applicable", ReviewComplete: true, EventType: "LotDecision" },
+            "page evidence links, lot-level decisions and stale-scope invalidation persist after reopening the database");
         Check(reopened.SetArchived(archivedAudit.Id, false) && reopened.List().Count == 1, "an archived audit can be restored after reopening");
-        Check(reopened.GetReferenceVersions().Count == 2, "reference versions persist in the embedded database");
+        Check(reopened.GetReferenceVersions().Count == 3, "reference versions persist in the embedded database");
+        Check(reopened.GetReferenceVersions().Single(reference => reference.FrameworkId == "wcag").Themes
+                  .SelectMany(theme => theme.Criteria).Single(criterion => criterion.Level == "AAA").Code == "1.4.6",
+            "criterion conformance levels remain available for target-scoped WCAG progress after reopening");
     }
 
     var legacySqlite = Environment.GetEnvironmentVariable("RGAA_STUDIO_CHECK_LEGACY_SQLITE");

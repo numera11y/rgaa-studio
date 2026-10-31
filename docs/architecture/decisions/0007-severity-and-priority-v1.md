@@ -5,7 +5,7 @@
 
 ## Contexte
 
-Le MVP enregistre, pour chaque règle et page, un résultat choisi par l’auditeur : Conforme, Non conforme, Non applicable (justification requise) ou Non vérifiable (justification requise). L’état de revue est distinct du résultat. Le niveau WCAG cible est sélectionné explicitement au démarrage d’un audit WCAG et n’est pas un indicateur de gravité.
+Le MVP enregistre un résultat choisi par l’auditeur pour chaque critère du lot : Conforme, Non conforme, Non applicable (justification requise) ou Non vérifiable (justification requise). L’applicabilité et les observations restent localisées par page ; l’état de revue est distinct du résultat. Le niveau WCAG cible est sélectionné explicitement au démarrage d’un audit WCAG et n’est pas un indicateur de gravité.
 
 Le besoin porte sur l’ajout éventuel d’une gravité ou priorité de correction. Les avis spécialisés réellement reçus sont :
 

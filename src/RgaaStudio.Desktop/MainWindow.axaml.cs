@@ -1,6 +1,8 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -793,6 +795,8 @@ public partial class MainWindow : Window
     private string _selectedAxeHtml = string.Empty;
     private AxeElementContext? _selectedAxeContext;
     private bool _contrastPipetteActive;
+    private string? _selectedCriterionId;
+    private bool _navigatingFromCriterionBoard;
     private CancellationTokenSource? _contrastPickPolling;
     private ContrastReviewContext? _contrastReviewContext;
     private bool CanInspect => WorkspaceView.IsVisible && IsLocalFixture && _pageViewMode == "site";
@@ -814,6 +818,11 @@ public partial class MainWindow : Window
     public ObservableCollection<TechnologyFinding> TechnologyFindings { get; } = [];
     public ObservableCollection<SeoFinding> SeoFindings { get; } = [];
     public ObservableCollection<AuditDashboardMetric> DashboardMetrics { get; } = [];
+    public ObservableCollection<AuditCriterion> AuditCriteria { get; } = [];
+    public ObservableCollection<AuditCriterionListItem> FilteredAuditCriteria { get; } = [];
+    public ObservableCollection<string> CriterionThemes { get; } = [];
+    public ObservableCollection<CriterionPageReviewItem> CriterionPageReviews { get; } = [];
+    public ObservableCollection<string> LotDecisionOptions { get; } = ["Conforme", "Non conforme", "Non applicable", "Non vérifiable"];
 
     public MainWindow()
     {
@@ -1140,11 +1149,9 @@ public partial class MainWindow : Window
             return;
         }
         var sample = context.Sample;
-        var selectorHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(sample.Selector))).ToLowerInvariant()[..16];
-        var sourceRule = "contrast.manual." + selectorHash;
-        var referenceCriterion = _activeAudit.Reference.Contains("RGAA", StringComparison.OrdinalIgnoreCase)
-            ? "RGAA 3.2 · contraste des textes et composants"
-            : context.IsText ? "WCAG 1.4.3 · contraste minimum" : "WCAG 1.4.11 · contraste des composants";
+        var sourceRule = _activeAudit.Reference.Contains("RGAA", StringComparison.OrdinalIgnoreCase)
+            ? "3.2"
+            : context.IsText ? "1.4.3" : "1.4.11";
         var ratio = context.Measurement?.Ratio.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) ?? "non calculable";
         var foreground = context.Measurement?.ForegroundHex ?? sample.Foreground;
         var background = context.Measurement?.BackgroundHex ?? string.Join(" sur ", sample.BackgroundLayers ?? []);
@@ -1153,9 +1160,9 @@ public partial class MainWindow : Window
         {
             var added = _dossiers.AddSemanticFindingToAudit(_activeAudit.Id, _activeAuditPageId, sourceRule,
                 "Contraste de couleur à inspecter", description, sample.Selector, "Pipette de contraste");
-            RuleBox.Text = referenceCriterion;
             PipetteStatus.Text = added ? "Constat de contraste ajouté au dossier pour examen." : "Un constat de contraste existe déjà pour cet élément.";
             _activeAudit = _dossiers.Get(_activeAudit.Id) ?? _activeAudit;
+            RefreshPageCriterionContext();
             RefreshAudits();
         }
         catch (Exception exception) when (exception is ArgumentException or InvalidOperationException or IOException)
@@ -1241,10 +1248,10 @@ public partial class MainWindow : Window
             _dossiers.AddSemanticFindingToAudit(_activeAudit.Id, _activeAuditPageId, "axe." + suggestion.RuleId,
                 "Vérifier : " + suggestion.Summary, suggestion.Summary + " (analyse automatique axe-core ; à confirmer par l’auditeur).",
                 locator, "Analyse axe-core");
+            RefreshPageCriterionContext();
         }
         if (status == "Retenu")
         {
-            RuleBox.Text = suggestion.RuleId;
             await PopulateAxeInspectionAsync(suggestion);
         }
         RefreshAxeResults();
@@ -1326,11 +1333,16 @@ public partial class MainWindow : Window
     private void AddHtmlProof_Click(object? sender, RoutedEventArgs e)
     {
         if (_activeAudit is null || _activeAuditPageId is null || _selectedAxeSuggestion is null || string.IsNullOrWhiteSpace(_selectedAxeHtml)) return;
+        var criterionId = _selectedCriterionId is { } selectedId && AuditCriteria.Any(criterion => criterion.Id == selectedId)
+            ? selectedId : _selectedAxeSuggestion.RuleId;
+        var findingId = _dossiers.GetPages(_activeAudit.Id).FirstOrDefault(page => page.Id == _activeAuditPageId)?.Findings
+            .FirstOrDefault(finding => finding.SourceRuleId == "axe." + _selectedAxeSuggestion.RuleId)?.Id ?? string.Empty;
         _dossiers.AddEvidence(_activeAudit.Id, _activeAuditPageId, "axe-core · " + _selectedAxeSuggestion.RuleId,
             _selectedAxeTag, _selectedAxeText, "Extrait DOM HTML relu depuis le WebView",
-            _selectedAxeHtml);
+            _selectedAxeHtml, criterionId: criterionId, findingId: findingId);
         AxeProofStatus.Text = "Extrait HTML enregistré comme preuve locale.";
         RefreshInspectionEvidence();
+        RefreshPageCriterionContext();
     }
 
     private async void CaptureAxeProof_Click(object? sender, RoutedEventArgs e)
@@ -1362,11 +1374,17 @@ public partial class MainWindow : Window
             left = Math.Clamp(left, 0, browserWidth - 1); top = Math.Clamp(top, 0, browserHeight - 1);
             right = Math.Clamp(right, left + 1, browserWidth); bottom = Math.Clamp(bottom, top + 1, browserHeight);
             var png = WindowsScreenCapture.CapturePng(origin.X + left, origin.Y + top, right - left, bottom - top);
+            var criterionId = _selectedCriterionId is { } selectedId && AuditCriteria.Any(criterion => criterion.Id == selectedId)
+                ? selectedId : _selectedAxeSuggestion.RuleId;
+            var findingId = _dossiers.GetPages(_activeAudit.Id).FirstOrDefault(page => page.Id == _activeAuditPageId)?.Findings
+                .FirstOrDefault(finding => finding.SourceRuleId == "axe." + _selectedAxeSuggestion.RuleId)?.Id ?? string.Empty;
             _dossiers.AddEvidence(_activeAudit.Id, _activeAuditPageId, "axe-core · " + _selectedAxeSuggestion.RuleId,
                 _selectedAxeTag, _selectedAxeText, "Capture d’écran de la zone visible du WebView",
-                $"Élément : {_selectedAxeTarget}\nCapture limitée à la zone actuellement visible de l’élément.", png, "image/png");
+                $"Élément : {_selectedAxeTarget}\nCapture limitée à la zone actuellement visible de l’élément.", png, "image/png",
+                criterionId, findingId);
             AxeProofStatus.Text = "Capture de l’élément enregistrée comme preuve locale.";
             RefreshInspectionEvidence();
+            RefreshPageCriterionContext();
         }
         catch (Exception exception) when (exception is InvalidOperationException or ArgumentException or ExternalException or IOException)
         {
@@ -1454,7 +1472,7 @@ public partial class MainWindow : Window
             ? new GridLength(0)
             : new GridLength(_pageScopeCollapsed ? 44 : 220);
         WorkspaceColumns.ColumnDefinitions[1].Width = showPageScope ? new GridLength(12) : new GridLength(0);
-        var showSidePanel = _sidePanelShown && _pageViewMode != "dashboard";
+        var showSidePanel = _sidePanelShown && _pageViewMode is not ("dashboard" or "criteria");
         SidePanel.IsVisible = showSidePanel;
         WorkspaceColumns.ColumnDefinitions[3].Width = showSidePanel ? new GridLength(12) : new GridLength(0);
         WorkspaceColumns.ColumnDefinitions[4].Width = showSidePanel ? new GridLength(350) : new GridLength(0);
@@ -1591,6 +1609,8 @@ public partial class MainWindow : Window
 
     private async Task FindAdditionalPages_ClickAsync(object? sender)
     {
+        if (!GuardUnsavedCriterionApplicability())
+            return;
         if (_activeAudit is null)
             return;
 
@@ -2034,6 +2054,8 @@ public partial class MainWindow : Window
 
     private async Task ConfirmDeletePageAsync(string auditId, AuditPageListItem page)
     {
+        if (!GuardUnsavedCriterionApplicability())
+            return;
         var confirmation = await ShowDestructiveConfirmationAsync(
             "Supprimer cette page ?",
             page.Name,
@@ -2053,11 +2075,15 @@ public partial class MainWindow : Window
             }
             RefreshAuditPages(auditId);
             _activeAudit = _dossiers.Get(auditId) ?? _activeAudit;
+            if (_pageViewMode == "criteria" && _selectedCriterionId is not null)
+                SelectLotCriterion(_selectedCriterionId);
         }
     }
 
     private void OpenAudit(AuditManifest manifest)
     {
+        if (_activeAudit?.Id != manifest.Id && !GuardUnsavedCriterionApplicability())
+            return;
         if (_contrastPipetteActive)
             _ = StopContrastPipetteAsync("Dossier changé ; pipette arrêtée.");
         if (_activeAudit?.Id != manifest.Id && _inspectionActive)
@@ -2065,6 +2091,8 @@ public partial class MainWindow : Window
 
         _activeAudit = manifest;
         _activeAuditPageId = null;
+        _selectedCriterionId = null;
+        RefreshAuditCriteria();
         _pageSourceSnapshot = null;
         _siteStylesRemoved = false;
         _addingPagesToExistingAudit = false;
@@ -2080,7 +2108,6 @@ public partial class MainWindow : Window
         WorkspaceView.IsVisible = true;
         UpdateWorkspaceLayout();
         UpdateProjectListState();
-        RestoreReviewRecord();
         AxeEvidencePanel.IsVisible = false;
         ColorContrastPanel.IsVisible = false;
         _contrastReviewContext = null;
@@ -2093,18 +2120,403 @@ public partial class MainWindow : Window
         AuditPages.Clear();
         foreach (var page in _dossiers.GetPages(auditId))
         {
-        var pendingSuggestions = page.Suggestions.Count(item => item.AnalyzerVersion.StartsWith("axe-core ", StringComparison.Ordinal) && item.ReviewStatus == "À vérifier");
+            var pendingSuggestions = page.Suggestions.Count(item => item.AnalyzerVersion.StartsWith("axe-core ", StringComparison.Ordinal) && item.ReviewStatus == "À vérifier");
+            var evidenceCount = _dossiers.GetEvidence(auditId, page.Id).Count;
             AuditPages.Add(new AuditPageListItem(page.Id, page.Name, FormatLocalPagePath(page.Url), page.SamplingReason,
-                page.Id == _activeAuditPageId, page.LastOpenedAtUtc is not null, page.TestResults.Count, pendingSuggestions));
+                page.Id == _activeAuditPageId, page.LastOpenedAtUtc is not null, page.Findings.Count, evidenceCount, pendingSuggestions));
         }
         PageCountText.Text = AuditPages.Count == 1 ? "1 page incluse" : $"{AuditPages.Count} pages incluses";
         EmptyAuditPages.IsVisible = AuditPages.Count == 0;
+        UpdateCriterionLotProgressSummary();
+    }
+
+    private void RefreshAuditCriteria()
+    {
+        AuditCriteria.Clear();
+        FilteredAuditCriteria.Clear();
+        CriterionThemes.Clear();
+        CriterionPageReviews.Clear();
+        _selectedCriterionId = null;
+        if (_activeAudit is null)
+        {
+            CriterionBoardSubtitle.Text = string.Empty;
+            SelectedCriterionContent.IsVisible = false;
+            NoSelectedCriterion.IsVisible = true;
+            return;
+        }
+
+        foreach (var criterion in _dossiers.GetAuditCriteria(_activeAudit.Id))
+            AuditCriteria.Add(criterion);
+        CriterionThemes.Add("Tous les thèmes");
+        foreach (var theme in AuditCriteria.Select(criterion => $"{criterion.ThemeNumber} — {criterion.ThemeTitle}").Distinct(StringComparer.CurrentCultureIgnoreCase))
+            CriterionThemes.Add(theme);
+        CriterionThemeFilter.SelectedItem = CriterionThemes[0];
+        CriterionBoardSubtitle.Text = AuditCriteria.Count > 0
+            ? $"{_activeAudit.Version} · {AuditCriteria.Count} critères · lot sélectionné : {FormatAuditPageCount(_dossiers.GetPages(_activeAudit.Id).Count)}. Une conclusion par critère ; l’échantillon ne représente pas automatiquement tout le site. Les constats et l’applicabilité restent liés à chaque page."
+            : $"Le catalogue complet de {_activeAudit.Version} n’est pas disponible ; la progression du lot ne sera pas estimée.";
+        RefreshFilteredCriteria();
+        UpdateCriterionLotProgressSummary();
+    }
+
+    private void CriterionSearch_TextChanged(object? sender, TextChangedEventArgs e) => RefreshFilteredCriteria();
+
+    private void CriterionThemeFilter_SelectionChanged(object? sender, SelectionChangedEventArgs e) => RefreshFilteredCriteria();
+
+    private void RefreshFilteredCriteria()
+    {
+        FilteredAuditCriteria.Clear();
+        if (_activeAudit is null)
+            return;
+        var query = CriterionSearchBox.Text?.Trim() ?? string.Empty;
+        var selectedTheme = CriterionThemeFilter.SelectedItem as string;
+        var decisions = _dossiers.ReadDecisions(_activeAudit.Id);
+        var pages = _dossiers.GetPages(_activeAudit.Id);
+        var latestApplicabilities = decisions
+            .Where(decision => decision.EventType == "PageApplicability")
+            .GroupBy(decision => (decision.AuditPageId, decision.CriterionId))
+            .Select(group => group.OrderBy(decision => decision.UpdatedAt).Last())
+            .ToArray();
+        var latestLotDecisions = decisions
+            .Where(decision => decision.EventType == "LotDecision")
+            .GroupBy(decision => decision.CriterionId, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(group => group.Key, group => group.OrderBy(decision => decision.UpdatedAt).Last(), StringComparer.OrdinalIgnoreCase);
+        var legacyPageDecisions = decisions.Where(decision => decision.EventType == "LegacyPageDecision")
+            .Select(decision => string.IsNullOrWhiteSpace(decision.CriterionId) ? decision.RuleSuggestion : decision.CriterionId)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        foreach (var criterion in AuditCriteria.Where(criterion =>
+                     (selectedTheme is null || selectedTheme == "Tous les thèmes" || $"{criterion.ThemeNumber} — {criterion.ThemeTitle}" == selectedTheme) &&
+                     (query.Length == 0 || CriterionMatchesSearch(criterion, query))))
+        {
+            latestLotDecisions.TryGetValue(criterion.Id, out var decision);
+            var status = decision is null
+                ? legacyPageDecisions.Contains(criterion.Id) ? "À réévaluer · ancienne décision page" : "À examiner"
+                : IsLotCriterionDecisionCurrent(criterion, decision, pages, latestApplicabilities) ? $"Revue terminée · {decision.HumanDecision}"
+                : decision.ReviewComplete ? "À reprendre · applicabilité modifiée" : $"À terminer · {decision.HumanDecision}";
+            FilteredAuditCriteria.Add(new AuditCriterionListItem(criterion.Id, criterion.Code, criterion.Title,
+                $"{criterion.ThemeNumber} — {criterion.ThemeTitle}", status, criterion.Id == _selectedCriterionId));
+        }
+        FilteredCriterionCountText.Text = AuditCriteria.Count == 0
+            ? "Catalogue de critères indisponible"
+            : AuditCriteria.Count == FilteredAuditCriteria.Count
+                ? $"{FilteredAuditCriteria.Count} critères"
+                : $"{FilteredAuditCriteria.Count} sur {AuditCriteria.Count} critères";
+        NoFilteredCriteria.Text = AuditCriteria.Count == 0
+            ? "Aucun catalogue complet n’est disponible pour cette version."
+            : "Aucun critère ne correspond à cette recherche.";
+        NoFilteredCriteria.IsVisible = FilteredAuditCriteria.Count == 0;
+    }
+
+    private static bool CriterionMatchesSearch(AuditCriterion criterion, string query) =>
+        criterion.Code.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        criterion.Title.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        criterion.ThemeTitle.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        criterion.TechnicalNote.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        criterion.ParticularCases.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        criterion.Tests.Any(test => test.Code.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+            test.Question.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+            test.Requirements.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+            test.Methodology.Contains(query, StringComparison.CurrentCultureIgnoreCase));
+
+    private void LotCriterion_Click(object? sender, RoutedEventArgs e)
+    {
+        if ((sender as Button)?.Tag is not string criterionId)
+            return;
+        if (_selectedCriterionId == criterionId)
+            return;
+        SelectLotCriterion(criterionId);
+    }
+
+    private void SelectLotCriterion(string criterionId)
+    {
+        if (_selectedCriterionId != criterionId && !GuardUnsavedCriterionApplicability())
+            return;
+        _selectedCriterionId = criterionId;
+        var criterion = AuditCriteria.FirstOrDefault(item => item.Id == criterionId);
+        SelectedCriterionContent.IsVisible = criterion is not null;
+        NoSelectedCriterion.IsVisible = criterion is null;
+        if (criterion is null)
+            return;
+
+        SelectedCriterionHeading.Text = criterion.Label;
+        SelectedCriterionTheme.Text = $"Thème {criterion.ThemeNumber} — {criterion.ThemeTitle}";
+        SelectedCriterionSummary.Text = criterion.TechnicalNote;
+        var testDetails = criterion.Tests.Count == 0
+            ? "Aucun sous-test n’est disponible dans ce catalogue."
+            : string.Join(Environment.NewLine, criterion.Tests.Select(test => $"{test.Code} · {test.Question}" +
+                (string.IsNullOrWhiteSpace(test.Requirements) ? string.Empty : Environment.NewLine + "Exigences : " + test.Requirements) +
+                (string.IsNullOrWhiteSpace(test.Methodology) ? string.Empty : Environment.NewLine + "Méthode : " + test.Methodology)));
+        if (!string.IsNullOrWhiteSpace(criterion.ParticularCases))
+            testDetails += Environment.NewLine + "Cas particuliers : " + criterion.ParticularCases;
+        CriterionTestsText.Text = testDetails;
+
+        CriterionPageReviews.Clear();
+        var decisionHistory = _dossiers.ReadDecisions(_activeAudit!.Id);
+        var latestApplicabilities = decisionHistory
+            .Where(decision => decision.EventType == "PageApplicability" && decision.CriterionId.Equals(criterion.Id, StringComparison.OrdinalIgnoreCase))
+            .GroupBy(decision => decision.AuditPageId, StringComparer.Ordinal)
+            .ToDictionary(group => group.Key, group => group.OrderBy(decision => decision.UpdatedAt).Last(), StringComparer.Ordinal);
+        var pageCount = 0;
+        var auditPages = _dossiers.GetPages(_activeAudit.Id);
+        foreach (var page in auditPages)
+        {
+            latestApplicabilities.TryGetValue(page.Id, out var applicability);
+            var testIds = criterion.Tests.Select(test => test.Id).ToHashSet(StringComparer.Ordinal);
+            var pageEvidence = _dossiers.GetEvidence(_activeAudit.Id, page.Id);
+            var evidenceFindingIds = pageEvidence.Where(evidence => evidence.CriterionId == criterion.Id)
+                .Select(evidence => evidence.FindingId).Where(id => !string.IsNullOrWhiteSpace(id)).ToHashSet(StringComparer.Ordinal);
+            var findings = page.Findings.Where(finding => finding.SourceRuleId == criterion.Id ||
+                testIds.Contains(finding.ReferenceTestId) || evidenceFindingIds.Contains(finding.Id)).ToArray();
+            var findingIds = findings.Select(finding => finding.Id).ToHashSet(StringComparer.Ordinal);
+            var evidenceCount = pageEvidence.Count(evidence => evidence.CriterionId == criterion.Id || findingIds.Contains(evidence.FindingId));
+            var assessedTests = page.TestResults.Count(result => testIds.Contains(result.ReferenceTestId) && result.Status != "À vérifier");
+            var contextSummary = $"{assessedTests}/{criterion.Tests.Count} tests évalués · {findings.Length} constats · {evidenceCount} preuves";
+            CriterionPageReviews.Add(new CriterionPageReviewItem(page.Id, page.Name, FormatLocalPagePath(page.Url),
+                applicability?.Applicability ?? "À déterminer", applicability?.Justification ?? string.Empty,
+                contextSummary, applicability?.UpdatedAt ?? DateTimeOffset.MinValue, applicability is not null));
+            if (applicability is not null)
+                pageCount++;
+        }
+        var hasUnsavedApplicability = CriterionPageReviews.Any(item => item.IsDirty);
+        CriterionPageCoverageText.Text = $"{pageCount}/{CriterionPageReviews.Count} pages renseignées" +
+            (hasUnsavedApplicability ? " · modifications non enregistrées" : string.Empty);
+        var allPageApplicabilitiesRecorded = pageCount == CriterionPageReviews.Count && !hasUnsavedApplicability;
+        LotDecisionOptions.Clear();
+        if (allPageApplicabilitiesRecorded)
+        {
+            var pageApplicabilities = CriterionPageReviews.Select(item => item.Applicability).ToArray();
+            var hasApplicablePage = pageApplicabilities.Contains("Applicable");
+            var hasUndeterminedPage = pageApplicabilities.Contains("Indéterminée");
+            var allPagesNotApplicable = pageApplicabilities.All(status => status == "Non applicable");
+            if (hasApplicablePage && !hasUndeterminedPage)
+                LotDecisionOptions.Add("Conforme");
+            if (hasApplicablePage)
+                LotDecisionOptions.Add("Non conforme");
+            if (hasApplicablePage || hasUndeterminedPage)
+                LotDecisionOptions.Add("Non vérifiable");
+            if (allPagesNotApplicable)
+                LotDecisionOptions.Add("Non applicable");
+        }
+
+        var latestDecision = _dossiers.GetLatestLotCriterionDecision(_activeAudit.Id, criterion.Id);
+        var hasLegacyPageDecision = latestDecision is null && decisionHistory.Any(decision => decision.EventType == "LegacyPageDecision" &&
+            string.Equals(string.IsNullOrWhiteSpace(decision.CriterionId) ? decision.RuleSuggestion : decision.CriterionId,
+                criterion.Id, StringComparison.OrdinalIgnoreCase));
+        LotCriterionDecisionCombo.IsEnabled = allPageApplicabilitiesRecorded;
+        LotCriterionDecisionCombo.SelectedItem = latestDecision is not null && LotDecisionOptions.Contains(latestDecision.HumanDecision)
+            ? latestDecision.HumanDecision : null;
+        LotCriterionJustificationBox.Text = latestDecision?.Justification ?? string.Empty;
+        LotCriterionJustificationBox.IsEnabled = allPageApplicabilitiesRecorded;
+        SaveLotCriterionDecisionButton.IsEnabled = allPageApplicabilitiesRecorded;
+        CompleteLotCriterionButton.IsEnabled = allPageApplicabilitiesRecorded && latestDecision is not null && !latestDecision.ReviewComplete;
+        LotCriterionReviewStatus.Text = !allPageApplicabilitiesRecorded
+            ? "Renseignez l’applicabilité sur chaque page avant de choisir le résultat du lot."
+            : latestDecision is null
+            ? hasLegacyPageDecision
+                ? "Une ancienne décision limitée à une page est conservée dans l’historique, mais n’est pas reprise comme résultat du lot. Réévaluez le critère sur l’ensemble des pages."
+                : "Aucun résultat global enregistré pour ce critère."
+            : IsLotCriterionDecisionCurrent(criterion, latestDecision, auditPages, latestApplicabilities.Values.ToArray())
+                ? latestDecision.ReviewComplete
+                    ? $"Revue terminée pour le lot : {latestDecision.HumanDecision}. Ce résultat ne certifie pas le site entier."
+                    : $"Résultat enregistré pour le lot : {latestDecision.HumanDecision}. Terminez explicitement la revue."
+                : "L’applicabilité a changé ou des pages restent à renseigner. Vérifiez le résultat du lot.";
+        RefreshFilteredCriteria();
+    }
+
+    private bool IsLotCriterionDecisionCurrent(AuditCriterion criterion, AuditDecisionEvent decision, IReadOnlyList<StoredAuditPage> pages,
+        IReadOnlyList<AuditDecisionEvent> latestApplicabilities)
+    {
+        if (_activeAudit is null || decision.EventType != "LotDecision" || !decision.ReviewComplete ||
+            decision.AuditPageScopeRevision != _activeAudit.PageScopeRevision)
+            return false;
+        var criterionApplicabilities = latestApplicabilities
+            .Where(item => item.CriterionId.Equals(decision.CriterionId, StringComparison.OrdinalIgnoreCase)).ToArray();
+        if (criterionApplicabilities.Length != pages.Count || pages.Any(page => criterionApplicabilities.All(item => item.AuditPageId != page.Id)) ||
+            criterionApplicabilities.Any(item => item.UpdatedAt > decision.UpdatedAt) ||
+            decision.ApplicabilitySnapshotJson != JsonSerializer.Serialize(criterionApplicabilities
+                .OrderBy(item => item.AuditPageId, StringComparer.Ordinal).Select(item => item.Id).ToArray()))
+            return false;
+        var testIds = criterion.Tests.Select(test => test.Id).ToHashSet(StringComparer.Ordinal);
+        if (pages.Any(page => page.TestResults.Any(result => testIds.Contains(result.ReferenceTestId) &&
+                new DateTimeOffset(DateTime.SpecifyKind(result.UpdatedAtUtc, DateTimeKind.Utc)) > decision.UpdatedAt) ||
+            page.Findings.Any(finding => (finding.SourceRuleId == criterion.Id || testIds.Contains(finding.ReferenceTestId)) &&
+                new DateTimeOffset(DateTime.SpecifyKind(finding.CreatedAtUtc, DateTimeKind.Utc)) > decision.UpdatedAt)))
+            return false;
+        return decision.HumanDecision switch
+        {
+            "Conforme" => criterionApplicabilities.Any(item => item.Applicability == "Applicable") && criterionApplicabilities.All(item => item.Applicability != "Indéterminée"),
+            "Non conforme" => criterionApplicabilities.Any(item => item.Applicability == "Applicable"),
+            "Non applicable" => criterionApplicabilities.All(item => item.Applicability == "Non applicable"),
+            "Non vérifiable" => criterionApplicabilities.Any(item => item.Applicability is "Applicable" or "Indéterminée"),
+            _ => false
+        };
+    }
+
+    private void UpdateCriterionLotProgressSummary()
+    {
+        if (_activeAudit is null)
+        {
+            CriterionLotProgressSummary.Text = string.Empty;
+            return;
+        }
+        var progress = _dossiers.GetReviewProgress(_activeAudit.Id);
+        CriterionLotProgressSummary.Text = progress.IsAvailable
+            ? $"{progress.CompletedCriteria}/{progress.TotalCriteria} critères terminés"
+            : "Catalogue complet indisponible";
+    }
+
+    private bool GuardUnsavedCriterionApplicability()
+    {
+        if (_pageViewMode != "criteria" || !CriterionPageReviews.Any(item => item.IsDirty))
+            return true;
+        LotCriterionReviewStatus.Text = "Enregistrez ou annulez les modifications d’applicabilité avant de quitter ce critère.";
+        return false;
+    }
+
+    private void OpenCriterionBoard_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_pageViewMode == "criteria")
+            return;
+        if (_activeAudit is null)
+            return;
+        ReturnFromCriteriaButton.Content = _activeAuditPageId is null ? "Retour à la vue d’ensemble" : "Retour à la page";
+        SetPageView("criteria");
+        BrowserModeLabel.Text = "Revue des critères du lot";
+        BrowserModeBorder.SetValue(AutomationProperties.NameProperty, "Revue des critères pour l’ensemble du lot de pages");
+        CurrentSiteHeader.Text = $"Résultats par critère · {FormatAuditPageCount(_dossiers.GetPages(_activeAudit.Id).Count)}";
+        AuditOverviewButton.Tag = false;
+        OpenCriteriaBoardButton.Tag = true;
+        if (_selectedCriterionId is not null)
+            SelectLotCriterion(_selectedCriterionId);
+        else
+        {
+            SelectedCriterionContent.IsVisible = false;
+            NoSelectedCriterion.IsVisible = true;
+            CriterionSearchBox.Focus();
+        }
+        RefreshAuditPages(_activeAudit.Id);
+    }
+
+    private void ReturnToPage_Click(object? sender, RoutedEventArgs e)
+    {
+        if (!GuardUnsavedCriterionApplicability())
+            return;
+        OpenCriteriaBoardButton.Tag = false;
+        if (_activeAuditPageId is { } pageId)
+        {
+            _navigatingFromCriterionBoard = _selectedCriterionId is not null;
+            OpenAuditPage(pageId);
+            _navigatingFromCriterionBoard = false;
+            return;
+        }
+        ShowAuditOverview();
+    }
+
+    private void SavePageApplicability_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_activeAudit is null || _selectedCriterionId is null || (sender as Button)?.DataContext is not CriterionPageReviewItem pageReview)
+            return;
+        if (pageReview.Applicability == "À déterminer")
+        {
+            LotCriterionReviewStatus.Text = $"Choisissez l’applicabilité pour « {pageReview.PageName} » avant de l’enregistrer.";
+            return;
+        }
+        try
+        {
+            _dossiers.AppendPageCriterionApplicability(_activeAudit.Id, pageReview.PageId, _selectedCriterionId,
+                pageReview.Applicability, pageReview.Justification);
+            SelectLotCriterion(_selectedCriterionId);
+            LotCriterionReviewStatus.Text = $"Applicabilité enregistrée pour « {pageReview.PageName} ». Vérifiez ou réenregistrez le résultat du lot avant de terminer la revue.";
+            _activeAudit = _dossiers.Get(_activeAudit.Id) ?? _activeAudit;
+            RefreshAuditDashboard();
+            RefreshAudits();
+        }
+        catch (ArgumentException exception)
+        {
+            LotCriterionReviewStatus.Text = exception.Message;
+        }
+        catch (InvalidOperationException exception)
+        {
+            LotCriterionReviewStatus.Text = exception.Message;
+        }
+        catch (IOException)
+        {
+            LotCriterionReviewStatus.Text = "L’applicabilité de cette page n’a pas pu être enregistrée.";
+        }
+    }
+
+    private void DiscardPageApplicabilityChanges_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_selectedCriterionId is not null)
+            SelectLotCriterion(_selectedCriterionId);
+    }
+
+    private void SaveLotCriterionDecision_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_activeAudit is null || _selectedCriterionId is null)
+            return;
+        var decision = LotCriterionDecisionCombo.SelectedItem as string ?? string.Empty;
+        try
+        {
+            _dossiers.AppendLotCriterionDecision(_activeAudit.Id, _selectedCriterionId, decision, LotCriterionJustificationBox.Text);
+            _activeAudit = _dossiers.Get(_activeAudit.Id) ?? _activeAudit;
+            SelectLotCriterion(_selectedCriterionId);
+            LotCriterionReviewStatus.Text = "Résultat enregistré pour le lot. Terminez explicitement la revue de ce critère.";
+            RefreshAuditDashboard();
+            RefreshAudits();
+        }
+        catch (ArgumentException exception)
+        {
+            LotCriterionReviewStatus.Text = exception.Message;
+        }
+        catch (InvalidOperationException exception)
+        {
+            LotCriterionReviewStatus.Text = exception.Message;
+        }
+        catch (IOException)
+        {
+            LotCriterionReviewStatus.Text = "Le résultat du critère n’a pas pu être enregistré.";
+        }
+    }
+
+    private void CompleteLotCriterion_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_activeAudit is null || _selectedCriterionId is null)
+            return;
+        try
+        {
+            _dossiers.CompleteLotCriterionReview(_activeAudit.Id, _selectedCriterionId);
+            _activeAudit = _dossiers.Get(_activeAudit.Id) ?? _activeAudit;
+            SelectLotCriterion(_selectedCriterionId);
+            RefreshAuditDashboard();
+            RefreshAudits();
+        }
+        catch (InvalidOperationException exception)
+        {
+            LotCriterionReviewStatus.Text = exception.Message;
+        }
+        catch (IOException)
+        {
+            LotCriterionReviewStatus.Text = "La revue du critère n’a pas pu être terminée.";
+        }
+    }
+
+    private void OpenCriterionPage_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_activeAudit is null || _selectedCriterionId is null || (sender as Button)?.DataContext is not CriterionPageReviewItem pageReview)
+            return;
+        if (!GuardUnsavedCriterionApplicability())
+            return;
+        _navigatingFromCriterionBoard = true;
+        OpenAuditPage(pageReview.PageId);
+        _navigatingFromCriterionBoard = false;
     }
 
     private void AuditOverview_Click(object? sender, RoutedEventArgs e) => ShowAuditOverview();
 
     private void ShowAuditOverview()
     {
+        if (!GuardUnsavedCriterionApplicability())
+            return;
         if (_activeAudit is null) return;
         if (_contrastPipetteActive)
             _ = StopContrastPipetteAsync("Retour au tableau de bord ; pipette arrêtée.");
@@ -2123,6 +2535,7 @@ public partial class MainWindow : Window
         BrowserModeBorder.SetValue(AutomationProperties.NameProperty, "Vue d’ensemble du dossier d’audit");
         BrowserSafetyNote.Text = "Les indicateurs résument les pages ouvertes et les éléments réellement enregistrés dans ce dossier.";
         AuditOverviewButton.Tag = true;
+        OpenCriteriaBoardButton.Tag = false;
         RefreshAuditDashboard();
     }
 
@@ -2135,6 +2548,11 @@ public partial class MainWindow : Window
         {
             DashboardPageProgressText.Text = string.Empty;
             DashboardPageProgress.Value = 0;
+            DashboardCriterionProgressText.Text = string.Empty;
+            DashboardCriterionProgress.Value = 0;
+            DashboardCriterionProgress.IsVisible = false;
+            DashboardApplicabilitySummary.Text = string.Empty;
+            CriterionLotProgressSummary.Text = string.Empty;
             DashboardNextSteps.Text = "Ouvrez un dossier d’audit pour afficher son avancement.";
             DashboardOpenNextPageButton.IsEnabled = false;
             DashboardReviewSuggestionsButton.IsVisible = false;
@@ -2145,7 +2563,7 @@ public partial class MainWindow : Window
         var openedPages = pages.Count(page => page.LastOpenedAtUtc is not null);
         var testResults = pages.SelectMany(page => page.TestResults).ToArray();
         var pendingTests = testResults.Count(result => result.Status == "À vérifier");
-        var decisions = _dossiers.ReadDecisions(_activeAudit.Id).Count(decision => !decision.ReviewComplete);
+        var reviewProgress = _dossiers.GetReviewProgress(_activeAudit.Id);
         var findings = pages.SelectMany(page => page.Findings).ToArray();
         var findingsToFollow = findings.Count(finding => finding.Status is not ("Corrigé" or "Résolu" or "Fermé"));
         var pendingSuggestions = pages.SelectMany(page => page.Suggestions)
@@ -2154,13 +2572,25 @@ public partial class MainWindow : Window
 
         DashboardMetrics.Add(new AuditDashboardMetric("Pages ouvertes", $"{openedPages} / {pages.Count}", "Pages du lot consultées dans l’outil"));
         DashboardMetrics.Add(new AuditDashboardMetric("Contrôles consignés", testResults.Length.ToString(), $"{pendingTests} encore marqués « À vérifier »"));
-        DashboardMetrics.Add(new AuditDashboardMetric("Décisions humaines", decisions.ToString(), "Résultats enregistrés par l’auditeur"));
+        DashboardMetrics.Add(new AuditDashboardMetric("Critères revus pour le lot", reviewProgress.IsAvailable
+                ? $"{reviewProgress.CompletedCriteria} / {reviewProgress.TotalCriteria}" : "Indisponible",
+            reviewProgress.IsAvailable
+                ? $"{reviewProgress.PendingCriteria} à conclure · applicabilité renseignée sur {reviewProgress.PageApplicabilitiesRecorded}/{reviewProgress.TotalPageApplicabilities} pages"
+                : "Catalogue complet de cette version indisponible"));
         DashboardMetrics.Add(new AuditDashboardMetric("Constats", findings.Length.ToString(), $"{findingsToFollow} à suivre"));
         DashboardMetrics.Add(new AuditDashboardMetric("Suggestions axe-core", pendingSuggestions.ToString(), "À vérifier manuellement"));
         DashboardMetrics.Add(new AuditDashboardMetric("Preuves", evidenceCount.ToString(), "Enregistrées dans le dossier"));
 
         DashboardPageProgressText.Text = $"{openedPages} sur {pages.Count}";
         DashboardPageProgress.Value = pages.Count == 0 ? 0 : openedPages * 100d / pages.Count;
+        DashboardCriterionProgressText.Text = reviewProgress.IsAvailable
+            ? $"{reviewProgress.CompletedCriteria} / {reviewProgress.TotalCriteria} · {reviewProgress.Percentage:0}%"
+            : "Catalogue incomplet";
+        DashboardCriterionProgress.IsVisible = reviewProgress.IsAvailable;
+        DashboardCriterionProgress.Value = reviewProgress.Percentage;
+        DashboardApplicabilitySummary.Text = reviewProgress.IsAvailable
+            ? $"Une décision globale par critère ; états d’applicabilité conservés page par page. {reviewProgress.PageApplicabilitiesRecorded}/{reviewProgress.TotalPageApplicabilities} pages renseignées."
+            : "Importez le catalogue complet du référentiel pour calculer la progression. Le résultat est unique par critère ; l’applicabilité reste liée à chaque page.";
 
         var firstUnopened = pages.FirstOrDefault(page => page.LastOpenedAtUtc is null);
         var firstPendingSuggestionPage = pages.FirstOrDefault(page => page.Suggestions.Any(suggestion =>
@@ -2173,7 +2603,11 @@ public partial class MainWindow : Window
             ? $"Il reste {pages.Count - openedPages} page(s) du lot à ouvrir. L’ouverture n’est pas un résultat d’audit : consigne les contrôles au fil de la vérification."
             : pendingSuggestions > 0
                 ? $"{pendingSuggestions} suggestion(s) automatisée(s) attendent une décision humaine."
-                : testResults.Length == 0 && decisions == 0
+                : !reviewProgress.IsAvailable
+                    ? "La progression des critères ne peut pas être calculée sans le catalogue complet. Vous pouvez poursuivre les constats ; importez le catalogue pour suivre les résultats du lot."
+                : reviewProgress.PendingCriteria > 0
+                    ? $"Il reste {reviewProgress.PendingCriteria} critère(s) à conclure pour l’ensemble du lot. Renseignez l’applicabilité sur chaque page concernée, puis choisissez un résultat global."
+                : testResults.Length == 0 && reviewProgress.CompletedCriteria == 0
                     ? "Aucun résultat de contrôle manuel n’est encore enregistré. Ouvre une page pour commencer et consigner tes décisions dans Inspection."
                     : findingsToFollow > 0
                         ? $"{findingsToFollow} constat(s) restent à suivre dans ce dossier."
@@ -2222,6 +2656,8 @@ public partial class MainWindow : Window
 
     private void OpenAuditPage(string pageId)
     {
+        if (!_navigatingFromCriterionBoard && !GuardUnsavedCriterionApplicability())
+            return;
         if (_activeAudit is null) return;
         var page = _dossiers.GetPages(_activeAudit.Id).FirstOrDefault(candidate => candidate.Id == pageId);
         if (page is null)
@@ -2246,15 +2682,18 @@ public partial class MainWindow : Window
         _pageSourceSnapshot = null;
         _siteStylesRemoved = false;
         RefreshAuditPages(_activeAudit.Id);
+        OpenCriteriaBoardButton.Tag = false;
         SetPageView("site");
         BrowserModeLabel.Text = "Page sélectionnée dans l’audit";
         BrowserModeBorder.SetValue(AutomationProperties.NameProperty, "Le navigateur affiche une page sélectionnée dans l’audit");
         BrowserSafetyNote.Text = "Page HTTPS retenue dans ce dossier. Les pages non sélectionnées et les liens vers un autre site sont bloqués.";
         CurrentSiteHeader.Text = $"Page du dossier : {page.Name} · {FormatLocalPagePath(page.Url)}";
+        var pageEvidenceCount = _dossiers.GetEvidence(_activeAudit.Id, page.Id).Count;
+        PageAuditSpecificSummary.Text = $"{page.Name} · {page.Findings.Count} constat(s) · {pageEvidenceCount} preuve(s). Ces éléments restent attachés à cette page ; le résultat du critère se décide pour le lot.";
+        RefreshPageCriterionContext();
         Browser.Source = new Uri(page.Url);
         AxeResults.Clear();
         RefreshAxeResults();
-        RestoreReviewRecord();
         RefreshAudits();
         UpdateInspectionMenuCommands();
     }
@@ -2287,6 +2726,103 @@ public partial class MainWindow : Window
                 LoadLocalFixture();
         }
     }
+
+    private void RefreshPageCriterionContext()
+    {
+        if (_activeAudit is null || _activeAuditPageId is null || _selectedCriterionId is null ||
+            AuditCriteria.FirstOrDefault(criterion => criterion.Id == _selectedCriterionId) is not { } criterion ||
+            _dossiers.GetPages(_activeAudit.Id).FirstOrDefault(page => page.Id == _activeAuditPageId) is not { } page)
+        {
+            PageCriterionContextPanel.IsVisible = false;
+            return;
+        }
+
+        PageCriterionContextPanel.IsVisible = true;
+        PageCriterionContextHeading.Text = criterion.Label;
+        var applicability = _dossiers.GetPageCriterionApplicability(_activeAudit.Id, page.Id, criterion.Id);
+        PageCriterionApplicabilityText.Text = applicability is null
+            ? "Applicabilité sur cette page : à déterminer dans la revue du lot."
+            : $"Applicabilité sur cette page : {applicability.Applicability}" +
+              (string.IsNullOrWhiteSpace(applicability.Justification) ? string.Empty : $" · {applicability.Justification}");
+
+        var decisionHistory = _dossiers.ReadDecisions(_activeAudit.Id);
+        var latestDecision = _dossiers.GetLatestLotCriterionDecision(_activeAudit.Id, criterion.Id);
+        var latestApplicabilities = decisionHistory
+            .Where(decision => decision.EventType == "PageApplicability" && decision.CriterionId == criterion.Id)
+            .GroupBy(decision => decision.AuditPageId, StringComparer.Ordinal)
+            .Select(group => group.OrderBy(decision => decision.UpdatedAt).Last()).ToArray();
+        PageCriterionLotOutcomeText.Text = latestDecision is null
+            ? "Résultat du lot : à conclure."
+            : IsLotCriterionDecisionCurrent(criterion, latestDecision, _dossiers.GetPages(_activeAudit.Id), latestApplicabilities)
+                ? $"Résultat du lot : {latestDecision.HumanDecision}{(latestDecision.ReviewComplete ? " · revue terminée" : " · revue à terminer")}"
+                : $"Ancien résultat du lot : {latestDecision.HumanDecision} · à revalider";
+
+        var tests = criterion.Tests.Select(test =>
+        {
+            var result = page.TestResults.FirstOrDefault(item => item.ReferenceTestId == test.Id);
+            return $"{test.Code} — {test.Question} · {result?.Status ?? "À examiner"}" +
+                (string.IsNullOrWhiteSpace(result?.Notes) ? string.Empty : $" · {result.Notes}");
+        }).ToArray();
+        PageCriterionTestsText.Text = tests.Length == 0
+            ? "Aucun sous-test n’est fourni par le catalogue pour ce critère."
+            : string.Join(Environment.NewLine, tests);
+
+        var testIds = criterion.Tests.Select(test => test.Id).ToHashSet(StringComparer.Ordinal);
+        var pageEvidence = _dossiers.GetEvidence(_activeAudit.Id, page.Id);
+        var evidenceFindingIds = pageEvidence.Where(evidence => evidence.CriterionId == criterion.Id)
+            .Select(evidence => evidence.FindingId).Where(id => !string.IsNullOrWhiteSpace(id)).ToHashSet(StringComparer.Ordinal);
+        var findings = page.Findings.Where(finding => finding.SourceRuleId == criterion.Id ||
+            testIds.Contains(finding.ReferenceTestId) || evidenceFindingIds.Contains(finding.Id)).ToArray();
+        PageCriterionFindingsText.Text = findings.Length == 0
+            ? "Aucun constat associé à ce critère sur cette page."
+            : "Constats sur cette page : " + string.Join(" · ", findings.Select(finding =>
+                $"{finding.Title}{(string.IsNullOrWhiteSpace(finding.Locator) ? string.Empty : " — " + finding.Locator)} · {finding.Status}"));
+
+        var findingIds = findings.Select(finding => finding.Id).ToHashSet(StringComparer.Ordinal);
+        var evidence = pageEvidence.Where(item => item.CriterionId == criterion.Id || findingIds.Contains(item.FindingId)).ToArray();
+        PageCriterionEvidenceText.Text = evidence.Length == 0
+            ? "Aucune preuve associée à ce critère sur cette page."
+            : "Preuves sur cette page : " + string.Join(" · ", evidence.Select(item =>
+                $"{item.CaptureMethod}{(string.IsNullOrWhiteSpace(item.SelectedElementText) ? string.Empty : " — " + item.SelectedElementText)}"));
+    }
+
+    private void AddPageCriterionFinding_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_activeAudit is null || _activeAuditPageId is null || _selectedCriterionId is null ||
+            string.IsNullOrWhiteSpace(PageCriterionObservationInput.Text))
+        {
+            PageCriterionFindingStatus.Text = "Décrivez d’abord le constat observé sur cette page.";
+            PageCriterionObservationInput.Focus();
+            return;
+        }
+        if (!AuditCriteria.Any(criterion => criterion.Id == _selectedCriterionId))
+            return;
+
+        try
+        {
+            var added = _dossiers.AddSemanticFindingToAudit(_activeAudit.Id, _activeAuditPageId, _selectedCriterionId,
+                $"Observation {_selectedCriterionId}", PageCriterionObservationInput.Text.Trim(),
+                PageCriterionLocatorInput.Text ?? string.Empty, "Observation de l’auditeur");
+            PageCriterionFindingStatus.Text = added
+                ? "Constat enregistré sur cette page et rattaché au critère. Le résultat du lot sera à réévaluer."
+                : "Un constat existe déjà pour ce critère et cet emplacement.";
+            if (added)
+            {
+                PageCriterionObservationInput.Text = string.Empty;
+                PageCriterionLocatorInput.Text = string.Empty;
+            }
+            _activeAudit = _dossiers.Get(_activeAudit.Id) ?? _activeAudit;
+            RefreshPageCriterionContext();
+            RefreshAuditDashboard();
+            RefreshAudits();
+        }
+        catch (Exception exception) when (exception is ArgumentException or InvalidOperationException or IOException)
+        {
+            PageCriterionFindingStatus.Text = exception.Message;
+        }
+    }
+
+    private void ReturnToCriterionBoard_Click(object? sender, RoutedEventArgs e) => OpenCriterionBoard_Click(sender, e);
 
     private void PageViewTools_Click(object? sender, RoutedEventArgs e)
     {
@@ -2573,10 +3109,13 @@ public partial class MainWindow : Window
             _ = StopContrastPipetteAsync("Vue changée ; pipette arrêtée.");
         _pageViewMode = mode;
         var isDashboard = mode == "dashboard";
-        PageViewToolsButton.IsVisible = !isDashboard;
-        RunAxeScanButton.IsVisible = !isDashboard;
-        PipetteButton.IsVisible = !isDashboard;
+        var isCriteria = mode == "criteria";
+        PageViewToolsButton.IsVisible = !isDashboard && !isCriteria;
+        RunAxeScanButton.IsVisible = !isDashboard && !isCriteria;
+        PipetteButton.IsVisible = !isDashboard && !isCriteria;
+        OpenCriteriaBoardToolbarButton.IsVisible = !isDashboard && !isCriteria;
         DashboardToolbarLabel.IsVisible = isDashboard;
+        CriterionBoardToolbarLabel.IsVisible = isCriteria;
         PageViewToolsButton.Tag = mode == "site";
         PageViewToolsLabel.Text = mode switch
         {
@@ -2592,7 +3131,7 @@ public partial class MainWindow : Window
         Browser.IsVisible = mode is "site" or "no-css" or "aria" or "semantic" or "media" or "axe" or "technology";
         SourceCodeView.IsVisible = mode == "source";
         AuditDashboardPanel.IsVisible = isDashboard;
-        AuditDashboardPanel.IsVisible = isDashboard;
+        CriterionBoardPanel.IsVisible = isCriteria;
         AriaTreePanel.IsVisible = mode == "aria";
         AxeResultsPanel.IsVisible = mode == "axe";
         TechnologyProfilePanel.IsVisible = mode == "technology";
@@ -2605,7 +3144,6 @@ public partial class MainWindow : Window
         PageContentGrid.ColumnDefinitions[1].Width = treeView ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
         PageViewStatus.IsVisible = false;
         UpdateInspectionMenuCommands();
-        UpdateWorkspaceLayout();
         UpdateWorkspaceLayout();
     }
 
@@ -3074,113 +3612,6 @@ public partial class MainWindow : Window
         catch (InvalidOperationException) { }
     }
 
-    private void RestoreReviewRecord()
-    {
-        RuleBox.Text = string.Empty;
-        DecisionCombo.SelectedIndex = 0;
-        JustificationBox.Text = string.Empty;
-        CompleteReviewButton.IsEnabled = false;
-
-        if (_activeAudit is null)
-            return;
-
-        var latest = _dossiers.ReadDecisions(_activeAudit.Id).LastOrDefault();
-        if (latest is null)
-        {
-            ReviewStatus.Text = "Aucune décision n’a encore été enregistrée pour ce dossier.";
-            return;
-        }
-
-        RuleBox.Text = latest.RuleSuggestion;
-        JustificationBox.Text = latest.Justification;
-        for (var index = 0; index < DecisionCombo.Items.Count; index++)
-        {
-            if ((DecisionCombo.Items[index] as ComboBoxItem)?.Content?.ToString() == latest.HumanDecision)
-            {
-                DecisionCombo.SelectedIndex = index;
-                break;
-            }
-        }
-
-        CompleteReviewButton.IsEnabled = !latest.ReviewComplete;
-        ReviewStatus.Text = latest.ReviewComplete
-            ? "Décision humaine retrouvée ; la revue a été explicitement terminée. Cela ne signifie pas que le site est conforme."
-            : "Décision humaine retrouvée ; la revue reste à terminer.";
-    }
-
-    private void SaveReview_Click(object? sender, RoutedEventArgs e)
-    {
-        if (_activeAudit is null)
-            return;
-        if (_activeAuditPageId is null || _dossiers.GetPages(_activeAudit.Id).FirstOrDefault(page => page.Id == _activeAuditPageId) is not { } activePage)
-        {
-            ReviewStatus.Text = "Ouvrez d’abord une page du dossier pour rattacher la décision au bon contexte.";
-            return;
-        }
-
-        var decision = (DecisionCombo.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? string.Empty;
-        try
-        {
-            var record = _dossiers.AppendDecision(
-                _activeAudit.Id,
-                activePage.Name,
-                RuleBox.Text ?? string.Empty,
-                decision,
-                JustificationBox.Text);
-            _activeAudit = _dossiers.Get(_activeAudit.Id) ?? _activeAudit;
-            CompleteReviewButton.IsEnabled = true;
-            ReviewStatus.Text = $"Décision humaine enregistrée : {record.HumanDecision}. L’achèvement de la revue reste une étape distincte.";
-            RefreshAudits();
-            RefreshAuditDashboard();
-        }
-        catch (ArgumentException ex)
-        {
-            ReviewStatus.Text = ex.Message;
-            if (string.IsNullOrWhiteSpace(RuleBox.Text))
-                RuleBox.Focus();
-            else if (decision is not ("Conforme" or "Non conforme" or "Non applicable" or "Non vérifiable"))
-                DecisionCombo.Focus();
-            else
-                JustificationBox.Focus();
-        }
-        catch (IOException)
-        {
-            ReviewStatus.Text = "La décision n’a pas pu être enregistrée dans le dossier local.";
-        }
-    }
-
-    private void CompleteReview_Click(object? sender, RoutedEventArgs e)
-    {
-        if (_activeAudit is null)
-            return;
-
-        var latest = _dossiers.ReadDecisions(_activeAudit.Id).LastOrDefault();
-        var decision = (DecisionCombo.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? string.Empty;
-        if (latest is null || latest.RuleSuggestion != RuleBox.Text?.Trim() || latest.HumanDecision != decision || latest.Justification != JustificationBox.Text?.Trim())
-        {
-            ReviewStatus.Text = "Enregistrez d’abord la décision affichée avant de terminer cette revue.";
-            return;
-        }
-
-        try
-        {
-            _dossiers.CompleteLatestReview(_activeAudit.Id);
-            _activeAudit = _dossiers.Get(_activeAudit.Id) ?? _activeAudit;
-            CompleteReviewButton.IsEnabled = false;
-            ReviewStatus.Text = "Revue explicitement terminée par l’auditeur. Cela ne signifie pas que le site est conforme.";
-            RefreshAudits();
-            RefreshAuditDashboard();
-        }
-        catch (InvalidOperationException ex)
-        {
-            ReviewStatus.Text = ex.Message;
-        }
-        catch (IOException)
-        {
-            ReviewStatus.Text = "L’état de revue n’a pas pu être enregistré dans le dossier local.";
-        }
-    }
-
     private static string SafeField(JsonElement root, string name, int max)
     {
         if (!root.TryGetProperty(name, out var value) || value.ValueKind != JsonValueKind.String)
@@ -3229,6 +3660,8 @@ public partial class MainWindow : Window
 
     private void ShowHome()
     {
+        if (!GuardUnsavedCriterionApplicability())
+            return;
         if (_contrastPipetteActive)
             _ = StopContrastPipetteAsync("Espace d’audit fermé ; pipette arrêtée.");
         RefreshAudits();
@@ -3243,6 +3676,9 @@ public partial class MainWindow : Window
     private void CloseAuditTab_Click(object? sender, RoutedEventArgs e)
     {
         if ((sender as Button)?.Tag is not string id)
+            return;
+
+        if (_activeAudit?.Id == id && !GuardUnsavedCriterionApplicability())
             return;
 
         var index = OpenAuditTabs.ToList().FindIndex(tab => tab.Id == id);
@@ -3795,14 +4231,88 @@ public partial class MainWindow : Window
     public sealed record AuditDashboardMetric(string Label, string Value, string Detail);
 
     public sealed record AuditPageListItem(string Id, string Name, string DisplayPath, string SamplingReason,
-        bool IsCurrentPage, bool IsOpened, int RecordedTestCount, int PendingSuggestionCount)
+        bool IsCurrentPage, bool IsOpened, int FindingCount, int EvidenceCount, int PendingSuggestionCount)
     {
-        public string ProgressSummary => !IsOpened ? "À consulter" : RecordedTestCount > 0
-            ? $"{RecordedTestCount} contrôle(s) consigné(s)" : "Ouverte · contrôles à consigner";
+        public string ProgressSummary => $"{(IsOpened ? "Page ouverte" : "À consulter")} · {FindingCount} constat(s) · {EvidenceCount} preuve(s)";
         public bool HasPendingSuggestions => PendingSuggestionCount > 0;
         public string SuggestionSummary => $"{PendingSuggestionCount} suggestion(s) à valider";
         public string AccessibleName => $"Ouvrir la page {Name}, {DisplayPath}, {ProgressSummary}{(PendingSuggestionCount > 0 ? $", {PendingSuggestionCount} suggestions à vérifier" : string.Empty)}{(IsCurrentPage ? ", actuellement affichée dans le navigateur" : string.Empty)}";
         public string ActionsAccessibleName => $"Actions pour la page {Name}";
+    }
+
+    public sealed record AuditCriterionListItem(string Id, string Code, string Title, string ThemeLabel, string ReviewStatus, bool IsSelected)
+    {
+        public string AccessibleName => $"Critère {Code}, {Title}. Thème : {ThemeLabel}. État : {ReviewStatus}.";
+    }
+
+    public sealed class CriterionPageReviewItem : INotifyPropertyChanged
+    {
+        private string _applicability;
+        private string _justification;
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public CriterionPageReviewItem(string pageId, string pageName, string pagePath, string applicability,
+            string justification, string contextSummary, DateTimeOffset updatedAt, bool hasSavedApplicability)
+        {
+            PageId = pageId;
+            PageName = pageName;
+            PagePath = pagePath;
+            _applicability = applicability;
+            _justification = justification;
+            ContextSummary = contextSummary;
+            UpdatedAt = updatedAt;
+            HasSavedApplicability = hasSavedApplicability;
+        }
+
+        public string PageId { get; }
+        public string PageName { get; }
+        public string PagePath { get; }
+        public string ContextSummary { get; }
+        public DateTimeOffset UpdatedAt { get; }
+        public bool HasSavedApplicability { get; }
+        public bool IsDirty { get; private set; }
+        public bool CanSave => IsDirty;
+        public IReadOnlyList<string> ApplicabilityOptions { get; } = ["À déterminer", "Applicable", "Non applicable", "Indéterminée"];
+        public string Applicability
+        {
+            get => _applicability;
+            set
+            {
+                if (_applicability == value) return;
+                _applicability = value;
+                SetDirty();
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(NeedsJustification));
+            }
+        }
+        public string Justification
+        {
+            get => _justification;
+            set
+            {
+                if (_justification == value) return;
+                _justification = value;
+                SetDirty();
+                OnPropertyChanged();
+            }
+        }
+        public bool NeedsJustification => Applicability is "Non applicable" or "Indéterminée";
+        public string ApplicabilityAccessibleName => $"Applicabilité du critère sur la page {PageName}";
+        public string JustificationAccessibleName => $"Justification de l’applicabilité sur la page {PageName}";
+        public string SaveAccessibleName => $"Enregistrer l’applicabilité du critère sur la page {PageName}";
+        public string DiscardAccessibleName => $"Annuler les modifications d’applicabilité sur la page {PageName}";
+        public string OpenPageAccessibleName => $"Ouvrir la page {PageName} pour vérifier les observations du critère";
+
+        private void SetDirty()
+        {
+            if (IsDirty) return;
+            IsDirty = true;
+            OnPropertyChanged(nameof(IsDirty));
+            OnPropertyChanged(nameof(CanSave));
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     public sealed record OpenAuditTab(string Id, string Title, bool IsActive, bool WindowIsActive, double TabWidth = 230, Bitmap? Favicon = null)

@@ -49,6 +49,7 @@
     <AvaloniaResource Include="..\..\docs\_sources\images\chevron-down.svg" Link="Assets\chevron-down.svg" />
     <AvaloniaResource Include="..\..\docs\_sources\images\link.svg" Link="Assets\link.svg" />
     <AvaloniaResource Include="..\..\docs\_sources\images\folder.svg" Link="Assets\folder.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\criteria.svg" Link="Assets\criteria.svg" />
   </ItemGroup>
 
   <ItemGroup>

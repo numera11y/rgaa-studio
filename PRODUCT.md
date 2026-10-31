@@ -20,7 +20,7 @@ Create a dedicated RGAA/WCAG website-audit workbench. At launch, auditors resume
 
 ## Positioning
 
-A page-centered audit workflow that connects the live page to criteria, human decisions, and durable evidence. Automated detections support the auditor but never claim a complete audit or replace the auditor’s conformity decision.
+A lot-centered audit workflow: one human result per criterion for the selected page sample, supported by page-specific applicability, observations, and evidence. The integrated browser provides the page context; automated detections assist but never replace the auditor’s lot-level decision.
 
 ## Operating Context
 
@@ -35,7 +35,7 @@ A page-centered audit workflow that connects the live page to criteria, human de
 - A current top-bar “update available” icon is requested; update source, security/signature policy, and exact user flow are not selected. It must not interrupt or misrepresent audit state.
 - Interface and reports for v1.0.0 are in French.
 - Each audit concerns one site and one fixed reference/version; a WCAG audit requires an explicit A/AA/AAA target.
-- The expected flow is: resume/create → configure URL/reference/target → review and confirm candidate pages → open pages individually → inspect an element/state or start from a rule → decide and attach evidence → resume/report.
+- The expected flow is: resume/create → configure URL/reference/target → review and confirm candidate pages → inspect pages individually and record page-specific observations/applicability/evidence → review criteria across the complete lot and record one result per criterion → resume/report.
 - The user expects candidate pages important/required for the site to be shown only when they exist, and expects the inspected element/state and screenshot to be retained as evidence. Exact page-discovery categories and mandatory/optional capture behavior remain open.
 - Audits are local dossiers. Browser profiles are separate, persistent, explicitly assigned, and may be reused; this never merges audit findings or evidence.
 
@@ -48,7 +48,7 @@ A page-centered audit workflow that connects the live page to criteria, human de
 - The auditor can point to an element and see available details and candidate relevant rules. Rule-level and page-/journey-level checks must also work without element selection.
 - Element-to-rule relationships can be many-to-many. An element reference is contextual and may become stale when the site changes.
 - Keep automated findings, manual observations, human conformity results, and review completion distinct. Non-applicable and non-verifiable results require justification.
-- Evidence is attached to the right audit/page/rule context. Notes, reproduction steps, screenshots, and DOM/element context are expected; cookies, tokens, and browser-profile data must never enter evidence, reports, or logs.
+- Evidence is attached to the right audit, criterion, and source page. Criteria receive one result for the audit lot; applicability, tests, findings, notes, reproduction steps, screenshots, and DOM/element context remain attached to their page; cookies, tokens, and browser-profile data must never enter evidence, reports, or logs.
 - Expected report outputs are client PDF, editable ODT, and structured JSON. Jira is nonblocking.
 - No complete visual identity, screenshot policy, page-category checklist, session-isolation policy, or release-ready browser security policy has been selected. Avalonia is the chosen primary desktop UI framework; final browser profile/session guarantees and Linux packaging still require verification.
 
@@ -65,7 +65,7 @@ No approved product logo or complete brand system has been supplied; the user ex
 ## Product Principles
 
 1. Keep the auditor’s judgment authoritative; automation is assistance, never a conformance verdict.
-2. Preserve traceability from audit and page to rule, decision, element/state context, and evidence.
+2. Preserve traceability from audit and lot-level criterion result back to each page’s applicability, tests, findings, element/state context, and evidence.
 3. Make page suggestions transparent and explicitly confirmed; never promise exhaustive discovery.
 4. Support both element-level and page-/journey-level audit work, including keyboard and assistive-technology checks.
 5. Keep audit data local and isolated from persistent browser profiles.
