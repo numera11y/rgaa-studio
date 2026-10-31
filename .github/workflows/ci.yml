@@ -1,0 +1,28 @@
+name: Vérification .NET
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Installer .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restaurer
+        run: dotnet restore RgaaStudio.slnx
+      - name: Compiler
+        run: dotnet build RgaaStudio.slnx --configuration Release --no-restore
+      - name: Vérifications du cœur
+        run: dotnet run --project src/RgaaStudio.Core.Checks/RgaaStudio.Core.Checks.csproj --configuration Release --no-build

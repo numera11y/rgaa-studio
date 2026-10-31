@@ -1,0 +1,36 @@
+# Local secrets and signing material
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.key
+
+# Runtime and build outputs
+**/node_modules/
+**/bin/
+**/obj/
+**/dist/
+**/target/
+**/out/
+**/build/
+**/.vs/
+**/.idea/
+*.log
+
+# Local browser profiles and synthetic test artifacts
+browser-profiles/
+user-data/
+test-results/
+artifacts/
+
+# Local agent/design workbench material
+/.opencode/
+/.impeccable/
+
+# Source audit reports are reference material, not application content
+/docs/_sources/**/*.pdf
+
+# OS-generated files
+Thumbs.db
+.DS_Store

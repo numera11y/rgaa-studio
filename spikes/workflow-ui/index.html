@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Espace d’audit — prototype de parcours</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+  <div class="app-shell">
+    <header class="app-header">
+      <button class="wordmark" id="brand-home" type="button" aria-label="Espace d’audit, accueil">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 22 22"><path d="M4 4h14v14H4zM7.5 8h7M7.5 11h7M7.5 14h4"></path></svg></span>
+        <span>Espace d’audit</span>
+      </button>
+      <div class="header-context"><span class="environment-dot" aria-hidden="true"></span>Prototype de parcours · données synthétiques</div>
+      <div class="header-actions">
+        <button class="icon-button" id="help-button" type="button" aria-label="Aide" title="Aide">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.7 9a2.4 2.4 0 1 1 4.2 1.6c-1 .9-1.9 1.2-1.9 2.6M12 16.8h.01"></path></svg>
+        </button>
+        <button class="profile-button" id="profile-button" type="button"><span class="avatar">D</span><span>Profil démo</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg></button>
+      </div>
+    </header>
+
+    <div class="app-body" id="app-body">
+      <aside class="sidebar">
+        <nav class="sidebar-top" aria-label="Navigation principale">
+          <button class="primary-button sidebar-create" id="sidebar-create" type="button">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"></path></svg>
+            <span>Créer un audit</span>
+          </button>
+          <button class="nav-item active" id="nav-audits" type="button" aria-current="page">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3.5" width="14" height="13" rx="1.5"></rect><path d="M6.5 7h7M6.5 10h7M6.5 13h4"></path></svg>
+            <span>Mes audits</span><span class="nav-count" id="audit-count">0</span>
+          </button>
+          <button class="nav-item" id="nav-guidelines" type="button">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h8.5L16.5 6v10.5H5z"></path><path d="M13.5 3.5V6h3M7.5 9h6M7.5 12h6"></path></svg>
+            <span>Référentiels</span>
+          </button>
+        </nav>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section-heading"><span>À reprendre</span><button class="text-button" id="show-all-audits" type="button" aria-pressed="false">Tout voir</button></div>
+        <div class="sidebar-audit-list" id="sidebar-audits"></div>
+        <div class="sidebar-footer">
+          <div class="privacy-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4.5" y="8.5" width="11" height="8" rx="1.5"></rect><path d="M7 8.5V6a3 3 0 0 1 6 0v2.5"></path></svg></div>
+          <div><strong>Données locales</strong><span>Stockées sur cet appareil</span></div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="main-content" tabindex="-1">
+        <section class="view view-home" id="view-home" aria-labelledby="home-title">
+          <div class="page-heading">
+            <div><p class="breadcrumb">Espace de travail</p><h1 id="home-title" tabindex="-1">Mes audits</h1><p class="page-subtitle">Reprenez un audit ou créez-en un nouveau.</p></div>
+            <button class="primary-button" id="home-create" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"></path></svg>Créer un audit</button>
+          </div>
+          <div class="summary-strip" aria-label="Résumé des audits">
+            <div><span class="summary-label">En cours</span><strong id="summary-active">0</strong></div>
+            <div><span class="summary-label">Pages à examiner</span><strong id="summary-pages">0</strong></div>
+            <div><span class="summary-label">Dernière activité</span><strong id="summary-date">—</strong></div>
+          </div>
+          <div class="section-heading"><h2>Audits à reprendre</h2><span class="section-meta" id="home-list-count">0 dossier</span></div>
+          <div class="audit-table-wrap">
+            <table class="audit-table" id="audit-table">
+              <thead><tr><th scope="col">Site / dossier</th><th scope="col">Référentiel</th><th scope="col">Pages examinées</th><th scope="col">Dernière activité</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+              <tbody id="audit-table-body"></tbody>
+            </table>
+            <div class="empty-state" id="empty-audits" hidden>
+              <div class="empty-illustration" aria-hidden="true"><svg viewBox="0 0 64 64"><rect x="10" y="12" width="44" height="40" rx="3"></rect><path d="M20 24h24M20 32h17M20 40h12"></path><circle cx="48" cy="44" r="9"></circle><path d="M48 39v10M43 44h10"></path></svg></div>
+              <h2>Aucun audit pour le moment</h2><p>Créez un audit pour choisir un site, un référentiel et les pages à examiner.</p><button class="primary-button" id="empty-create" type="button">Créer un audit</button>
+            </div>
+          </div>
+          <div class="notice-inline"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"></circle><path d="M10 9v5M10 6.5h.01"></path></svg><span>Les contrôles automatiques signalent des points à vérifier ; ils ne remplacent pas l’évaluation de l’auditeur.</span></div>
+        </section>
+
+        <section class="view view-setup" id="view-setup" aria-labelledby="setup-title" hidden>
+          <div class="page-heading compact-heading"><div><p class="breadcrumb"><button class="breadcrumb-button" data-go-home type="button">Mes audits</button><span aria-hidden="true">/</span>Nouvel audit</p><h1 id="setup-title" tabindex="-1">Créer un audit</h1><p class="page-subtitle">Définissez le site et le référentiel de cet audit.</p></div></div>
+          <ol class="stepper" aria-label="Étapes de création">
+            <li class="step active"><span class="step-number">1</span><span>Configuration</span></li><li class="step-line"></li><li class="step"><span class="step-number">2</span><span>Pages à auditer</span></li><li class="step-line"></li><li class="step"><span class="step-number">3</span><span>Espace d’audit</span></li>
+          </ol>
+          <div class="setup-grid">
+            <form class="form-panel" id="setup-form" novalidate>
+              <div class="form-section"><h2>Site à auditer</h2><p class="form-help">Saisissez la page de départ. Vous pourrez ensuite confirmer les pages à inclure.</p>
+                <label class="field-label" for="site-url">URL du site <span class="required-mark">*</span></label>
+                <div class="input-with-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.2"></circle><path d="M2.8 10h14.4M10 2.8c2 2 2 12.4 0 14.4M10 2.8c-2 2-2 12.4 0 14.4"></path></svg><input id="site-url" type="url" autocomplete="url" placeholder="https://exemple.fr" required></div>
+                <label class="field-label spaced-label" for="audit-name">Nom du dossier <span class="optional-label">Facultatif</span></label><input id="audit-name" type="text" maxlength="100" placeholder="Ex. Audit du parcours de recherche">
+              </div>
+              <div class="form-section"><h2>Référentiel</h2><p class="form-help">Un audit utilise un seul référentiel et une version définie.</p>
+                <div class="form-row"><div><label class="field-label" for="reference">Référentiel <span class="required-mark">*</span></label><select id="reference" required><option value="" selected disabled>Choisir un référentiel</option><option value="RGAA">RGAA</option><option value="WCAG">WCAG</option></select></div><div><label class="field-label" for="reference-version">Version <span class="required-mark">*</span></label><select id="reference-version" required disabled><option value="" selected>Choisir le référentiel d’abord</option></select></div></div>
+                <fieldset class="level-field" id="level-field" hidden><legend>Niveau cible WCAG <span class="required-mark">*</span></legend><p class="form-help">Le niveau cible n’est pas un résultat de conformité.</p><div class="radio-row"><label class="radio-choice"><input type="radio" name="wcag-level" value="A"><span>A</span></label><label class="radio-choice"><input type="radio" name="wcag-level" value="AA"><span>AA</span></label><label class="radio-choice"><input type="radio" name="wcag-level" value="AAA"><span>AAA</span></label></div></fieldset>
+              </div>
+              <div class="form-error" id="setup-error" role="alert" hidden></div>
+              <div class="form-actions"><button class="secondary-button" data-go-home type="button">Annuler</button><button class="primary-button" type="submit">Continuer vers les pages<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10 5l5 5-5 5"></path></svg></button></div>
+            </form>
+            <aside class="guidance-panel"><div class="guidance-title"><div class="guidance-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10.5L19 8v11.5H5z"></path><path d="M15 4.5V8h4M8 11h8M8 14h6"></path></svg></div><h2>Un audit, un référentiel</h2></div><p>Pour comparer RGAA et WCAG, créez deux audits distincts. Les résultats et les preuves resteront séparés.</p><div class="guidance-rule"></div><p class="guidance-small">Les vérifications automatiques aideront à repérer des points d’attention. La décision finale restera celle de l’auditeur.</p></aside>
+          </div>
+        </section>
+
+        <section class="view view-pages" id="view-pages" aria-labelledby="pages-title" hidden>
+          <div class="page-heading compact-heading"><div><p class="breadcrumb"><button class="breadcrumb-button" data-go-home type="button">Mes audits</button><span aria-hidden="true">/</span><span>Créer un audit</span></p><h1 id="pages-title" tabindex="-1">Pages à examiner</h1><p class="page-subtitle" id="pages-subtitle"></p></div></div>
+          <ol class="stepper" aria-label="Étapes de création"><li class="step complete"><span class="step-number" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3 8 3.2 3.2L13 4.5"></path></svg></span><span>Configuration <span class="sr-only">terminée</span></span></li><li class="step-line active-line"></li><li class="step active"><span class="step-number">2</span><span>Pages à auditer</span></li><li class="step-line"></li><li class="step"><span class="step-number">3</span><span>Espace d’audit</span></li></ol>
+          <div class="candidate-notice"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"></circle><path d="M10 9v5M10 6.5h.01"></path></svg><div><strong>Des pages candidates, pas un inventaire complet</strong><span>Les pages ci-dessous sont repérées dans le site de démonstration. Vérifiez-les et confirmez celles à ajouter au lot.</span></div></div>
+          <div class="candidate-list" id="candidate-list"></div>
+          <div class="manual-page-row"><div><strong>Une page manque ?</strong><span>Ajoutez manuellement une URL à ce lot.</span></div><div class="manual-entry"><input type="url" id="manual-page-url" placeholder="https://exemple.fr/ma-page" aria-label="URL d’une page à ajouter"><button class="secondary-button" id="add-manual-page" type="button">Ajouter l’URL</button></div></div>
+          <div class="form-error" id="pages-error" role="alert" hidden></div>
+          <div class="form-actions page-actions"><button class="secondary-button" id="back-to-setup" type="button">Retour</button><span class="selected-count" id="selected-count">Aucune page sélectionnée</span><button class="primary-button" id="start-audit" type="button" disabled>Ouvrir l’espace d’audit<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10 5l5 5-5 5"></path></svg></button></div>
+        </section>
+
+        <section class="view view-workspace" id="view-workspace" aria-labelledby="workspace-title" hidden>
+          <div class="workspace-titlebar"><div><p class="breadcrumb"><button class="breadcrumb-button" data-go-home type="button">Mes audits</button><span aria-hidden="true">/</span><span id="workspace-audit-crumb"></span></p><h1 id="workspace-title" tabindex="-1"></h1></div><div class="workspace-title-actions"><span class="autosave-status" id="autosave-status"><span class="saved-dot"></span>Démo locale</span><button class="secondary-button small-button" id="workspace-exit" type="button">Quitter l’audit</button></div></div>
+          <div class="audit-workbench">
+            <aside class="page-rail"><div class="rail-heading"><span>Pages du lot</span><button class="icon-button small-icon" id="add-page-workspace" type="button" aria-label="Ajouter une page" title="Ajouter une page"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"></path></svg></button></div><nav class="page-list" id="workspace-page-list" aria-label="Pages de l’audit"></nav><div class="rail-footer"><span id="page-progress-label" role="status" aria-live="polite">0 page sur 0 terminée</span><div class="progress-track"><span id="page-progress-bar"></span></div><button class="text-button" id="edit-page-list" type="button">Gérer le lot</button></div></aside>
+            <section class="target-area" aria-label="Page auditée"><div class="target-toolbar"><div class="target-url"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.2"></circle><path d="M2.8 10h14.4M10 2.8c2 2 2 12.4 0 14.4M10 2.8c-2 2-2 12.4 0 14.4"></path></svg><span id="target-url-label"></span></div><div class="target-tools"><button class="tool-button" id="inspect-mode-button" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 3 11 8-5 .8-2.2 4.2z"></path><path d="m12 13 3 3"></path></svg><span>Pointer un élément</span></button><button class="tool-button" id="select-focused-button" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h12v13H4zM7 7h6M7 10h4"></path></svg><span>Élément au focus</span></button><button class="icon-button small-icon" id="reload-page" type="button" aria-label="Recharger la page" title="Recharger la page"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 8a6 6 0 0 0-10-3L4 7M4 4v3h3M4 12a6 6 0 0 0 10 3l2-2m0 3v-3h-3"></path></svg></button></div></div>
+              <div class="inspect-instruction" id="inspect-instruction" role="status" aria-live="polite" hidden>Choisissez un élément de la page. Le clavier reste disponible : placez le focus sur un contrôle puis utilisez « Élément au focus ».</div>
+              <div class="site-preview" id="site-preview"></div>
+            </section>
+            <aside class="inspector-panel" aria-label="Règles et preuves"><div class="inspector-tabs" role="tablist" aria-label="Mode de vérification"><button class="inspector-tab active" id="tab-element" role="tab" aria-selected="true" aria-controls="panel-element" tabindex="0" type="button">Élément</button><button class="inspector-tab" id="tab-rules" role="tab" aria-selected="false" aria-controls="panel-rules" tabindex="-1" type="button">Règles de la page</button></div>
+              <div id="panel-element" class="inspector-content" role="tabpanel" aria-labelledby="tab-element"><div class="inspector-heading"><h2 id="selected-element-title">Aucun élément sélectionné</h2><button class="icon-button small-icon" id="clear-selection" type="button" aria-label="Effacer la sélection" title="Effacer la sélection"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"></path></svg></button></div><p class="element-description" id="selected-element-description">Pointez un élément dans la page ou placez-y le focus puis utilisez « Élément au focus ».</p><dl class="detail-table" id="element-details"></dl><div class="rule-section"><div class="subsection-heading"><h3>Règles à examiner</h3><span id="candidate-rule-count">0</span></div><div id="candidate-rules" class="rule-list"></div></div><div class="proof-section"><div class="subsection-heading"><h3>Preuves du contexte</h3><button class="text-button" id="add-proof" type="button" disabled>Ajouter</button></div><div id="proof-list" class="proof-list"><p class="empty-hint">Les éléments examinés et les preuves apparaîtront ici.</p></div></div></div>
+              <div id="panel-rules" class="inspector-content" role="tabpanel" aria-labelledby="tab-rules" hidden><div class="inspector-heading"><h2>Règles de la page</h2></div><p class="element-description">Certaines vérifications portent sur la page ou le parcours entier et ne nécessitent pas d’élément pointé.</p><div id="page-rules" class="rule-list"></div></div>
+            </aside>
+          </div>
+          <div class="workbench-footer"><span id="workbench-state" role="status" aria-live="polite">Démonstration synthétique · Les détections ne sont pas des verdicts</span><button class="text-button" id="finish-page-review" type="button" disabled>Marquer la revue de la page terminée</button><button class="text-button" id="return-dashboard" type="button">Revenir aux audits</button></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog class="decision-dialog" id="rule-dialog" aria-labelledby="rule-dialog-title">
+    <form id="rule-form">
+      <div class="dialog-header"><h2 id="rule-dialog-title">Vérifier la règle</h2><button class="icon-button" type="button" data-close-dialog="rule-dialog" aria-label="Fermer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"></path></svg></button></div>
+      <p id="rule-dialog-description" class="dialog-description"></p>
+      <div class="automation-note"><span class="note-mark">i</span><span>Les aides automatiques signalent des points à examiner ; elles ne décident pas de la conformité.</span></div>
+      <fieldset class="result-fieldset"><legend>Votre résultat</legend><label><input type="radio" name="result" value="Conforme"><span>Conforme</span></label><label><input type="radio" name="result" value="Non conforme"><span>Non conforme</span></label><label><input type="radio" name="result" value="Non applicable"><span>Non applicable</span></label><label><input type="radio" name="result" value="Non vérifiable"><span>Non vérifiable</span></label></fieldset>
+      <div class="justification-field" id="justification-wrap" hidden><label for="justification">Justification <span class="required-mark">*</span></label><textarea id="justification" rows="3" placeholder="Expliquez pourquoi ce résultat s’applique…"></textarea></div>
+      <div class="dialog-error" id="decision-error" role="alert" hidden></div>
+      <div class="dialog-actions"><button class="secondary-button" type="button" data-close-dialog="rule-dialog">Annuler</button><button class="primary-button" id="save-decision" type="button">Enregistrer le résultat</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="proof-dialog" id="proof-dialog" aria-labelledby="proof-dialog-title">
+    <form id="proof-form">
+      <div class="dialog-header"><h2 id="proof-dialog-title">Conserver le contexte observé</h2><button class="icon-button" type="button" data-close-dialog="proof-dialog" aria-label="Fermer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"></path></svg></button></div>
+      <p class="dialog-description">Cette maquette simule l’association d’une capture et des détails de l’élément. Aucune image réelle de navigateur n’est capturée.</p>
+      <label class="field-label" for="proof-note">Note de l’auditrice</label><textarea id="proof-note" rows="4" placeholder="Contexte, état observé ou étapes de reproduction…"></textarea>
+      <div class="proof-preview" id="proof-preview"><span class="proof-preview-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="1"></rect><circle cx="7" cy="8" r="1.5"></circle><path d="m3 14 4-3 3 2 3-4 4 4"></path></svg></span><span><strong>Capture simulée</strong><small id="proof-preview-caption">Aucun élément choisi</small></span><span class="simulated-tag">Maquette</span></div>
+      <div class="dialog-error" id="proof-error" role="alert" hidden></div><div class="dialog-actions"><button class="secondary-button" type="button" data-close-dialog="proof-dialog">Annuler</button><button class="primary-button" id="save-proof" type="button">Ajouter cette preuve</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="proof-dialog" id="proof-view-dialog" aria-labelledby="proof-view-title">
+    <div class="dialog-form">
+      <div class="dialog-header"><h2 id="proof-view-title">Détail de la preuve</h2><button class="icon-button" type="button" data-close-dialog="proof-view-dialog" aria-label="Fermer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"></path></svg></button></div>
+      <p id="proof-view-context" class="dialog-description"></p>
+      <div class="proof-preview"><span class="proof-preview-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="1"></rect><circle cx="7" cy="8" r="1.5"></circle><path d="m3 14 4-3 3 2 3-4 4 4"></path></svg></span><span><strong>Capture simulée</strong><small>Aucune image réelle n’a été capturée dans cette maquette.</small></span><span class="simulated-tag">Maquette</span></div>
+      <div class="proof-view-note"><h3>Note de l’auditrice</h3><p id="proof-view-note">Aucune note.</p></div>
+      <div class="dialog-actions"><button class="secondary-button" type="button" data-close-dialog="proof-view-dialog">Fermer</button></div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

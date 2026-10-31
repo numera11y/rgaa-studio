@@ -1,0 +1,1010 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+        xmlns:edit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+        xmlns:webview="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.WebView"
+        x:Class="RgaaStudio.Desktop.MainWindow"
+        x:CompileBindings="False"
+        Title="RGAA Studio"
+        Width="1280" Height="760" MinWidth="760" MinHeight="480"
+        WindowStartupLocation="CenterScreen"
+        WindowDecorations="None" Background="#EEF2FA"
+        KeyDown="Window_KeyDown" PointerPressed="Window_PointerPressed">
+  <Window.Styles>
+    <Style Selector="Button.toolbar">
+      <Setter Property="Width" Value="40" />
+      <Setter Property="Height" Value="40" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Foreground" Value="#171F3B" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid>
+            <Border x:Name="ToolbarFocusRing" Width="28" Height="28" CornerRadius="4" />
+            <Border x:Name="ToolbarSurface" Width="20" Height="20" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2">
+              <Grid>
+                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Border x:Name="MenuUnderline" Width="16" Height="1" Background="White" VerticalAlignment="Bottom" Margin="0,0,0,1" />
+              </Grid>
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="Button.toolbar:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.toolbar:pressed">
+      <Setter Property="Background" Value="#D5E1F5" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.toolbar:focus /template/ Border#ToolbarFocusRing">
+      <Setter Property="Background" Value="White" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Button.toolbar:focus:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.toolbar /template/ Border#ToolbarFocusRing">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+        <Style Selector="Button.toolbar /template/ Border#MenuUnderline">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="Button.options[Tag=True]">
+      <Setter Property="Background" Value="#214B9A" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+    </Style>
+    <Style Selector="Button.options[Tag=True] /template/ Border#MenuUnderline">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="Button.projects[Tag=True]">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+    </Style>
+    <Style Selector="Button.projects[Tag=True]:pressed">
+      <Setter Property="Background" Value="#D5E1F5" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+    </Style>
+    <Style Selector="Button.toolbar:disabled">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Foreground" Value="#8A8E98" />
+    </Style>
+    <Style Selector="Button.window-control">
+      <Setter Property="Width" Value="46" />
+      <Setter Property="Height" Value="44" />
+    </Style>
+    <Style Selector="Button.tab-close">
+      <Setter Property="Width" Value="32" />
+      <Setter Property="Height" Value="28" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="Border.tab-surface[Tag=Active] Button.tab-close">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="Border.tab-surface[Tag=ActiveWindowInactive] Button.tab-close">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="Border.tab-surface:pointerover Button.tab-close">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="Button.tab-close:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Border.tab-surface">
+      <Setter Property="Background" Value="#E7E8EB" />
+      <Setter Property="BorderBrush" Value="#C4C7CC" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Border.tab-surface[Tag=Active]">
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="0,0,0,3" />
+    </Style>
+    <Style Selector="Border.tab-surface[Tag=ActiveWindowInactive]">
+      <Setter Property="Background" Value="#E4E3DD" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="0,0,0,3" />
+    </Style>
+    <Style Selector="Border.tab-surface[Tag=InactiveWindowInactive]">
+      <Setter Property="Background" Value="#E4E3DD" />
+      <Setter Property="BorderBrush" Value="#A8A8A4" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Border.tab-surface:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Border.tab-surface[Tag=Active]:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="1,1,1,3" />
+    </Style>
+    <Style Selector="Border.tab-surface[Tag=ActiveWindowInactive]:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="1,1,1,3" />
+    </Style>
+    <Style Selector="Button.menu-item">
+      <Setter Property="Width" Value="310" />
+      <Setter Property="Height" Value="44" />
+      <Setter Property="Padding" Value="16,0" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Foreground" Value="#171F3B" />
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+            <Grid>
+              <Border x:Name="FocusMark" Width="3" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0" Background="#214B9A" />
+              <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="Center" />
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="Button.menu-item /template/ Border#FocusMark">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="Button.menu-item:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+    </Style>
+    <Style Selector="Button.menu-item:pressed">
+      <Setter Property="Background" Value="#D5E1F5" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.menu-item:focus">
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Button.menu-item:focus /template/ Border#FocusMark">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="Button.menu-item:disabled">
+      <Setter Property="Background" Value="#E4E3DD" />
+      <Setter Property="Foreground" Value="#555E70" />
+    </Style>
+    <Style Selector="Button.audit-card">
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="Background" Value="#FFFDF7" />
+      <Setter Property="BorderBrush" Value="#D8DAD9" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Padding" Value="18" />
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="CornerRadius" Value="8" />
+    </Style>
+    <Style Selector="Button.audit-card:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+    </Style>
+    <Style Selector="Button.audit-card:focus">
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Button.audit-card:pressed">
+      <Setter Property="Background" Value="#D5E1F5" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+    </Style>
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="#214B9A" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="Padding" Value="16,10" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.header-action">
+      <Setter Property="Height" Value="40" />
+      <Setter Property="MinHeight" Value="40" />
+      <Setter Property="Padding" Value="16,10" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.secondary">
+      <Setter Property="Background" Value="#FFFDF7" />
+      <Setter Property="Foreground" Value="#171F3B" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.secondary:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+    </Style>
+    <Style Selector="Button.danger">
+      <Setter Property="Background" Value="#A52C2C" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="BorderBrush" Value="#842323" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Padding" Value="16,10" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.danger:pointerover">
+      <Setter Property="Background" Value="#842323" />
+      <Setter Property="BorderBrush" Value="#6E1B1B" />
+    </Style>
+    <Style Selector="Button.primary:pointerover">
+      <Setter Property="Background" Value="#193D80" />
+    </Style>
+    <Style Selector="Button.audit-actions">
+      <Setter Property="Width" Value="40" />
+      <Setter Property="Height" Value="40" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.audit-actions:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.audit-actions:focus">
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Button.page-list-item">
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="Padding" Value="8,6,46,6" />
+    </Style>
+    <Style Selector="Button.page-list-item:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+    </Style>
+    <Style Selector="Button.page-list-item:focus">
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Button.page-tools">
+      <Setter Property="Height" Value="34" />
+      <Setter Property="Padding" Value="12,6" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#171F3B" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="Button.page-tools:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+    </Style>
+    <Style Selector="Button.page-tools[Tag=True]">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Button.aria-tree-item">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#171F3B" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="Padding" Value="4,3" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.aria-tree-item:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+    </Style>
+    <Style Selector="Button.aria-tree-item:focus">
+      <Setter Property="BorderBrush" Value="#214B9A" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Button.page-rail">
+      <Setter Property="Width" Value="40" />
+      <Setter Property="Height" Value="44" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.page-rail:pointerover">
+      <Setter Property="Background" Value="#E9EFF9" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+  </Window.Styles>
+
+  <Grid RowDefinitions="48,*">
+      <Border x:Name="TopToolbar" Grid.Row="0" BorderBrush="#E9DBFF" BorderThickness="0,0,0,1">
+        <Border.Background>
+          <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#F4EEFF" Offset="0" />
+            <GradientStop Color="#F7EEF6" Offset="0.7417" />
+            <GradientStop Color="#FDEDE6" Offset="1" />
+          </LinearGradientBrush>
+        </Border.Background>
+        <Grid ColumnDefinitions="12,40,40,*,40,Auto,40,40,46,46,46,12">
+        <Button x:Name="OptionsButton" Grid.Column="1" Classes="toolbar options" Tag="False" Click="Options_Click"
+                ToolTip.Tip="Options" AutomationProperties.Name="Options" AutomationProperties.HelpText="Ouvre le menu de l’application">
+          <svg:Svg x:Name="BurgerGlyph" Path="/Assets/menu.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+        </Button>
+        <Button x:Name="ProjectsButton" Grid.Column="2" Classes="toolbar projects" Tag="False" Click="Projects_Click" ToolTip.Tip="Projets" AutomationProperties.Name="Projets">
+          <svg:Svg Path="/Assets/projects.svg" Width="16" Height="16" CurrentColor="#171F3B" />
+        </Button>
+        <Grid x:Name="TabStrip" Grid.Column="3" ColumnDefinitions="Auto,*,Auto" SizeChanged="TabStrip_SizeChanged">
+          <Button x:Name="TabsPreviousButton" Grid.Column="0" Classes="toolbar" IsVisible="False" IsEnabled="False" Click="TabsPrevious_Click" ToolTip.Tip="Onglets précédents" AutomationProperties.Name="Faire défiler les onglets précédents">
+            <svg:Svg Path="/Assets/chevron-left.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+          </Button>
+          <ScrollViewer x:Name="TabsScrollViewer" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" ScrollChanged="TabsScrollViewer_ScrollChanged">
+            <ItemsControl x:Name="OpenTabs" ItemsSource="{Binding OpenAuditTabs}" AutomationProperties.Name="Dossiers ouverts">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border Classes="tab-surface" Tag="{Binding VisualState}" Width="{Binding TabWidth}" Height="32" Margin="8,8,0,8" CornerRadius="3">
+                    <Grid ColumnDefinitions="24,*,32">
+                      <svg:Svg Grid.Column="0" Path="/Assets/globe.svg" Width="14" Height="14" CurrentColor="#171F3B" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding ShowGlobe}" />
+                      <Image Grid.Column="0" Source="{Binding Favicon}" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding HasFavicon}" />
+                      <Button Grid.Column="1" Classes="tab-title" Tag="{Binding Id}" Background="Transparent" BorderThickness="0" Padding="0" HorizontalContentAlignment="Left" Click="TabActivate_Click" AutomationProperties.Name="{Binding Title}" AutomationProperties.ItemStatus="{Binding Status}">
+                        <TextBlock Text="{Binding Title}" FontSize="11" Foreground="#171F3B" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                      </Button>
+                      <Button Grid.Column="2" Classes="tab-close" Tag="{Binding Id}" Margin="1,2,3,2" Click="CloseAuditTab_Click" AutomationProperties.Name="{Binding CloseName}" AutomationProperties.HelpText="Fermer l’onglet sans supprimer le dossier">
+                        <svg:Svg Path="/Assets/close.svg" Width="12" Height="12" CurrentColor="#171F3B" />
+                      </Button>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+          <Button x:Name="TabsNextButton" Grid.Column="2" Classes="toolbar" IsVisible="False" IsEnabled="False" Click="TabsNext_Click" ToolTip.Tip="Onglets suivants" AutomationProperties.Name="Faire défiler les onglets suivants">
+            <svg:Svg Path="/Assets/chevron-right.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+          </Button>
+        </Grid>
+        <Border Grid.Column="4" Background="Transparent" PointerPressed="TitleBar_PointerPressed" />
+        <Button Grid.Column="4" HorizontalAlignment="Left" Classes="toolbar" Click="NewAudit_Click" ToolTip.Tip="Nouveau projet" AutomationProperties.Name="Nouveau projet">
+          <svg:Svg Path="/Assets/plus.svg" Width="16" Height="16" CurrentColor="#171F3B" />
+        </Button>
+        <Border Grid.Column="5" x:Name="InspectBadge" IsVisible="False" Margin="8,12" Padding="10,0" Background="#E6F6F2" BorderBrush="#69AAA0" BorderThickness="1" CornerRadius="3" AutomationProperties.LiveSetting="Polite">
+          <TextBlock Text="Inspection active · Échap hors menu" FontSize="11" Foreground="#175F59" VerticalAlignment="Center" />
+        </Border>
+        <Button Grid.Column="6" Classes="toolbar" ToolTip.Tip="Aucun service de mise à jour n’est configuré" AutomationProperties.Name="Mises à jour non configurées">
+          <svg:Svg Path="/Assets/update.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+        </Button>
+        <Button Grid.Column="7" Classes="toolbar" Click="ToggleSidePanel_Click" ToolTip.Tip="Afficher ou masquer le panneau" AutomationProperties.Name="Afficher ou masquer le panneau d’audit">
+          <svg:Svg Path="/Assets/panel-right.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+        </Button>
+        <Button Grid.Column="8" Classes="toolbar window-control" Click="Minimize_Click" ToolTip.Tip="Réduire" AutomationProperties.Name="Réduire la fenêtre">
+          <svg:Svg Path="/Assets/minus.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+        </Button>
+        <Button Grid.Column="9" Classes="toolbar window-control" Click="Maximize_Click" ToolTip.Tip="Agrandir ou restaurer" AutomationProperties.Name="Agrandir ou restaurer la fenêtre">
+          <svg:Svg Path="/Assets/resize.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+        </Button>
+        <Button Grid.Column="10" Classes="toolbar window-control" Click="Close_Click" ToolTip.Tip="Fermer" AutomationProperties.Name="Fermer la fenêtre">
+          <svg:Svg Path="/Assets/close.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+        </Button>
+        </Grid>
+    </Border>
+
+    <Grid Grid.Row="1" Background="#EEF2FA">
+      <Grid x:Name="HomeView" IsVisible="True" Margin="32,26" SizeChanged="HomeView_SizeChanged">
+        <Grid x:Name="HomeLayout" Width="1200" MaxWidth="1260" HorizontalAlignment="Center" ColumnDefinitions="*,28,300" RowDefinitions="Auto,*">
+          <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,0,22" ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="5">
+              <TextBlock x:Name="AuditListTitle" Text="Mes audits" FontSize="25" FontWeight="SemiBold" Foreground="#171F3B" />
+              <TextBlock x:Name="AuditListSubtitle" Text="Ouvrez un dossier pour poursuivre votre audit." FontSize="13" Foreground="#555E70" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+              <Button x:Name="ArchivedAuditsButton" Classes="header-action secondary" Content="Archives" Click="ToggleArchivedAudits_Click" />
+              <Button Classes="header-action primary" Content="Créer un audit" Click="NewAudit_Click" />
+            </StackPanel>
+          </Grid>
+          <Border Grid.Row="0" Grid.Column="2" Padding="16" Background="#E9EFF9" CornerRadius="8" VerticalAlignment="Top">
+            <StackPanel Spacing="4">
+              <TextBlock x:Name="AuditCountTitle" Text="Dossiers actifs sur cet appareil" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+              <TextBlock x:Name="AuditCount" FontSize="12" Foreground="#45536D" />
+            </StackPanel>
+          </Border>
+          <Grid Grid.Row="1" Grid.Column="0">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+              <ItemsControl x:Name="AuditList" HorizontalAlignment="Stretch" ItemsSource="{Binding Audits}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Grid ColumnDefinitions="*,44" Margin="0,0,0,10">
+                      <Button Grid.ColumnSpan="2" Classes="audit-card" Margin="0" HorizontalAlignment="Stretch" Tag="{Binding Id}" Click="ResumeAudit_Click" AutomationProperties.Name="{Binding AccessibleName}">
+                        <Grid ColumnDefinitions="34,*,Auto,44">
+                          <svg:Svg Grid.Column="0" Path="/Assets/globe.svg" Width="20" Height="20" CurrentColor="#171F3B" VerticalAlignment="Top" IsVisible="{Binding ShowGlobe}" />
+                          <Image Grid.Column="0" Source="{Binding Favicon}" Width="20" Height="20" Stretch="Uniform" VerticalAlignment="Top" IsVisible="{Binding HasFavicon}" />
+                          <StackPanel Grid.Column="1" Spacing="6">
+                            <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" Foreground="#171F3B" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{Binding Summary}" FontSize="13" Foreground="#555E70" />
+                          </StackPanel>
+                          <TextBlock Grid.Column="2" Text="{Binding UpdatedLabel}" FontSize="12" Foreground="#555E70" VerticalAlignment="Center" Margin="20,0,0,0" />
+                        </Grid>
+                      </Button>
+                      <Button Grid.Column="1" Classes="audit-actions" Tag="{Binding Id}" Click="AuditActions_Click" ToolTip.Tip="Actions de l’audit" AutomationProperties.Name="{Binding ActionsAccessibleName}" />
+                      <svg:Svg Grid.Column="1" Path="/Assets/more-horizontal.svg" Width="16" Height="16" CurrentColor="#171F3B" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+                    </Grid>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+            <Border x:Name="EmptyAudits" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="28" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8">
+              <StackPanel Spacing="8" MaxWidth="420">
+                <TextBlock x:Name="EmptyAuditTitle" Text="Aucun dossier d’audit" FontSize="17" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock x:Name="EmptyAuditDescription" Text="Créez un dossier pour définir le site et le référentiel avant de commencer." FontSize="13" Foreground="#555E70" TextWrapping="Wrap" />
+              </StackPanel>
+            </Border>
+          </Grid>
+          <Border Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" Padding="18" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8" VerticalAlignment="Top">
+            <StackPanel Spacing="10">
+              <TextBlock Text="Un dossier, un audit" FontSize="15" FontWeight="SemiBold" Foreground="#171F3B" />
+              <TextBlock Text="Chaque dossier conserve son site, son référentiel et ses décisions. Ouvrez une ligne pour reprendre son espace de travail." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Grid>
+
+      <Grid x:Name="SetupView" IsVisible="False" Margin="36,26">
+        <Grid MaxWidth="1080" HorizontalAlignment="Center" ColumnDefinitions="*,28,320" RowDefinitions="Auto,*">
+          <StackPanel Grid.Row="0" Grid.Column="0" Spacing="5" Margin="0,0,0,20">
+            <Button x:Name="SetupBackButton" Content="‹  Mes audits" Background="Transparent" BorderThickness="0" Foreground="#214B9A" HorizontalAlignment="Left" Click="CancelPageSelection_Click" />
+            <TextBlock x:Name="SetupTitle" Text="Créer un audit" FontSize="25" FontWeight="SemiBold" Foreground="#171F3B" Margin="0,7,0,0" />
+            <TextBlock x:Name="SetupSubtitle" Text="Définissez le site, puis choisissez le référentiel à appliquer." FontSize="13" Foreground="#555E70" />
+          </StackPanel>
+          <Border x:Name="SetupConfiguration" Grid.Row="1" Grid.Column="0" Padding="26" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8">
+            <StackPanel Spacing="16">
+              <StackPanel Spacing="6">
+                <TextBlock Text="Site à auditer" FontSize="16" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock Text="Choisissez le site et son référentiel. L’étape suivante repérera des pages candidates à confirmer." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
+              </StackPanel>
+              <StackPanel Spacing="7">
+                <TextBlock Text="Adresse du site" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBox x:Name="SiteUrlBox" Height="40" Padding="12,8" PlaceholderText="https://exemple.fr" AutomationProperties.Name="URL du site à auditer" />
+              </StackPanel>
+              <CheckBox x:Name="FaviconConsentCheckBox" IsChecked="True" AutomationProperties.Name="Récupérer le favicon du site" AutomationProperties.HelpText="Option facultative. Une requête HTTPS est envoyée à /favicon.ico sans cookie ni identifiant ; le site voit l’adresse IP de l’appareil.">
+                <StackPanel Spacing="3">
+                  <TextBlock Text="Récupérer le favicon du site" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                  <TextBlock Text="Option facultative : une requête HTTPS vers /favicon.ico révèle l’adresse IP au site. Aucun cookie ni identifiant n’est envoyé." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" MaxWidth="540" />
+                </StackPanel>
+              </CheckBox>
+              <Border Height="1" Background="#D8DAD9" />
+              <StackPanel Spacing="7">
+                <TextBlock Text="Référentiel" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                <ComboBox x:Name="ReferenceCombo" Height="40" HorizontalAlignment="Stretch" PlaceholderText="Choisir RGAA ou WCAG" ItemsSource="{Binding ReferenceOptions}" SelectionChanged="Reference_Changed" AutomationProperties.Name="Référentiel" />
+              </StackPanel>
+              <StackPanel x:Name="VersionPanel" IsVisible="False" Spacing="7">
+                <TextBlock Text="Version" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                <ComboBox x:Name="VersionCombo" Height="40" HorizontalAlignment="Stretch" PlaceholderText="Choisir une version" ItemsSource="{Binding VersionOptions}" SelectionChanged="Version_Changed" AutomationProperties.Name="Version du référentiel" />
+              </StackPanel>
+              <StackPanel x:Name="LevelPanel" IsVisible="False" Spacing="7">
+                <TextBlock Text="Niveau cible WCAG" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                <ComboBox x:Name="LevelCombo" Height="40" HorizontalAlignment="Stretch" PlaceholderText="Choisir A, AA ou AAA" ItemsSource="{Binding LevelOptions}" AutomationProperties.Name="Niveau cible WCAG, obligatoire" />
+                <TextBlock Text="Ce niveau définit le périmètre WCAG ; il ne constitue pas un résultat de conformité." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
+              </StackPanel>
+              <TextBlock x:Name="SetupStatus" IsVisible="False" Background="#FBEDEA" Padding="10" Foreground="#8B2D24" FontSize="12" TextWrapping="Wrap" AutomationProperties.LiveSetting="Assertive" />
+              <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,4,0,0">
+                <Button Content="Annuler" Click="Projects_Click" />
+                <Button Classes="primary" Content="Analyser les pages" Click="ScanSite_Click" />
+              </StackPanel>
+            </StackPanel>
+          </Border>
+          <Border x:Name="SetupPageSelection" Grid.Row="1" Grid.Column="0" IsVisible="False" Padding="22" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8">
+            <Grid RowDefinitions="Auto,Auto,*">
+              <StackPanel Spacing="4">
+                <TextBlock Text="Pages candidates du site" FontSize="18" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock x:Name="PageScanSummary" FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
+              </StackPanel>
+              <TextBlock x:Name="FaviconScanStatus" Grid.Row="1" Margin="0,10,0,4" FontSize="11" Foreground="#555E70" />
+              <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                <StackPanel Spacing="14" Margin="0,6,8,10">
+                  <StackPanel Spacing="7">
+                    <TextBlock Text="Pages prioritaires repérées" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <ItemsControl ItemsSource="{Binding PriorityPageChoices}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Border Padding="9,7" Margin="0,0,0,5" Background="#E9EFF9" CornerRadius="4">
+                            <StackPanel Spacing="3">
+                              <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" FontSize="13" Foreground="#171F3B" />
+                              <TextBlock Text="{Binding Url}" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" Margin="24,0,0,0" />
+                              <TextBlock Text="{Binding Category}" FontSize="10" Foreground="#45536D" Margin="24,0,0,0" />
+                            </StackPanel>
+                          </Border>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock x:Name="NoPriorityPages" Text="Aucune page prioritaire détectée." FontSize="12" Foreground="#555E70" IsVisible="False" />
+                  </StackPanel>
+                  <StackPanel Spacing="7">
+                    <TextBlock x:Name="OtherPagesHeading" Text="Autres pages (25 maximum)" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <ItemsControl ItemsSource="{Binding OtherPageChoices}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Border Padding="9,7" Margin="0,0,0,5" Background="#F3F4F6" CornerRadius="4">
+                            <StackPanel Spacing="3">
+                              <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" FontSize="13" Foreground="#171F3B" />
+                              <TextBlock Text="{Binding Url}" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" Margin="24,0,0,0" />
+                            </StackPanel>
+                          </Border>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock x:Name="NoOtherPages" Text="Aucune autre page candidate détectée." FontSize="12" Foreground="#555E70" IsVisible="False" />
+                  </StackPanel>
+                </StackPanel>
+              </ScrollViewer>
+            </Grid>
+          </Border>
+          <Border Grid.Row="1" Grid.Column="2" Padding="20" Background="#E9EFF9" CornerRadius="8" VerticalAlignment="Top">
+            <StackPanel Spacing="10">
+              <TextBlock x:Name="SetupGuidanceTitle" Text="Un référentiel par dossier" FontSize="15" FontWeight="SemiBold" Foreground="#171F3B" />
+              <TextBlock x:Name="SetupGuidanceText" Text="Choisissez RGAA ou WCAG. La version disponible dépend de ce choix." FontSize="12" Foreground="#45536D" TextWrapping="Wrap" />
+              <Border Height="1" Background="#D8DAD9" Margin="0,2" />
+              <TextBlock Text="La décision de conformité reste toujours celle de l’auditeur." FontSize="12" Foreground="#45536D" TextWrapping="Wrap" />
+              <StackPanel x:Name="PageSelectionActions" IsVisible="False" Spacing="8" Margin="0,6,0,0">
+                <Border Height="1" Background="#D8DAD9" Margin="0,2" />
+                <TextBlock Text="Périmètre de l’audit" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock x:Name="PageSelectionStatus" IsVisible="False" FontSize="12" Foreground="#8B2D24" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                <Button Content="Annuler" HorizontalAlignment="Stretch" Click="CancelPageSelection_Click" />
+                <Button x:Name="ConfirmPageSelectionButton" Classes="primary" Content="Valider et créer l’audit" HorizontalAlignment="Stretch" Click="ConfirmPages_Click" />
+              </StackPanel>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Grid>
+
+      <Grid x:Name="WorkspaceView" IsVisible="False" RowDefinitions="56,*" Margin="24,16" SizeChanged="WorkspaceView_SizeChanged">
+        <Grid Grid.Row="0" Margin="4,0,4,12" ColumnDefinitions="*,Auto">
+          <StackPanel Spacing="3" VerticalAlignment="Center">
+            <TextBlock x:Name="CurrentAuditHeader" FontSize="16" FontWeight="SemiBold" Foreground="#171F3B" TextTrimming="CharacterEllipsis" />
+            <TextBlock x:Name="CurrentSiteHeader" FontSize="12" Foreground="#555E70" TextTrimming="CharacterEllipsis" />
+          </StackPanel>
+          <Border x:Name="BrowserModeBorder" Grid.Column="1" Padding="11,7" Background="#E9EFF9" CornerRadius="4" VerticalAlignment="Center" AutomationProperties.Name="Le navigateur affiche une fixture locale fictive">
+            <TextBlock x:Name="BrowserModeLabel" Text="Fixture locale · démonstration" FontSize="12" Foreground="#214B9A" />
+          </Border>
+        </Grid>
+        <Grid x:Name="WorkspaceColumns" Grid.Row="1">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="350" />
+          </Grid.ColumnDefinitions>
+          <Border x:Name="CollapsedPageTab" Grid.Column="0" IsVisible="False" Height="56" VerticalAlignment="Top" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8">
+            <Grid RowDefinitions="Auto,*">
+              <Button x:Name="ExpandPagesTabButton" Grid.Row="0" Classes="page-rail" Click="ExpandPageScope_Click" ToolTip.Tip="Afficher la liste des pages" AutomationProperties.Name="Déplier la liste des pages de l’audit">
+                <svg:Svg Path="/Assets/folder.svg" Width="18" Height="18" CurrentColor="#171F3B" />
+              </Button>
+            </Grid>
+          </Border>
+          <Border x:Name="PageScopePanel" Grid.Column="0" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8" Padding="16">
+            <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" RowSpacing="10">
+              <Grid Grid.Row="0" ColumnDefinitions="*,32">
+                <StackPanel Spacing="3">
+                  <TextBlock Text="Pages du dossier" FontSize="15" FontWeight="SemiBold" Foreground="#171F3B" />
+                  <TextBlock x:Name="PageCountText" FontSize="12" Foreground="#555E70" />
+                </StackPanel>
+                <Button x:Name="CollapsePageScopeButton" Grid.Column="1" Classes="audit-actions" Width="32" Height="32" Click="CollapsePageScope_Click" ToolTip.Tip="Replier la liste des pages" AutomationProperties.Name="Replier la liste des pages en languette" />
+                <svg:Svg Grid.Column="1" Path="/Assets/chevron-left.svg" Width="14" Height="14" CurrentColor="#171F3B" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+              </Grid>
+              <Button x:Name="AuditOverviewButton" Grid.Row="1" Classes="page-tools" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Tag="True" Content="Vue d’ensemble" Click="AuditOverview_Click" AutomationProperties.Name="Afficher le tableau de bord de l’audit" />
+              <Button Grid.Row="2" HorizontalAlignment="Stretch" Content="Ajouter des pages" Click="FindAdditionalPages_Click" AutomationProperties.Name="Rechercher des pages candidates à ajouter à cet audit" />
+              <Border Grid.Row="3" Background="Transparent">
+                <Grid>
+                  <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding AuditPages}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Grid ColumnDefinitions="*,36" Margin="0,0,0,3">
+                            <Border Grid.ColumnSpan="2" Background="#E9EFF9" CornerRadius="4" IsVisible="{Binding IsCurrentPage}" />
+                            <Button Grid.ColumnSpan="2" Classes="page-list-item" Tag="{Binding Id}" Click="AuditPage_Click" ContextRequested="AuditPage_ContextRequested" AutomationProperties.Name="{Binding AccessibleName}">
+                              <StackPanel Spacing="2">
+                                <TextBlock Text="{Binding Name}" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2" />
+                                <TextBlock Text="{Binding DisplayPath}" FontSize="10" Foreground="#45536D" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Text="{Binding ProgressSummary}" FontSize="9" Foreground="#555E70" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding SuggestionSummary}" FontSize="9" Foreground="#6A5016" TextWrapping="Wrap" IsVisible="{Binding HasPendingSuggestions}" />
+                              </StackPanel>
+                            </Button>
+                            <Button Grid.Column="1" Classes="audit-actions" Width="32" Height="32" Tag="{Binding Id}" Click="AuditPageActions_Click" ContextRequested="AuditPage_ContextRequested" ToolTip.Tip="Actions de la page" AutomationProperties.Name="{Binding ActionsAccessibleName}" />
+                            <svg:Svg Grid.Column="1" Path="/Assets/more-horizontal.svg" Width="16" Height="16" CurrentColor="#171F3B" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+                          </Grid>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </ScrollViewer>
+                  <TextBlock x:Name="EmptyAuditPages" Text="Aucune page n’a encore été ajoutée." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="False" />
+                </Grid>
+              </Border>
+              <TextBlock Grid.Row="4" Text="25 pages supplémentaires maximum par audit." FontSize="10" Foreground="#555E70" TextWrapping="Wrap" />
+            </Grid>
+          </Border>
+          <Border Grid.Column="2" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8" ClipToBounds="True">
+            <Grid RowDefinitions="42,*">
+              <Border BorderBrush="#D8DAD9" BorderThickness="0,0,0,1" Padding="10,0">
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                  <Button x:Name="PageViewToolsButton" Classes="page-tools" Tag="True" Click="PageViewTools_Click" ToolTip.Tip="Choisir une vue de la page" AutomationProperties.Name="Outils et réglages d’affichage de la page">
+                    <StackPanel Orientation="Horizontal" Spacing="7" VerticalAlignment="Center">
+                      <svg:Svg Path="/Assets/sliders-horizontal.svg" Width="16" Height="16" CurrentColor="#171F3B" />
+                      <TextBlock x:Name="PageViewToolsLabel" Text="Site" VerticalAlignment="Center" />
+                      <svg:Svg Path="/Assets/chevron-down.svg" Width="13" Height="13" CurrentColor="#171F3B" />
+                    </StackPanel>
+                  </Button>
+                  <TextBlock x:Name="DashboardToolbarLabel" Text="Vue d’ensemble de l’audit" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" VerticalAlignment="Center" IsVisible="False" />
+                  <Button x:Name="RunAxeScanButton" Classes="page-tools" Click="RunAxeScan_Click" ToolTip.Tip="Lancer une analyse axe-core de la page sélectionnée" AutomationProperties.Name="Lancer une analyse axe-core de la page sélectionnée" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="7" HorizontalAlignment="Center" VerticalAlignment="Center">
+                      <svg:Svg Path="/Assets/search.svg" Width="15" Height="15" CurrentColor="#171F3B" VerticalAlignment="Center" />
+                      <TextBlock Text="Analyser cette page" VerticalAlignment="Center" />
+                    </StackPanel>
+                  </Button>
+                  <Button x:Name="PipetteButton" Classes="page-tools" Tag="False" Click="PipetteButton_Click" ToolTip.Tip="Pointer un élément pour relever ses couleurs et son contraste" AutomationProperties.Name="Activer la pipette de contraste" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="7" HorizontalAlignment="Center" VerticalAlignment="Center">
+                      <svg:Svg Path="/Assets/pipette.svg" Width="15" Height="15" CurrentColor="#171F3B" VerticalAlignment="Center" />
+                      <TextBlock x:Name="PipetteButtonLabel" Text="Pipette" VerticalAlignment="Center" />
+                    </StackPanel>
+                  </Button>
+                </StackPanel>
+              </Border>
+              <Grid x:Name="PageContentGrid" Grid.Row="1" ColumnDefinitions="*,0">
+                <webview:NativeWebView x:Name="Browser" Grid.Column="0" AutomationProperties.Name="Page du site sélectionnée dans l’audit" />
+                <Border x:Name="AuditDashboardPanel" Grid.ColumnSpan="2" IsVisible="False" Background="#FFFDF7" Padding="24" AutomationProperties.Name="Tableau de bord de l’audit">
+                  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel MaxWidth="1060" HorizontalAlignment="Center" Spacing="18" Margin="0,0,0,20">
+                      <StackPanel Spacing="5">
+                        <TextBlock Text="Vue d’ensemble" FontSize="23" FontWeight="SemiBold" Foreground="#171F3B" />
+                        <TextBlock x:Name="DashboardSubtitle" FontSize="13" Foreground="#45536D" TextWrapping="Wrap" />
+                      </StackPanel>
+                      <Border Background="#E9EFF9" CornerRadius="6" Padding="16">
+                        <StackPanel Spacing="8">
+                          <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Pages consultées" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                            <TextBlock x:Name="DashboardPageProgressText" Grid.Column="1" FontSize="12" FontWeight="SemiBold" Foreground="#214B9A" />
+                          </Grid>
+                          <ProgressBar x:Name="DashboardPageProgress" Minimum="0" Maximum="100" Height="8" AutomationProperties.Name="Progression des pages ouvertes dans le dossier" />
+                          <TextBlock Text="Cette progression indique les pages ouvertes dans l’outil, pas une conformité ni une couverture complète des critères." FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                        </StackPanel>
+                      </Border>
+                      <ItemsControl ItemsSource="{Binding DashboardMetrics}">
+                        <ItemsControl.ItemsPanel>
+                          <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                          </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate>
+                            <Border Width="205" MinHeight="108" Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="5" Padding="14" Margin="0,0,10,10">
+                              <StackPanel Spacing="5">
+                                <TextBlock Text="{Binding Label}" FontSize="11" FontWeight="SemiBold" Foreground="#45536D" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Value}" FontSize="23" FontWeight="SemiBold" Foreground="#171F3B" />
+                                <TextBlock Text="{Binding Detail}" FontSize="10" Foreground="#555E70" TextWrapping="Wrap" />
+                              </StackPanel>
+                            </Border>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                      <Border Background="#FFF4D9" BorderBrush="#E8D39D" BorderThickness="1" CornerRadius="5" Padding="16">
+                        <StackPanel Spacing="8">
+                          <TextBlock Text="À poursuivre" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                          <TextBlock x:Name="DashboardNextSteps" FontSize="12" Foreground="#45536D" TextWrapping="Wrap" />
+                          <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="DashboardOpenNextPageButton" Classes="primary" Content="Ouvrir une page" Click="DashboardOpenNextPage_Click" />
+                            <Button x:Name="DashboardReviewSuggestionsButton" Classes="secondary" Content="Examiner les suggestions" Click="DashboardReviewSuggestions_Click" IsVisible="False" />
+                          </StackPanel>
+                        </StackPanel>
+                      </Border>
+                      <TextBlock Text="Les compteurs reflètent les résultats, constats et preuves actuellement enregistrés dans ce dossier." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" />
+                    </StackPanel>
+                  </ScrollViewer>
+                </Border>
+                <edit:TextEditor x:Name="SourceCodeView" Grid.ColumnSpan="2" IsVisible="False" IsReadOnly="True" ShowLineNumbers="True" LineNumbersForeground="#555E70" WordWrap="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FFFDF7" Foreground="#171F3B" FontFamily="Consolas" FontSize="12" AutomationProperties.Name="Code source HTML, numéroté et coloré" />
+                <Border x:Name="SemanticTreePanel" Grid.Column="1" IsVisible="False" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1,0,0,0" Padding="12" AutomationProperties.Name="Balises HTML5 et anomalies de placement">
+                  <Grid RowDefinitions="Auto,*">
+                    <StackPanel Grid.Row="0" Spacing="3" Margin="2,0,2,10">
+                      <TextBlock x:Name="StructurePanelTitle" Text="Structure HTML5" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                      <TextBlock x:Name="StructurePanelSubtitle" Text="Balises sémantiques, titres et emplacements à vérifier." FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                      <TextBlock x:Name="SemanticReportStatus" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                      <ItemsControl ItemsSource="{Binding SemanticTreeNodes}">
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate>
+                            <StackPanel Margin="{Binding Indent}" Spacing="3">
+                              <Button Classes="aria-tree-item" Tag="{Binding Id}" Click="SemanticTreeNode_Click" PointerEntered="SemanticTreeNode_PointerEntered" PointerExited="SemanticTreeNode_PointerExited" GotFocus="SemanticTreeNode_GotFocus" LostFocus="SemanticTreeNode_LostFocus" AutomationProperties.Name="{Binding AccessibleName}">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="7">
+                                  <Border Grid.Column="0" Background="{Binding BadgeBackground}" CornerRadius="3" Padding="5,2" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Badge}" FontSize="10" FontWeight="Bold" Foreground="{Binding BadgeForeground}" />
+                                  </Border>
+                                  <TextBlock Grid.Column="1" Text="{Binding Summary}" FontSize="12" Foreground="#171F3B" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2" VerticalAlignment="Center" />
+                                </Grid>
+                              </Button>
+                              <Border IsVisible="{Binding HasIssue}" Margin="8,0,0,2" Background="{Binding BadgeBackground}" CornerRadius="4" Padding="8">
+                                <StackPanel Spacing="6">
+                                  <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <TextBlock Text="{Binding IssueLabel}" FontSize="10" FontWeight="Bold" Foreground="{Binding IssueForeground}" />
+                                    <TextBlock Text="{Binding Issue}" FontSize="11" Foreground="{Binding IssueForeground}" TextWrapping="Wrap" />
+                                  </StackPanel>
+                                  <TextBlock Text="{Binding Locator}" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                                  <Button Content="{Binding ReportActionLabel}" Tag="{Binding Id}" IsEnabled="{Binding CanAddToReport}" HorizontalAlignment="Stretch" Click="AddSemanticFindingToReport_Click" AutomationProperties.Name="{Binding AccessibleName}" AutomationProperties.HelpText="Ajoute ce constat à la page sélectionnée du dossier." />
+                                </StackPanel>
+                              </Border>
+                            </StackPanel>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </ScrollViewer>
+                  </Grid>
+                </Border>
+                <TextBlock x:Name="NoStructureNodes" Grid.Column="1" IsVisible="False" Text="Aucune balise HTML5 sémantique ou aucun titre détecté." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <Border x:Name="AriaTreePanel" Grid.Column="1" IsVisible="False" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1,0,0,0" Padding="12" AutomationProperties.Name="Arborescence des rôles et noms accessibles">
+                  <Grid RowDefinitions="Auto,*">
+                    <StackPanel Grid.Row="0" Spacing="3" Margin="2,0,2,10">
+                      <TextBlock Text="Éléments tels qu’annoncés" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                      <TextBlock Text="Rôles et noms accessibles calculés depuis le DOM." FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                      <ItemsControl ItemsSource="{Binding AriaTreeNodes}">
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate>
+                            <Button Classes="aria-tree-item" Margin="{Binding Indent}" Tag="{Binding Id}" Click="AriaTreeNode_Click" PointerEntered="AriaTreeNode_PointerEntered" PointerExited="AriaTreeNode_PointerExited" GotFocus="AriaTreeNode_GotFocus" LostFocus="AriaTreeNode_LostFocus" AutomationProperties.Name="{Binding AccessibleName}">
+                              <Grid ColumnDefinitions="Auto,*,20" ColumnSpacing="7">
+                                <Border Grid.Column="0" Background="{Binding BadgeBackground}" CornerRadius="3" Padding="5,2" VerticalAlignment="Center">
+                                  <TextBlock Text="{Binding Badge}" FontSize="10" FontWeight="Bold" Foreground="{Binding BadgeForeground}" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Spacing="1" VerticalAlignment="Center">
+                                  <TextBlock Text="{Binding DisplayName}" FontSize="12" Foreground="{Binding NameForeground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2" IsVisible="{Binding HasName}" />
+                                  <TextBlock Text="{Binding State}" FontSize="10" Foreground="#555E70" IsVisible="{Binding HasState}" />
+                                </StackPanel>
+                                <svg:Svg Grid.Column="2" IsVisible="{Binding IsLink}" Path="/Assets/link.svg" Width="15" Height="15" CurrentColor="#214B9A" VerticalAlignment="Center" />
+                              </Grid>
+                            </Button>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </ScrollViewer>
+                  </Grid>
+                </Border>
+                <TextBlock x:Name="NoAriaTreeNodes" Grid.Column="1" IsVisible="False" Text="Aucun élément accessible détecté." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <Border x:Name="AxeResultsPanel" Grid.Column="1" IsVisible="False" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1,0,0,0" Padding="12" AutomationProperties.Name="Résultats de l’analyse axe-core">
+                  <Grid RowDefinitions="Auto,*">
+                    <StackPanel Grid.Row="0" Spacing="4" Margin="2,0,2,10">
+                      <TextBlock Text="Analyse axe-core" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                      <TextBlock Text="Les règles sans élément applicable sont masquées. « À vérifier » signale un cas qu’axe-core ne peut pas trancher seul." FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                      <TextBlock x:Name="AxeScanStatus" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                      <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding AxeResults}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                              <Border Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="4" Padding="8" Margin="0,0,0,7">
+                                <StackPanel Spacing="5">
+                                  <TextBlock Text="{Binding Heading}" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                                  <TextBlock Text="{Binding Summary}" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                                  <TextBlock Text="{Binding ReviewStatus}" FontSize="10" Foreground="#214B9A" />
+                                  <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <Button Content="Repérer" Tag="{Binding Id}" Click="AxeResult_Click" AutomationProperties.Name="Repérer l’élément concerné dans la page" />
+                                    <Button Content="Retenir" Tag="{Binding Id}" Click="AxeKeep_Click" />
+                                    <Button Content="Écarter" Tag="{Binding Id}" Click="AxeReject_Click" />
+                                  </StackPanel>
+                                </StackPanel>
+                              </Border>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                      </ScrollViewer>
+                      <TextBlock x:Name="NoAxeResults" Text="Lancez l’analyse depuis la barre d’outils. Seules les règles comportant des éléments concernés seront listées." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="True" />
+                    </Grid>
+                  </Grid>
+                </Border>
+                <Border x:Name="TechnologyProfilePanel" Grid.Column="1" IsVisible="False" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1,0,0,0" Padding="12" AutomationProperties.Name="Résumé technique et SEO de la page">
+                  <Grid RowDefinitions="Auto,*">
+                    <StackPanel Grid.Row="0" Spacing="5" Margin="2,0,2,12">
+                      <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="Résumé technique et SEO" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" VerticalAlignment="Center" />
+                        <Button Grid.Column="1" Content="Actualiser" Click="RefreshTechnologyProfile_Click" AutomationProperties.Name="Actualiser le résumé technique de la page" />
+                      </Grid>
+                      <TextBlock x:Name="TechnologyProfileStatus" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                      <StackPanel Spacing="8" Margin="0,0,2,8">
+                        <Border Background="#E9EFF9" CornerRadius="4" Padding="9">
+                          <StackPanel Spacing="3">
+                            <TextBlock x:Name="TechnologyPageTitle" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                            <TextBlock x:Name="TechnologyPageFacts" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                          </StackPanel>
+                        </Border>
+                        <TextBlock Text="Technologies détectées" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" Margin="2,5,0,0" />
+                        <TextBlock x:Name="TechnologyDetectionSummary" FontSize="10" Foreground="#555E70" TextWrapping="Wrap" />
+                        <ItemsControl ItemsSource="{Binding TechnologyFindings}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                              <Border Background="#F3F4F6" CornerRadius="4" Padding="8" Margin="0,0,0,5">
+                                <StackPanel Spacing="4">
+                                  <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+                                    <TextBlock Text="{Binding Name}" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Category}" FontSize="9" Foreground="#214B9A" VerticalAlignment="Center" TextWrapping="Wrap" />
+                                  </Grid>
+                                  <TextBlock Text="{Binding Evidence}" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                                  <TextBlock Text="{Binding VersionSummary}" FontSize="10" Foreground="#45536D" IsVisible="{Binding HasVersion}" />
+                                  <TextBlock Text="{Binding Confidence}" FontSize="10" Foreground="#6A5016" />
+                                </StackPanel>
+                              </Border>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock x:Name="NoTechnologyFindings" Text="Aucun indice reconnu par les signatures locales. Une technologie peut être présente sans signature visible." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" IsVisible="True" />
+                        <Border Height="1" Background="#D8DAD9" Margin="0,4" />
+                        <TextBlock Text="Référencement naturel (SEO)" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" Margin="2,3,0,0" />
+                        <TextBlock Text="Indicateurs techniques de la page ; ils ne constituent pas un audit complet de visibilité." FontSize="10" Foreground="#555E70" TextWrapping="Wrap" />
+                        <ItemsControl ItemsSource="{Binding SeoFindings}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                              <Border BorderBrush="#E3E7EF" BorderThickness="0,0,0,1" Padding="3,7">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="6" RowSpacing="2">
+                                  <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Label}" FontSize="11" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                                  <Border Grid.Row="0" Grid.Column="1" Background="{Binding StateBackground}" CornerRadius="3" Padding="5,2" VerticalAlignment="Top">
+                                    <TextBlock Text="{Binding State}" FontSize="9" Foreground="{Binding StateForeground}" />
+                                  </Border>
+                                  <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Value}" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                                </Grid>
+                              </Border>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                      </StackPanel>
+                    </ScrollViewer>
+                  </Grid>
+                </Border>
+                <Border x:Name="PageViewStatus" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="14" Background="#FFF4D9" BorderBrush="#E8D39D" BorderThickness="1" CornerRadius="4">
+                  <TextBlock x:Name="PageViewStatusText" FontSize="12" Foreground="#6A5016" TextWrapping="Wrap" MaxWidth="420" />
+                </Border>
+              </Grid>
+            </Grid>
+          </Border>
+          <Border x:Name="SidePanel" Grid.Column="4" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8" Padding="18" AutomationProperties.AutomationId="AuditDecisionPanel" AutomationProperties.Name="Panneau de décision et d’inspection">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+              <StackPanel Spacing="9">
+                <TextBlock Text="Inspection" FontSize="17" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock Text="La décision de conformité appartient à l’auditeur." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
+                <Border Background="#FFF4D9" BorderBrush="#E8D39D" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,2,0,4">
+                  <TextBlock x:Name="BrowserSafetyNote" Text="Démonstration locale uniquement : la page affichée est une fixture fictive, jamais le site saisi dans le dossier." FontSize="12" Foreground="#6A5016" TextWrapping="Wrap" />
+                </Border>
+                <TextBlock x:Name="SelectedElementHeading" Text="Élément sélectionné" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock x:Name="SelectionSummary" Text="Aucun élément sélectionné. Activez l’inspection pour essayer la fixture locale." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                <Border x:Name="ColorContrastPanel" IsVisible="False" Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,4">
+                  <StackPanel Spacing="7">
+                    <TextBlock Text="Contraste des couleurs" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <TextBlock x:Name="ContrastElementSummary" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                      <StackPanel Spacing="4">
+                        <TextBlock Text="Texte / bordure" FontSize="10" FontWeight="SemiBold" Foreground="#171F3B" />
+                        <Border x:Name="ContrastForegroundSwatch" Height="28" Background="#171F3B" BorderBrush="#7B8190" BorderThickness="1" CornerRadius="3" />
+                        <TextBlock x:Name="ContrastForegroundHex" FontSize="10" Foreground="#45536D" />
+                      </StackPanel>
+                      <StackPanel Grid.Column="1" Spacing="4">
+                        <TextBlock Text="Arrière-plan calculé" FontSize="10" FontWeight="SemiBold" Foreground="#171F3B" />
+                        <Border x:Name="ContrastBackgroundSwatch" Height="28" Background="#FFFFFF" BorderBrush="#7B8190" BorderThickness="1" CornerRadius="3" />
+                        <TextBlock x:Name="ContrastBackgroundHex" FontSize="10" Foreground="#45536D" />
+                      </StackPanel>
+                    </Grid>
+                    <TextBlock x:Name="ContrastRatioText" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6" AutomationProperties.Name="Comparaison du contraste aux niveaux WCAG A, AA et AAA">
+                      <Border x:Name="ContrastLevelASurface" Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="4" Padding="6">
+                        <StackPanel Spacing="3">
+                          <TextBlock Text="Niveau A" FontSize="10" FontWeight="SemiBold" Foreground="#171F3B" />
+                          <TextBlock x:Name="ContrastLevelAStatus" Text="—" FontSize="10" FontWeight="SemiBold" Foreground="#555E70" TextWrapping="Wrap" />
+                          <TextBlock x:Name="ContrastLevelAThreshold" Text="Pas de seuil" FontSize="9" Foreground="#555E70" TextWrapping="Wrap" />
+                        </StackPanel>
+                      </Border>
+                      <Border x:Name="ContrastLevelAASurface" Grid.Column="1" Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="4" Padding="6">
+                        <StackPanel Spacing="3">
+                          <TextBlock Text="Niveau AA" FontSize="10" FontWeight="SemiBold" Foreground="#171F3B" />
+                          <TextBlock x:Name="ContrastLevelAAStatus" Text="—" FontSize="10" FontWeight="SemiBold" Foreground="#555E70" TextWrapping="Wrap" />
+                          <TextBlock x:Name="ContrastLevelAAThreshold" Text="Seuil —" FontSize="9" Foreground="#555E70" TextWrapping="Wrap" />
+                        </StackPanel>
+                      </Border>
+                      <Border x:Name="ContrastLevelAAASurface" Grid.Column="2" Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="4" Padding="6">
+                        <StackPanel Spacing="3">
+                          <TextBlock Text="Niveau AAA" FontSize="10" FontWeight="SemiBold" Foreground="#171F3B" />
+                          <TextBlock x:Name="ContrastLevelAAAStatus" Text="—" FontSize="10" FontWeight="SemiBold" Foreground="#555E70" TextWrapping="Wrap" />
+                          <TextBlock x:Name="ContrastLevelAAAThreshold" Text="Seuil —" FontSize="9" Foreground="#555E70" TextWrapping="Wrap" />
+                        </StackPanel>
+                      </Border>
+                    </Grid>
+                    <TextBlock x:Name="ContrastAssessment" FontSize="11" FontWeight="SemiBold" Foreground="#8B2D24" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    <TextBlock Text="La pipette fournit un indice, pas une décision de conformité." FontSize="9" Foreground="#555E70" TextWrapping="Wrap" />
+                    <TextBlock x:Name="ContrastCaveat" IsVisible="False" FontSize="10" Foreground="#6A5016" TextWrapping="Wrap" />
+                    <Button x:Name="AddContrastFindingButton" IsVisible="False" Classes="secondary" Content="Ajouter un constat à inspecter" Click="AddContrastFinding_Click" HorizontalAlignment="Stretch" />
+                    <TextBlock x:Name="PipetteStatus" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                  </StackPanel>
+                </Border>
+                <Border x:Name="AxeEvidencePanel" IsVisible="False" Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,4">
+                  <StackPanel Spacing="7">
+                    <TextBlock Text="Élément et preuves" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <TextBlock x:Name="AxeElementSummary" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                    <TextBlock Text="Extrait HTML (à relire avant de l’ajouter)" FontSize="11" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <TextBox x:Name="AxeHtmlEvidence" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="76" MaxHeight="130" FontFamily="Consolas" FontSize="10" AutomationProperties.Name="Extrait HTML de l’élément concerné" />
+                    <Button Content="Ajouter l’extrait HTML comme preuve" HorizontalAlignment="Stretch" Click="AddHtmlProof_Click" />
+                    <Button x:Name="CaptureAxeProofButton" Content="Capturer l’élément visible" HorizontalAlignment="Stretch" Click="CaptureAxeProof_Click" AutomationProperties.HelpText="Enregistre une capture de la zone de l’élément sélectionné, si la plateforme le permet." />
+                    <TextBlock Text="Les preuves restent locales. Vérifiez qu’elles ne contiennent pas de données personnelles ou confidentielles avant de les partager." FontSize="10" Foreground="#6A5016" TextWrapping="Wrap" />
+                    <TextBlock x:Name="AxeProofStatus" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    <TextBlock Text="Indices techniques détectés dans la page" FontSize="11" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <TextBlock x:Name="AxeTechnologyInfo" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                    <TextBlock Text="Preuves enregistrées" FontSize="11" FontWeight="SemiBold" Foreground="#171F3B" />
+                    <ItemsControl ItemsSource="{Binding InspectionEvidence}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Border Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="3" Padding="6" Margin="0,0,0,4">
+                            <StackPanel Spacing="2">
+                              <TextBlock Text="{Binding Title}" FontSize="10" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                              <TextBlock Text="{Binding Description}" FontSize="10" Foreground="#45536D" TextWrapping="Wrap" />
+                            </StackPanel>
+                          </Border>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock x:Name="NoInspectionEvidence" Text="Aucune preuve ajoutée pour cet élément." FontSize="10" Foreground="#555E70" />
+                  </StackPanel>
+                </Border>
+                <Border Height="1" Background="#E3E7EF" Margin="0,3" />
+                <TextBlock Text="Analyse automatisée axe-core" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock Text="Les résultats sont des pistes à vérifier manuellement ; ils ne déterminent pas la conformité." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" />
+                <Border Height="1" Background="#E3E7EF" Margin="0,3" />
+                <TextBlock Text="Décision humaine" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBlock Text="Critère ou contrôle" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
+                <TextBox x:Name="RuleBox" PlaceholderText="Saisir le critère examiné" AutomationProperties.Name="Critère ou contrôle examiné" />
+                <TextBlock Text="Résultat de conformité" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
+                <ComboBox x:Name="DecisionCombo" Height="40" HorizontalAlignment="Stretch" AutomationProperties.Name="Résultat décidé par l’auditeur">
+                  <ComboBoxItem Content="Choisir un résultat…" IsSelected="True" />
+                  <ComboBoxItem Content="Conforme" />
+                  <ComboBoxItem Content="Non conforme" />
+                  <ComboBoxItem Content="Non applicable" />
+                  <ComboBoxItem Content="Non vérifiable" />
+                </ComboBox>
+                <TextBlock Text="Justification (obligatoire pour les deux derniers résultats)" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" TextWrapping="Wrap" />
+                <TextBox x:Name="JustificationBox" PlaceholderText="Ajouter une justification si nécessaire" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="66" VerticalContentAlignment="Top" AutomationProperties.Name="Justification, obligatoire pour Non applicable et Non vérifiable" />
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,3,0,0">
+                  <Button x:Name="SaveReviewButton" Classes="primary" Content="Enregistrer" Click="SaveReview_Click" />
+                  <Button x:Name="CompleteReviewButton" Content="Terminer la revue" IsEnabled="False" Click="CompleteReview_Click" />
+                </StackPanel>
+                <TextBlock x:Name="ReviewStatus" FontSize="12" Foreground="#555E70" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+              </StackPanel>
+            </ScrollViewer>
+          </Border>
+        </Grid>
+      </Grid>
+    </Grid>
+
+    <Popup x:Name="OptionsPopup" Placement="Bottom" IsLightDismissEnabled="True" Closed="OptionsPopup_Closed">
+      <Border Width="324" Margin="8,12,8,0" Padding="6" Background="#FFFDF7" BorderBrush="#7B8190" BorderThickness="1" CornerRadius="8" BoxShadow="0 7 20 0 #260E1731">
+        <StackPanel x:Name="MenuItems" Width="310" HorizontalAlignment="Stretch">
+          <Button Classes="menu-item" Content="Mes projets" Click="Projects_Click" />
+          <Button Classes="menu-item" Content="Nouveau projet" Click="NewAudit_Click" />
+          <Border Height="1" Margin="0,4" Background="#D8DAD9" />
+          <Button x:Name="StartInspectItem" Classes="menu-item" Content="Activer l’inspection des éléments (F6)" Click="StartInspect_Click" />
+          <Button x:Name="StopInspectItem" Classes="menu-item" Content="Terminer l’inspection (Échap)" IsEnabled="False" Click="StopInspect_Click" />
+          <Border Height="1" Margin="0,4" Background="#D8DAD9" />
+          <Button Classes="menu-item" Content="Paramètres" Click="Settings_Click" />
+          <Button Classes="menu-item" Content="À propos" Click="About_Click" />
+          <Border Height="1" Margin="0,4" Background="#D8DAD9" />
+          <Button Classes="menu-item" Content="Quitter" Click="Quit_Click" />
+        </StackPanel>
+      </Border>
+    </Popup>
+  </Grid>
+</Window>

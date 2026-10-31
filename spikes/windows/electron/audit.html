@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Panneau d’audit — prototype temporaire</title>
+  <link rel="stylesheet" href="audit.css">
+  <script defer src="audit.js"></script>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">PROTOTYPE WINDOWS · DONNÉES SYNTHÉTIQUES UNIQUEMENT</p>
+    <h1>Panneau d’audit</h1>
+      <p class="notice">Prototype jetable, non destiné à la production. N’utilisez aucune donnée réelle. Seule la page locale synthétique peut être associée à un dossier enregistré. Pas de moteur de règles, d’authentification, de sauvegarde des preuves, de rapport ni d’export.</p>
+
+    <section aria-labelledby="dossiers-title">
+      <h2 id="dossiers-title">Dossiers d’audit synthétiques</h2>
+      <p id="session-warning" class="notice">Attention : un seul navigateur et une seule session sont partagés entre les dossiers. Les constats sont isolés ; les sessions de site ne le sont pas.</p>
+      <label for="audit-title">Nom du nouveau dossier</label>
+      <div class="row"><input id="audit-title" maxlength="120"><button id="create-audit" type="button">Créer</button></div>
+      <label for="audit-list">Dossiers enregistrés</label>
+      <div class="row"><select id="audit-list"></select><button id="open-audit" type="button">Ouvrir</button></div>
+      <p>Dossier actif : <strong id="active-audit">Aucun dossier ouvert.</strong></p>
+      <p>Page associée au dossier : <output id="active-audit-page">Aucune page enregistrée.</output></p>
+    </section>
+
+    <section aria-labelledby="navigation-title">
+      <h2 id="navigation-title">Navigation vers la page cible</h2>
+      <form id="url-form">
+        <label for="target-url">URL cible (http ou https uniquement)</label>
+        <div class="row"><input id="target-url" type="url" autocomplete="url" required><button type="submit">Ouvrir</button></div>
+      </form>
+      <p>Dernière URL chargée avec succès : <output id="current-url">Aucune page chargée avec succès.</output></p>
+      <button id="reload" type="button">Recharger la page</button>
+      <button id="focus-target" type="button">Aller à la page</button>
+      <button id="focus-audit" type="button">Revenir au panneau</button>
+      <p class="hint">Raccourci explicite entre les zones : <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd>. Les touches ordinaires de la page ne sont pas interceptées.</p>
+      <p id="status" role="status" aria-live="polite">Démarrage de la page de démonstration…</p>
+    </section>
+
+    <section aria-labelledby="automated-title">
+      <h2 id="automated-title">Observation automatique synthétique</h2>
+      <article class="finding">
+        <h3>Bouton de démonstration sans nom</h3>
+        <p>Un bouton de la page locale de démonstration n’a pas de nom accessible. Cet exemple codé en dur n’est ni un moteur de règles ni un résultat d’audit d’un site réel.</p>
+        <fieldset>
+          <legend>Traitement de cette observation</legend>
+          <label class="choice"><input type="radio" name="observation" value="confirmed"> Confirmer l’observation</label>
+          <label class="choice"><input type="radio" name="observation" value="rejected"> Rejeter l’observation</label>
+          <label class="choice"><input type="radio" name="observation" value="needs-follow-up"> À compléter</label>
+        </fieldset>
+        <p id="observation-status" role="status" aria-live="polite">Aucune action sur l’observation ; aucun résultat de conformité n’est déduit.</p>
+        <p>Informations limitées sur l’élément actif :</p>
+        <pre id="inspection" aria-live="polite">Aucune inspection effectuée.</pre>
+        <button id="inspect" type="button">Inspecter l’élément actif de la page</button>
+      </article>
+    </section>
+
+    <section aria-labelledby="manual-title">
+      <h2 id="manual-title">Vérification manuelle</h2>
+      <p>Examinez le nom du bouton de démonstration dans la page. L’observation automatique et votre résultat sont distincts.</p>
+      <form id="decision-form">
+        <fieldset>
+          <legend>Résultat décidé par l’auditeur</legend>
+          <label class="choice"><input type="radio" name="decision" value="Conforme" required> Conforme</label>
+          <label class="choice"><input type="radio" name="decision" value="Non conforme"> Non conforme</label>
+          <label class="choice"><input type="radio" name="decision" value="Non applicable"> Non applicable</label>
+          <label class="choice"><input type="radio" name="decision" value="Non vérifiable"> Non vérifiable</label>
+        </fieldset>
+        <label for="justification">Justification</label>
+        <p id="justification-help">Elle devient obligatoire pour « Non applicable » ou « Non vérifiable ».</p>
+        <textarea id="justification" aria-describedby="justification-help decision-status" rows="3"></textarea>
+        <button id="record-decision" type="submit" disabled>Enregistrer le résultat</button>
+      </form>
+      <button id="complete-review" type="button" disabled>Marquer explicitement la revue comme terminée</button>
+      <p id="decision-status" role="status" aria-live="polite">Ouvrez un dossier pour commencer.</p>
+    </section>
+
+    <footer>
+      <h2>Limites du prototype</h2>
+      <ul>
+        <li>Seuls les dossiers synthétiques JSON sont enregistrés dans user-data/audits/ ; aucune session ou donnée de navigateur n’est incluse.</li>
+        <li>L’inspection extrait quelques propriétés DOM ; elle ne lit pas l’arbre d’accessibilité et n’effectue pas une évaluation complète.</li>
+        <li>Les pages distantes sont non fiables ; utilisez uniquement des pages synthétiques. Une URL http(s) n’est pas vérifiée ni réputée sûre.</li>
+        <li>Aucun rapport, export, identifiant, authentification, profil persistant ni conclusion de conformité n’est produit.</li>
+      </ul>
+    </footer>
+  </main>
+</body>
+</html>

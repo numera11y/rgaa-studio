@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\RgaaStudio.ico</ApplicationIcon>
+    <AssemblyName>RgaaStudio.Desktop</AssemblyName>
+    <RootNamespace>RgaaStudio.Desktop</RootNamespace>
+    <Product>RGAA Studio</Product>
+    <Company>numera11y</Company>
+    <Copyright>Copyright (c) 2026 numera11y</Copyright>
+    <Description>Application desktop d’audit d’accessibilité RGAA et WCAG</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RgaaStudio.Core\RgaaStudio.Core.csproj" />
+    <PackageReference Include="Avalonia" Version="12.1.4" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.4" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.4" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.4" />
+    <PackageReference Include="Avalonia.Controls.WebView" Version="12.1.1" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
+    <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="12.0.0.17" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="..\..\docs\_sources\images\menu.svg" Link="Assets\menu.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\projects.svg" Link="Assets\projects.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\plus.svg" Link="Assets\plus.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\update.svg" Link="Assets\update.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\panel-right.svg" Link="Assets\panel-right.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\minus.svg" Link="Assets\minus.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\resize.svg" Link="Assets\resize.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\close.svg" Link="Assets\close.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\globe.svg" Link="Assets\globe.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\chevron-left.svg" Link="Assets\chevron-left.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\chevron-right.svg" Link="Assets\chevron-right.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\more-horizontal.svg" Link="Assets\more-horizontal.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\sliders-horizontal.svg" Link="Assets\sliders-horizontal.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\search.svg" Link="Assets\search.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\pipette.svg" Link="Assets\pipette.svg" />
+    <AvaloniaResource Include="Assets\rgaa-studio-app-icon.svg" Link="Assets\rgaa-studio-app-icon.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\chevron-down.svg" Link="Assets\chevron-down.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\link.svg" Link="Assets\link.svg" />
+    <AvaloniaResource Include="..\..\docs\_sources\images\folder.svg" Link="Assets\folder.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Highlighting\HtmlSource.xshd" LogicalName="RgaaStudio.Desktop.Highlighting.HtmlSource.xshd" />
+    <EmbeddedResource Include="Assets\axe.min.js" LogicalName="RgaaStudio.Desktop.Assets.axe.min.js" />
+    <Content Include="Assets\fixture.html" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Assets\LUCIDE-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Assets\AXE-CORE-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Assets\rgaa-studio-app-icon.svg" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\LICENSE" Link="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

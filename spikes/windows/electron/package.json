@@ -1,0 +1,15 @@
+{
+  "name": "rgaa-windows-electron-spike",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Disposable Windows-only architecture spike; not production code or a stack decision.",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "smoke": "node smoke.cjs",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "electron": "45.1.0"
+  }
+}

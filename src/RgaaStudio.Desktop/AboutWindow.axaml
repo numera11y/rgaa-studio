@@ -1,0 +1,68 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+        x:Class="RgaaStudio.Desktop.AboutWindow"
+        x:CompileBindings="False"
+        Title="À propos de RGAA Studio"
+        Width="490" Height="500" MinWidth="450" MinHeight="450"
+        WindowStartupLocation="CenterOwner"
+        WindowDecorations="None" CanResize="False" ShowInTaskbar="False"
+        Background="#EEF2FA">
+  <Window.Styles>
+    <Style Selector="Button.dialog-primary">
+      <Setter Property="Background" Value="#214B9A" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Padding" Value="16,9" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.dialog-primary:pointerover"><Setter Property="Background" Value="#193D80" /></Style>
+    <Style Selector="Button.dialog-secondary">
+      <Setter Property="Background" Value="#FFFDF7" />
+      <Setter Property="Foreground" Value="#171F3B" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Padding" Value="12,8" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.dialog-close">
+      <Setter Property="Width" Value="32" />
+      <Setter Property="Height" Value="32" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.dialog-close:pointerover"><Setter Property="Background" Value="#DCE6F7" /></Style>
+  </Window.Styles>
+  <Border Margin="10" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8">
+    <Grid RowDefinitions="48,*,Auto">
+      <Border x:Name="AboutHeader" Background="#E9EFF9" BorderBrush="#D8DAD9" BorderThickness="0,0,0,1" CornerRadius="8,8,0,0" PointerPressed="Header_PointerPressed" Padding="16,0">
+        <Grid ColumnDefinitions="*,40">
+          <TextBlock Text="À propos" FontSize="15" FontWeight="SemiBold" Foreground="#171F3B" VerticalAlignment="Center" />
+          <Button Grid.Column="1" Classes="dialog-close" Click="Close_Click" ToolTip.Tip="Fermer À propos" AutomationProperties.Name="Fermer À propos">
+            <svg:Svg Path="/Assets/close.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+          </Button>
+        </Grid>
+      </Border>
+      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="13" HorizontalAlignment="Center" Margin="24,22" MaxWidth="400">
+          <svg:Svg Path="/Assets/rgaa-studio-app-icon.svg" Width="72" Height="72" HorizontalAlignment="Center" AutomationProperties.Name="Icône de RGAA Studio" />
+          <TextBlock Text="RGAA Studio" FontSize="22" FontWeight="SemiBold" Foreground="#171F3B" HorizontalAlignment="Center" />
+          <TextBlock x:Name="VersionText" FontSize="12" Foreground="#45536D" HorizontalAlignment="Center" />
+          <TextBlock Text="Édité par numera11y" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" HorizontalAlignment="Center" />
+          <Border Height="1" Background="#D8DAD9" Margin="0,3" />
+          <TextBlock Text="RGAA Studio accompagne les audits d’accessibilité. Les détections automatiques sont des aides ; les décisions de conformité appartiennent à l’auditeur." FontSize="12" Foreground="#45536D" TextWrapping="Wrap" />
+          <TextBlock Text="Les dossiers d’audit et leurs preuves sont conservés localement sur cet appareil." FontSize="12" Foreground="#45536D" TextWrapping="Wrap" />
+          <TextBlock Text="Licence MIT" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
+          <Button Classes="dialog-secondary" Content="Consulter la licence" HorizontalAlignment="Left" Click="OpenLicense_Click" />
+          <TextBlock x:Name="AboutStatus" FontSize="11" Foreground="#8B2D24" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+        </StackPanel>
+      </ScrollViewer>
+      <Border Grid.Row="2" BorderBrush="#D8DAD9" BorderThickness="0,1,0,0" Padding="16">
+        <Button Classes="dialog-primary" Content="Fermer" HorizontalAlignment="Right" Click="Close_Click" />
+      </Border>
+    </Grid>
+  </Border>
+</Window>

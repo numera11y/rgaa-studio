@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+        x:Class="RgaaStudio.Desktop.SplashWindow"
+        x:CompileBindings="False"
+        Title="RGAA Studio"
+        Width="480" Height="330" MinWidth="480" MinHeight="330"
+        WindowStartupLocation="CenterScreen"
+        WindowDecorations="None" CanResize="False" ShowInTaskbar="False"
+        Background="#EEF2FA">
+  <Border Margin="10" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8">
+    <Grid RowDefinitions="*,Auto">
+      <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
+        <svg:Svg Path="/Assets/rgaa-studio-app-icon.svg" Width="88" Height="88" HorizontalAlignment="Center" AutomationProperties.Name="Icône RGAA Studio" />
+        <TextBlock Text="RGAA Studio" FontSize="23" FontWeight="SemiBold" Foreground="#171F3B" HorizontalAlignment="Center" />
+        <TextBlock Text="Audit d’accessibilité · RGAA &amp; WCAG" FontSize="13" Foreground="#45536D" HorizontalAlignment="Center" />
+        <TextBlock Text="Édité par numera11y" FontSize="11" Foreground="#555E70" HorizontalAlignment="Center" />
+      </StackPanel>
+      <StackPanel Grid.Row="1" Margin="28,0,28,22" Spacing="8">
+        <ProgressBar Height="4" IsIndeterminate="True" AutomationProperties.Name="Chargement de RGAA Studio" />
+        <TextBlock Text="Préparation de l’espace de travail…" FontSize="11" Foreground="#555E70" HorizontalAlignment="Center" />
+      </StackPanel>
+    </Grid>
+  </Border>
+</Window>

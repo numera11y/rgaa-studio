@@ -1,0 +1,1 @@
+The Windows setup executable is built with NSIS 3.13. NSIS source code and most components use the zlib/libpng license; the bzip2 and LZMA modules have separate notices in the upstream COPYING file. This setup uses NSIS's zlib compressor and does not bundle the NSIS compiler. See the adjacent NSIS-COPYING.txt for the notices included with the compiler distribution.

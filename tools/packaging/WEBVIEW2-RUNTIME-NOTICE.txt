@@ -1,0 +1,7 @@
+Microsoft Edge WebView2 Evergreen Runtime Standalone Installer, x64.
+
+The Windows setup bundles the Microsoft-distributed Evergreen standalone installer version 156.0.4314.58. It runs silently only when the WebView2 Runtime is absent. The installed Evergreen Runtime continues to receive Microsoft security and feature updates independently of RGAA Studio.
+
+Official distribution guidance: https://learn.microsoft.com/microsoft-edge/webview2/concepts/distribution
+Microsoft WebView2 download page: https://developer.microsoft.com/microsoft-edge/webview2/
+Installer SHA-256: 62863f0f0611a16ccf124b4f15650c3b66624504eba74d7cde1e2ae5d951249b

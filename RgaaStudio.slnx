@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/RgaaStudio.Core/RgaaStudio.Core.csproj" />
+  <Project Path="src/RgaaStudio.Desktop/RgaaStudio.Desktop.csproj" />
+  <Project Path="src/RgaaStudio.Core.Checks/RgaaStudio.Core.Checks.csproj" />
+  <Project Path="tools/RgaaStudio.Migration/RgaaStudio.Migration.csproj" />
+</Solution>

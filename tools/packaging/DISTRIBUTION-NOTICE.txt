@@ -1,0 +1,3 @@
+RGAA Studio est distribué sous licence MIT ; le texte complet se trouve dans LICENSE.txt.
+
+Les composants tiers conservent leurs licences et avis distincts, fournis dans Assets/. Le runtime Microsoft Edge WebView2 est redistribué dans l’installateur Windows selon les conditions de Microsoft. Ce paquet de préversion est construit pour l’évaluation ; la validation d’installation Linux reste en cours sur les distributions cibles.

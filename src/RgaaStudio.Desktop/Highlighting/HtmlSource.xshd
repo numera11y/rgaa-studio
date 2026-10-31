@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SyntaxDefinition name="HTML" extensions=".html" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Tag" foreground="#1D4ED8" fontWeight="bold" />
+  <Color name="Attribute" foreground="#7C3AED" />
+  <Color name="String" foreground="#A23B20" />
+  <Color name="Comment" foreground="#39734A" fontStyle="italic" />
+  <Color name="Entity" foreground="#8B4D9E" />
+  <RuleSet ignoreCase="true">
+    <Span color="Comment" begin="&lt;!--" end="--&gt;" />
+    <Span color="Tag" begin="&lt;/?[A-Za-z][A-Za-z0-9:-]*" end="&gt;">
+      <RuleSet ignoreCase="true">
+        <Span color="String" begin="&quot;" end="&quot;" />
+        <Span color="String" begin="&apos;" end="&apos;" />
+        <Rule color="Attribute">\b[a-z_:][\w:.-]*(?=\s*=)</Rule>
+        <Rule color="Entity">&amp;[A-Za-z0-9#xX]+;</Rule>
+      </RuleSet>
+    </Span>
+    <Rule color="Entity">&amp;[A-Za-z0-9#xX]+;</Rule>
+  </RuleSet>
+</SyntaxDefinition>

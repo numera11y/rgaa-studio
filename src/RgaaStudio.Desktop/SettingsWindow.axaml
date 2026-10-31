@@ -1,0 +1,85 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+        x:Class="RgaaStudio.Desktop.SettingsWindow"
+        x:CompileBindings="False"
+        Title="Paramètres de RGAA Studio"
+        Width="590" Height="530" MinWidth="520" MinHeight="460"
+        WindowStartupLocation="CenterOwner"
+        WindowDecorations="None" CanResize="False" ShowInTaskbar="False"
+        Background="#EEF2FA">
+  <Window.Styles>
+    <Style Selector="Button.dialog-primary">
+      <Setter Property="Background" Value="#214B9A" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Padding" Value="16,9" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.dialog-primary:pointerover"><Setter Property="Background" Value="#193D80" /></Style>
+    <Style Selector="Button.dialog-secondary">
+      <Setter Property="Background" Value="#FFFDF7" />
+      <Setter Property="Foreground" Value="#171F3B" />
+      <Setter Property="BorderBrush" Value="#7B8190" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Padding" Value="12,8" />
+      <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="Button.dialog-close">
+      <Setter Property="Width" Value="32" />
+      <Setter Property="Height" Value="32" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.dialog-close:pointerover"><Setter Property="Background" Value="#DCE6F7" /></Style>
+  </Window.Styles>
+  <Border Margin="10" Background="#FFFDF7" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="8">
+    <Grid RowDefinitions="48,*,Auto">
+      <Border x:Name="SettingsHeader" Background="#E9EFF9" BorderBrush="#D8DAD9" BorderThickness="0,0,0,1" CornerRadius="8,8,0,0" PointerPressed="Header_PointerPressed" Padding="16,0">
+        <Grid ColumnDefinitions="*,40">
+          <TextBlock Text="Paramètres" FontSize="15" FontWeight="SemiBold" Foreground="#171F3B" VerticalAlignment="Center" />
+          <Button Grid.Column="1" Classes="dialog-close" Click="Close_Click" ToolTip.Tip="Fermer les paramètres" AutomationProperties.Name="Fermer les paramètres">
+            <svg:Svg Path="/Assets/close.svg" Width="14" Height="14" CurrentColor="#171F3B" />
+          </Button>
+        </Grid>
+      </Border>
+      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="14" Margin="22,20">
+          <StackPanel Spacing="4">
+            <TextBlock Text="Affichage" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+            <TextBlock Text="Choisis les panneaux à afficher dans l’espace de travail." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
+          </StackPanel>
+          <CheckBox x:Name="ShowInspectionPanelCheckBox" AutomationProperties.Name="Afficher le panneau Inspection" AutomationProperties.HelpText="Garde visibles les informations d’élément et les décisions pendant la vérification d’une page.">
+            <StackPanel Spacing="2">
+              <TextBlock Text="Afficher le panneau Inspection" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
+              <TextBlock Text="Élément sélectionné, preuves et décision humaine." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" />
+            </StackPanel>
+          </CheckBox>
+          <CheckBox x:Name="CollapsePageScopeCheckBox" AutomationProperties.Name="Replier la liste des pages au démarrage" AutomationProperties.HelpText="La liste peut être dépliée depuis la languette du navigateur.">
+            <StackPanel Spacing="2">
+              <TextBlock Text="Replier la liste des pages au démarrage" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
+              <TextBlock Text="Utile pour donner plus d’espace à la page auditée." FontSize="11" Foreground="#555E70" TextWrapping="Wrap" />
+            </StackPanel>
+          </CheckBox>
+          <Border Height="1" Background="#D8DAD9" Margin="0,3" />
+          <StackPanel Spacing="6">
+            <TextBlock Text="Données locales" FontSize="14" FontWeight="SemiBold" Foreground="#171F3B" />
+            <TextBlock Text="Les dossiers d’audit, preuves et préférences sont conservés sur cet appareil." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
+            <TextBox x:Name="DataLocationBox" IsReadOnly="True" TextWrapping="Wrap" MinHeight="40" AutomationProperties.Name="Emplacement des données locales de RGAA Studio" />
+            <Button Classes="dialog-secondary" Content="Ouvrir l’emplacement" HorizontalAlignment="Left" Click="OpenDataFolder_Click" />
+          </StackPanel>
+          <TextBlock x:Name="SettingsStatus" FontSize="11" Foreground="#8B2D24" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+        </StackPanel>
+      </ScrollViewer>
+      <Border Grid.Row="2" BorderBrush="#D8DAD9" BorderThickness="0,1,0,0" Padding="16">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+          <Button Classes="dialog-secondary" Content="Annuler" Click="Cancel_Click" />
+          <Button Classes="dialog-primary" Content="Enregistrer" Click="Save_Click" />
+        </StackPanel>
+      </Border>
+    </Grid>
+  </Border>
+</Window>

@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="favicon-checks\**\*.cs" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\fixture.html" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Assets\LUCIDE-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Assets\SHARPVECTORS-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\..\docs\_sources\images\*.svg">
+      <Link>Assets\Icons\%(Filename)%(Extension)</Link>
+    </Resource>
+    <Resource Include="Assets\inspect.svg">
+      <Link>Assets\Icons\inspect.svg</Link>
+    </Resource>
+    <Resource Include="Assets\file-search.svg">
+      <Link>Assets\Icons\file-search.svg</Link>
+    </Resource>
+    <Resource Include="Assets\chevron-right.svg">
+      <Link>Assets\Icons\chevron-right.svg</Link>
+    </Resource>
+    <Resource Include="Assets\menu-open.svg">
+      <Link>Assets\Icons\menu-open.svg</Link>
+    </Resource>
+    <Resource Include="Assets\maximize.svg">
+      <Link>Assets\Icons\maximize.svg</Link>
+    </Resource>
+    <Resource Include="Assets\restore.svg">
+      <Link>Assets\Icons\restore.svg</Link>
+    </Resource>
+  </ItemGroup>
+
+</Project>

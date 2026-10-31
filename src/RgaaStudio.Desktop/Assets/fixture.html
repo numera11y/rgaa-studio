@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fixture locale — RGAA Studio</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px; color: #171f3b; background: #eef2fa; font: 14px Inter, "Segoe UI", sans-serif; }
+    .notice { max-width: 700px; margin: 0 auto 18px; color: #555e70; font-size: 12px; }
+    main { max-width: 700px; margin: auto; padding: 28px; background: white; border: 1px solid #d9dfeb; border-radius: 6px; }
+    h1 { margin: 0 0 10px; font-size: 22px; }
+    label { display: block; margin: 22px 0 6px; }
+    input { width: 100%; padding: 10px; border: 1px solid #7b8190; border-radius: 3px; font: inherit; }
+    button { margin-top: 18px; padding: 9px 14px; color: white; background: #214b9a; border: 0; border-radius: 3px; font: inherit; }
+    a { color: #214b9a; }
+    body.inspect, body.inspect * { cursor: crosshair !important; }
+    [data-audit-highlight] { outline: 3px solid #214b9a !important; outline-offset: 2px !important; }
+  </style>
+</head>
+<body>
+  <p class="notice">Fixture synthétique locale. N’entrez aucune donnée personnelle ; aucun site réel n’est chargé.</p>
+  <main>
+    <h1>Rechercher un service</h1>
+    <p>Page fictive de démonstration de l’espace de travail d’audit.</p>
+    <form autocomplete="off">
+      <label for="search">Mot-clé du service</label>
+      <input id="search" type="search" placeholder="Saisir un mot-clé" autocomplete="off">
+      <button type="button">Rechercher</button>
+    </form>
+    <p><a href="#help">Consulter l’aide fictive</a></p>
+    <p id="help">Les éléments de cette page sont synthétiques et sans effet.</p>
+  </main>
+  <script>
+    (() => {
+      let highlighted = null;
+      const report = (element) => {
+        const text = (element.innerText || element.value || "").trim().slice(0, 160);
+        const state = [element.disabled ? "désactivé" : "activé", element.required ? "obligatoire" : ""].filter(Boolean).join(", ");
+        if (typeof window.invokeCSharpAction === "function") {
+          window.invokeCSharpAction(JSON.stringify({
+            type: "selection",
+            tag: element.tagName,
+            text,
+            aria: element.getAttribute("aria-label") || element.getAttribute("aria-labelledby") || "",
+            state
+          }));
+        }
+      };
+      const inspectClick = (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        if (highlighted) highlighted.removeAttribute("data-audit-highlight");
+        highlighted = event.target;
+        highlighted.setAttribute("data-audit-highlight", "");
+        report(highlighted);
+      };
+      window.fixtureSetInspect = (enabled) => {
+        document.body.classList.toggle("inspect", enabled);
+        document.removeEventListener("click", inspectClick, true);
+        if (enabled) document.addEventListener("click", inspectClick, true);
+        if (!enabled && highlighted) highlighted.removeAttribute("data-audit-highlight");
+      };
+      window.fixtureSelectFocused = () => {
+        const element = document.activeElement;
+        if (element && element !== document.body) report(element);
+      };
+    })();
+  </script>
+</body>
+</html>

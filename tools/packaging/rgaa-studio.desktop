@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=RGAA Studio
+Comment=Espace de travail d’audit d’accessibilité numérique
+Exec=/usr/bin/rgaa-studio
+Icon=rgaa-studio
+Terminal=false
+Categories=Utility;Accessibility;
+StartupNotify=true

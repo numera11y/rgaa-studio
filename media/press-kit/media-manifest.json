@@ -1,0 +1,708 @@
+{
+  "product": "RGAA Studio",
+  "publisher": "numera11y",
+  "captureDate": "2026-10-30",
+  "capturePlatform": "Windows desktop · application window at 1920×1032",
+  "websiteShown": "https://www.numera11y.fr",
+  "auditData": "isolated synthetic dossier; no previous local dossiers imported",
+  "humanConformityDecisions": "none prefilled or recorded",
+  "axeResults": "live automated suggestions from the public website at capture time; suggestions only",
+  "records": [
+    {
+      "path": "captures/01-mes-audits.png",
+      "category": "capture",
+      "alt": "Mes audits",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 39383
+    },
+    {
+      "path": "captures/02-menu-options.png",
+      "category": "capture",
+      "alt": "Menu Options",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 49127
+    },
+    {
+      "path": "captures/03-parametres.png",
+      "category": "capture",
+      "alt": "Paramètres et données locales",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 70207
+    },
+    {
+      "path": "captures/04-a-propos.png",
+      "category": "capture",
+      "alt": "À propos et licence MIT",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 63133
+    },
+    {
+      "path": "captures/05-tableau-de-bord.png",
+      "category": "capture",
+      "alt": "Tableau de bord du dossier",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 97666
+    },
+    {
+      "path": "captures/06-espace-audit-site.png",
+      "category": "capture",
+      "alt": "Site numera11y dans l’espace d’audit",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 167126
+    },
+    {
+      "path": "captures/07-tableau-de-bord.png",
+      "category": "capture",
+      "alt": "Progression et indicateurs du dossier",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 98674
+    },
+    {
+      "path": "captures/08-menu-vues-page.png",
+      "category": "capture",
+      "alt": "Sélecteur des vues de page",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 179298
+    },
+    {
+      "path": "captures/09-code-source.png",
+      "category": "capture",
+      "alt": "Code source DOM",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 187960
+    },
+    {
+      "path": "captures/10-site-sans-css.png",
+      "category": "capture",
+      "alt": "Page sans CSS",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 183790
+    },
+    {
+      "path": "captures/11-html5-semantique.png",
+      "category": "capture",
+      "alt": "Structure HTML5 sémantique",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 222540
+    },
+    {
+      "path": "captures/12-images-medias.png",
+      "category": "capture",
+      "alt": "Repérage des images et médias",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 225019
+    },
+    {
+      "path": "captures/13-vue-aria.png",
+      "category": "capture",
+      "alt": "Aperçu de l’arbre ARIA",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 224212
+    },
+    {
+      "path": "captures/14-technologies-seo.png",
+      "category": "capture",
+      "alt": "Technologies et indicateurs SEO",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 224212
+    },
+    {
+      "path": "captures/15-resultats-axe-core.png",
+      "category": "capture",
+      "alt": "Suggestions axe-core à examiner",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 236345
+    },
+    {
+      "path": "captures/16-page-offre-audit.png",
+      "category": "capture",
+      "alt": "Page de l’offre d’audit d’accessibilité",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 174854
+    },
+    {
+      "path": "captures/17-page-offres.png",
+      "category": "capture",
+      "alt": "Page des offres numera11y",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 188838
+    },
+    {
+      "path": "captures/18-page-realisations.png",
+      "category": "capture",
+      "alt": "Page des réalisations numera11y",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 186997
+    },
+    {
+      "path": "captures/19-page-rendez-vous.png",
+      "category": "capture",
+      "alt": "Page de prise de rendez-vous",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 153409
+    },
+    {
+      "path": "captures/20-page-ressources.png",
+      "category": "capture",
+      "alt": "Page des ressources numera11y",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 181601
+    },
+    {
+      "path": "captures/21-page-mentions-legales.png",
+      "category": "capture",
+      "alt": "Mentions légales numera11y",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 144775
+    },
+    {
+      "path": "captures/22-pipette-contraste.png",
+      "category": "capture",
+      "alt": "Mesure de contraste sur le site",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 182154
+    },
+    {
+      "path": "captures/23-espace-web-etendu.png",
+      "category": "capture",
+      "alt": "Espace du navigateur élargi",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 145714
+    },
+    {
+      "path": "captures/24-liste-pages-repliee.png",
+      "category": "capture",
+      "alt": "Liste des pages repliée",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 158478
+    },
+    {
+      "path": "captures/25-creation-audit.png",
+      "category": "capture",
+      "alt": "Création d’un audit RGAA",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 55893
+    },
+    {
+      "path": "captures/26-creation-wcag-niveau.png",
+      "category": "capture",
+      "alt": "Création d’un audit WCAG cible AA",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 63541
+    },
+    {
+      "path": "store/01-mes-audits.png",
+      "category": "store",
+      "alt": "Mes audits",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 42784
+    },
+    {
+      "path": "store/02-menu-options.png",
+      "category": "store",
+      "alt": "Menu Options",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 57168
+    },
+    {
+      "path": "store/03-parametres.png",
+      "category": "store",
+      "alt": "Paramètres et données locales",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 80646
+    },
+    {
+      "path": "store/04-a-propos.png",
+      "category": "store",
+      "alt": "À propos et licence MIT",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 71408
+    },
+    {
+      "path": "store/05-tableau-de-bord.png",
+      "category": "store",
+      "alt": "Tableau de bord du dossier",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 106805
+    },
+    {
+      "path": "store/06-espace-audit-site.png",
+      "category": "store",
+      "alt": "Site numera11y dans l’espace d’audit",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 202985
+    },
+    {
+      "path": "store/07-tableau-de-bord.png",
+      "category": "store",
+      "alt": "Progression et indicateurs du dossier",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 107693
+    },
+    {
+      "path": "store/08-menu-vues-page.png",
+      "category": "store",
+      "alt": "Sélecteur des vues de page",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 219902
+    },
+    {
+      "path": "store/09-code-source.png",
+      "category": "store",
+      "alt": "Code source DOM",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 260204
+    },
+    {
+      "path": "store/10-site-sans-css.png",
+      "category": "store",
+      "alt": "Page sans CSS",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 213209
+    },
+    {
+      "path": "store/11-html5-semantique.png",
+      "category": "store",
+      "alt": "Structure HTML5 sémantique",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 277302
+    },
+    {
+      "path": "store/12-images-medias.png",
+      "category": "store",
+      "alt": "Repérage des images et médias",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 278778
+    },
+    {
+      "path": "store/13-vue-aria.png",
+      "category": "store",
+      "alt": "Aperçu de l’arbre ARIA",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 281222
+    },
+    {
+      "path": "store/14-technologies-seo.png",
+      "category": "store",
+      "alt": "Technologies et indicateurs SEO",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 281222
+    },
+    {
+      "path": "store/15-resultats-axe-core.png",
+      "category": "store",
+      "alt": "Suggestions axe-core à examiner",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 298272
+    },
+    {
+      "path": "store/16-page-offre-audit.png",
+      "category": "store",
+      "alt": "Page de l’offre d’audit d’accessibilité",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 207413
+    },
+    {
+      "path": "store/17-page-offres.png",
+      "category": "store",
+      "alt": "Page des offres numera11y",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 226221
+    },
+    {
+      "path": "store/18-page-realisations.png",
+      "category": "store",
+      "alt": "Page des réalisations numera11y",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 225883
+    },
+    {
+      "path": "store/19-page-rendez-vous.png",
+      "category": "store",
+      "alt": "Page de prise de rendez-vous",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 186612
+    },
+    {
+      "path": "store/20-page-ressources.png",
+      "category": "store",
+      "alt": "Page des ressources numera11y",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 216939
+    },
+    {
+      "path": "store/21-page-mentions-legales.png",
+      "category": "store",
+      "alt": "Mentions légales numera11y",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 173008
+    },
+    {
+      "path": "store/22-pipette-contraste.png",
+      "category": "store",
+      "alt": "Mesure de contraste sur le site",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 224695
+    },
+    {
+      "path": "store/23-espace-web-etendu.png",
+      "category": "store",
+      "alt": "Espace du navigateur élargi",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 173047
+    },
+    {
+      "path": "store/24-liste-pages-repliee.png",
+      "category": "store",
+      "alt": "Liste des pages repliée",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 191525
+    },
+    {
+      "path": "store/25-creation-audit.png",
+      "category": "store",
+      "alt": "Création d’un audit RGAA",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 61947
+    },
+    {
+      "path": "store/26-creation-wcag-niveau.png",
+      "category": "store",
+      "alt": "Création d’un audit WCAG cible AA",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 71112
+    },
+    {
+      "path": "compositions/01-espace-audit.png",
+      "category": "composition",
+      "alt": "Le site et son périmètre dans l’espace d’audit",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 366876
+    },
+    {
+      "path": "compositions/02-suggestions-axe-core.png",
+      "category": "composition",
+      "alt": "Résultats axe-core présentés comme pistes à vérifier",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 504203
+    },
+    {
+      "path": "compositions/03-structure-accessible.png",
+      "category": "composition",
+      "alt": "Structure HTML5 et page du site affichées côte à côte",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 471701
+    },
+    {
+      "path": "compositions/04-apercu-technique.png",
+      "category": "composition",
+      "alt": "Résumé des technologies et indicateurs SEO",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 478209
+    },
+    {
+      "path": "CONTACT-SHEET.png",
+      "category": "contact-sheet",
+      "alt": "CONTACT SHEET",
+      "width": 1920,
+      "height": 1628,
+      "bytes": 603216
+    },
+    {
+      "path": "web/captures/01-mes-audits.webp",
+      "category": "web-capture",
+      "alt": "01 mes audits",
+      "width": 1600,
+      "height": 860,
+      "bytes": 16952
+    },
+    {
+      "path": "web/captures/02-menu-options.webp",
+      "category": "web-capture",
+      "alt": "02 menu options",
+      "width": 1600,
+      "height": 860,
+      "bytes": 21652
+    },
+    {
+      "path": "web/captures/03-parametres.webp",
+      "category": "web-capture",
+      "alt": "03 parametres",
+      "width": 1600,
+      "height": 860,
+      "bytes": 33442
+    },
+    {
+      "path": "web/captures/04-a-propos.webp",
+      "category": "web-capture",
+      "alt": "04 a propos",
+      "width": 1600,
+      "height": 860,
+      "bytes": 28772
+    },
+    {
+      "path": "web/captures/05-tableau-de-bord.webp",
+      "category": "web-capture",
+      "alt": "05 tableau de bord",
+      "width": 1600,
+      "height": 860,
+      "bytes": 45228
+    },
+    {
+      "path": "web/captures/06-espace-audit-site.webp",
+      "category": "web-capture",
+      "alt": "06 espace audit site",
+      "width": 1600,
+      "height": 860,
+      "bytes": 101966
+    },
+    {
+      "path": "web/captures/07-tableau-de-bord.webp",
+      "category": "web-capture",
+      "alt": "07 tableau de bord",
+      "width": 1600,
+      "height": 860,
+      "bytes": 45248
+    },
+    {
+      "path": "web/captures/08-menu-vues-page.webp",
+      "category": "web-capture",
+      "alt": "08 menu vues page",
+      "width": 1600,
+      "height": 860,
+      "bytes": 108702
+    },
+    {
+      "path": "web/captures/09-code-source.webp",
+      "category": "web-capture",
+      "alt": "09 code source",
+      "width": 1600,
+      "height": 860,
+      "bytes": 157604
+    },
+    {
+      "path": "web/captures/10-site-sans-css.webp",
+      "category": "web-capture",
+      "alt": "10 site sans css",
+      "width": 1600,
+      "height": 860,
+      "bytes": 116710
+    },
+    {
+      "path": "web/captures/11-html5-semantique.webp",
+      "category": "web-capture",
+      "alt": "11 html5 semantique",
+      "width": 1600,
+      "height": 860,
+      "bytes": 131480
+    },
+    {
+      "path": "web/captures/12-images-medias.webp",
+      "category": "web-capture",
+      "alt": "12 images medias",
+      "width": 1600,
+      "height": 860,
+      "bytes": 129798
+    },
+    {
+      "path": "web/captures/13-vue-aria.webp",
+      "category": "web-capture",
+      "alt": "13 vue aria",
+      "width": 1600,
+      "height": 860,
+      "bytes": 131940
+    },
+    {
+      "path": "web/captures/14-technologies-seo.webp",
+      "category": "web-capture",
+      "alt": "14 technologies seo",
+      "width": 1600,
+      "height": 860,
+      "bytes": 131940
+    },
+    {
+      "path": "web/captures/15-resultats-axe-core.webp",
+      "category": "web-capture",
+      "alt": "15 resultats axe core",
+      "width": 1600,
+      "height": 860,
+      "bytes": 138508
+    },
+    {
+      "path": "web/captures/16-page-offre-audit.webp",
+      "category": "web-capture",
+      "alt": "16 page offre audit",
+      "width": 1600,
+      "height": 860,
+      "bytes": 100688
+    },
+    {
+      "path": "web/captures/17-page-offres.webp",
+      "category": "web-capture",
+      "alt": "17 page offres",
+      "width": 1600,
+      "height": 860,
+      "bytes": 100782
+    },
+    {
+      "path": "web/captures/18-page-realisations.webp",
+      "category": "web-capture",
+      "alt": "18 page realisations",
+      "width": 1600,
+      "height": 860,
+      "bytes": 99370
+    },
+    {
+      "path": "web/captures/19-page-rendez-vous.webp",
+      "category": "web-capture",
+      "alt": "19 page rendez vous",
+      "width": 1600,
+      "height": 860,
+      "bytes": 88080
+    },
+    {
+      "path": "web/captures/20-page-ressources.webp",
+      "category": "web-capture",
+      "alt": "20 page ressources",
+      "width": 1600,
+      "height": 860,
+      "bytes": 100292
+    },
+    {
+      "path": "web/captures/21-page-mentions-legales.webp",
+      "category": "web-capture",
+      "alt": "21 page mentions legales",
+      "width": 1600,
+      "height": 860,
+      "bytes": 76892
+    },
+    {
+      "path": "web/captures/22-pipette-contraste.webp",
+      "category": "web-capture",
+      "alt": "22 pipette contraste",
+      "width": 1600,
+      "height": 860,
+      "bytes": 110064
+    },
+    {
+      "path": "web/captures/23-espace-web-etendu.webp",
+      "category": "web-capture",
+      "alt": "23 espace web etendu",
+      "width": 1600,
+      "height": 860,
+      "bytes": 88840
+    },
+    {
+      "path": "web/captures/24-liste-pages-repliee.webp",
+      "category": "web-capture",
+      "alt": "24 liste pages repliee",
+      "width": 1600,
+      "height": 860,
+      "bytes": 99556
+    },
+    {
+      "path": "web/captures/25-creation-audit.webp",
+      "category": "web-capture",
+      "alt": "25 creation audit",
+      "width": 1600,
+      "height": 860,
+      "bytes": 25510
+    },
+    {
+      "path": "web/captures/26-creation-wcag-niveau.webp",
+      "category": "web-capture",
+      "alt": "26 creation wcag niveau",
+      "width": 1600,
+      "height": 860,
+      "bytes": 29946
+    },
+    {
+      "path": "web/compositions/01-espace-audit.webp",
+      "category": "web-composition",
+      "alt": "01 espace audit",
+      "width": 1600,
+      "height": 900,
+      "bytes": 78364
+    },
+    {
+      "path": "web/compositions/02-suggestions-axe-core.webp",
+      "category": "web-composition",
+      "alt": "02 suggestions axe core",
+      "width": 1600,
+      "height": 900,
+      "bytes": 102426
+    },
+    {
+      "path": "web/compositions/03-structure-accessible.webp",
+      "category": "web-composition",
+      "alt": "03 structure accessible",
+      "width": 1600,
+      "height": 900,
+      "bytes": 96150
+    },
+    {
+      "path": "web/compositions/04-apercu-technique.webp",
+      "category": "web-composition",
+      "alt": "04 apercu technique",
+      "width": 1600,
+      "height": 900,
+      "bytes": 97894
+    }
+  ]
+}
