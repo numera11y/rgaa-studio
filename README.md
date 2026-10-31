@@ -6,7 +6,7 @@
 
 Application desktop open source pour organiser des dossiers d’audit RGAA et WCAG, conserver les décisions localement et relier le travail aux pages examinées.
 
-> **Préversion — `1.0.0-preview.1`.** Cette version introduit le shell Avalonia pour Windows et Linux. L’aperçu intégré est encore limité à une fixture locale de démonstration : la navigation vers des sites réels n’est pas activée. Les paquets Linux sont construits, mais restent à valider en installation et à l’exécution sur les distributions cibles.
+> **Préversion — `1.0.0-preview.1`.** La nouvelle interface de bureau Avalonia est disponible pour Windows et Linux. Pour l’instant, l’aperçu intégré affiche une page d’exemple fournie avec l’application : il ne permet pas encore d’ouvrir un site à auditer. Les paquets Linux ont été générés, mais leur installation et leur fonctionnement restent à tester sur Ubuntu 26.04 et Fedora 44.
 
 ## Télécharger
 
@@ -23,7 +23,7 @@ Les paquets macOS de l’ancienne publication ne font pas partie de cette préve
 
 Cette préversion permet de créer, lister, reprendre et archiver des dossiers locaux, de choisir un référentiel et une version, et de conserver les pages et décisions associées. Les contrôles automatiques sont des suggestions ; ils ne constituent pas un verdict de conformité.
 
-Le navigateur intégré affiche uniquement la fixture fournie avec l’application. L’audit de sites réels, l’installation de mises à jour automatiques et la validation de l’expérience complète sur les distributions Linux cibles restent à réaliser. Voir [`CHANGELOG.md`](CHANGELOG.md) et le [plan de projet](docs/architecture/PROJECT-PLAN.md) pour le détail de cette tranche.
+Le navigateur intégré affiche une page d’exemple locale ; l’ouverture de sites réels et l’installation automatique de mises à jour ne sont pas encore disponibles. Voir [`CHANGELOG.md`](CHANGELOG.md) et le [plan de projet](docs/architecture/PROJECT-PLAN.md) pour le détail de cette préversion.
 
 ## Développer
 

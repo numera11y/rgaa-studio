@@ -18,7 +18,7 @@ Les changements notables de RGAA Studio sont consignés dans ce fichier. Le form
 
 ### Limites connues
 
-- Le navigateur intégré ne navigue pas encore vers des sites réels ; il affiche la fixture locale.
+- Le navigateur intégré affiche une page d’exemple fournie avec l’application ; il ne peut pas encore ouvrir le site que l’auditeur souhaite examiner.
 - Les paquets macOS de la publication précédente ne sont pas reconduits.
 - L’installateur Windows n’est pas signé.
 - Les paquets Linux ont été assemblés sous Ubuntu 24.04 WSL, mais l’installation et le rendu doivent encore être validés sur Ubuntu 26.04 et Fedora 44.
