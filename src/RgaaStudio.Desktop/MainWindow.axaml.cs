@@ -2249,7 +2249,7 @@ public partial class MainWindow : Window
         SetPageView("site");
         BrowserModeLabel.Text = "Page sélectionnée dans l’audit";
         BrowserModeBorder.SetValue(AutomationProperties.NameProperty, "Le navigateur affiche une page sélectionnée dans l’audit");
-        BrowserSafetyNote.Text = "Page sélectionnée dans le périmètre de cet audit. La décision de conformité appartient à l’auditeur.";
+        BrowserSafetyNote.Text = "Page HTTPS retenue dans ce dossier. Les pages non sélectionnées et les liens vers un autre site sont bloqués.";
         CurrentSiteHeader.Text = $"Page du dossier : {page.Name} · {FormatLocalPagePath(page.Url)}";
         Browser.Source = new Uri(page.Url);
         AxeResults.Clear();
@@ -2273,7 +2273,7 @@ public partial class MainWindow : Window
             else
                 Browser.Source = new Uri(page.Url);
             BrowserModeLabel.Text = "Page sélectionnée dans l’audit";
-            BrowserSafetyNote.Text = "Page sélectionnée dans le périmètre de cet audit. La décision de conformité appartient à l’auditeur.";
+            BrowserSafetyNote.Text = "Page HTTPS retenue dans ce dossier. Les pages non sélectionnées et les liens vers un autre site sont bloqués.";
         }
         else if (_activeAudit is not null)
         {
@@ -2961,8 +2961,8 @@ public partial class MainWindow : Window
             return;
 
         Browser.Source = new Uri(fixturePath);
-        BrowserModeLabel.Text = "Fixture locale · démonstration";
-        BrowserModeBorder.SetValue(AutomationProperties.NameProperty, "Le navigateur affiche une fixture locale fictive");
+        BrowserModeLabel.Text = "Page d’exemple locale";
+        BrowserModeBorder.SetValue(AutomationProperties.NameProperty, "Le navigateur affiche la page d’exemple locale fournie avec l’application");
         UpdateInspectionMenuCommands();
         Browser.Focus();
     }

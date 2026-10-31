@@ -4,9 +4,9 @@
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 [![Préversion 1.0.0-preview.1](https://img.shields.io/badge/version-1.0.0--preview.1-orange)](https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.1)
 
-Application desktop open source pour organiser des dossiers d’audit RGAA et WCAG, conserver les décisions localement et relier le travail aux pages examinées.
+Application desktop open source pour auditer des pages web selon le RGAA et les WCAG, organiser le travail par dossier et conserver les décisions localement.
 
-> **Préversion — `1.0.0-preview.1`.** La nouvelle interface de bureau Avalonia est disponible pour Windows et Linux. Pour l’instant, l’aperçu intégré affiche une page d’exemple fournie avec l’application : il ne permet pas encore d’ouvrir un site à auditer. Les paquets Linux ont été générés, mais leur installation et leur fonctionnement restent à tester sur Ubuntu 26.04 et Fedora 44.
+> **Préversion — `1.0.0-preview.1`.** L’application Avalonia est disponible pour Windows et Linux. Elle peut ouvrir et analyser de vrais sites : l’auditeur sélectionne d’abord les pages à inclure dans son dossier, puis les ouvre dans le navigateur intégré. La navigation reste limitée aux pages HTTPS sélectionnées sur le même site. Les paquets Linux ont été générés, mais leur installation et leur fonctionnement restent à tester sur Ubuntu 26.04 et Fedora 44.
 
 ## Télécharger
 
@@ -21,9 +21,9 @@ Les paquets macOS de l’ancienne publication ne font pas partie de cette préve
 
 ## État fonctionnel
 
-Cette préversion permet de créer, lister, reprendre et archiver des dossiers locaux, de choisir un référentiel et une version, et de conserver les pages et décisions associées. Les contrôles automatiques sont des suggestions ; ils ne constituent pas un verdict de conformité.
+Cette préversion permet de créer, lister, reprendre et archiver des dossiers locaux, de choisir un référentiel et une version, d’analyser les pages retenues avec axe-core et d’utiliser la pipette de contraste. Le scan propose des candidates à partir de la page d’accueil et du sitemap ; il n’est pas exhaustif et l’auditeur confirme les pages à inclure. Les contrôles automatiques sont des suggestions, jamais un verdict de conformité.
 
-Le navigateur intégré affiche une page d’exemple locale ; l’ouverture de sites réels et l’installation automatique de mises à jour ne sont pas encore disponibles. Voir [`CHANGELOG.md`](CHANGELOG.md) et le [plan de projet](docs/architecture/PROJECT-PLAN.md) pour le détail de cette préversion.
+La navigation bloque les pages non sélectionnées et les liens vers un autre site. L’inspection d’éléments par pointeur reste disponible sur la page d’exemple intégrée ; sur les pages réelles, l’analyse axe-core et la pipette sont utilisables. L’installation automatique de mises à jour n’est pas encore disponible. Voir [`CHANGELOG.md`](CHANGELOG.md) et le [plan de projet](docs/architecture/PROJECT-PLAN.md) pour le détail de cette préversion.
 
 ## Développer
 

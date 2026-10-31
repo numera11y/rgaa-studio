@@ -13,7 +13,7 @@
 
 ## Portée actuelle et suites
 
-La tranche intégrée sait créer, lister et reprendre un dossier d’audit local, configurer RGAA ou WCAG de façon progressive (version après référentiel, niveau A/AA/AAA uniquement après version WCAG), afficher une fixture locale synthétique dans le navigateur natif, inspecter des éléments de cette fixture, enregistrer des décisions humaines append-only avec une fin de revue explicite et distincte du résultat, et garder plusieurs dossiers ouverts dans des onglets qui survivent au retour à la liste. Fermer un onglet ne supprime jamais le dossier. La navigation vers des sites réels reste fermée. Les captures de preuve, profils authentifiés, collecte facultative du favicon, réordonnancement des onglets et packaging doivent être migrés/validés en tranches séparées.
+La préversion intégrée sait créer, lister et reprendre un dossier d’audit local, configurer RGAA ou WCAG de façon progressive (version après référentiel, niveau A/AA/AAA uniquement après version WCAG), ouvrir dans le WebView les pages HTTPS retenues dans un dossier, lancer axe-core et utiliser la pipette de contraste. La découverte des pages propose des liens de la page d’accueil et du sitemap ; l’auditeur confirme les pages à inclure et la navigation reste limitée à ces URL du même site. Les décisions humaines sont conservées séparément des suggestions automatiques ; fermer un onglet ne supprime jamais le dossier. L’inspection par pointeur d’éléments reste limitée à la fixture locale. L’authentification, une navigation générale hors périmètre, l’isolation de profils, et la validation Linux complète restent hors de cette préversion.
 
 La migration conserve le chemin et le schéma des manifestes existants (`RgaaStudioSpike/AuditDossier`) pour reprendre les dossiers du prototype Windows. Un changement de format ou d’emplacement nécessitera une migration explicite et vérifiée.
 
@@ -21,7 +21,7 @@ La migration conserve le chemin et le schéma des manifestes existants (`RgaaStu
 
 - Les nouvelles fonctions UI et les nouveaux parcours métier ciblent Avalonia.
 - Les validations de compilation Windows ne suffisent pas à confirmer Linux : vérifier la disponibilité du WebKit natif, les interactions clavier/focus WebView, l’installation et les paquets `.deb`/`.rpm` sur Ubuntu 26.04 et Fedora 44.
-- Continuer de distinguer la décision humaine, les suggestions automatisées, la revue terminée et les preuves ; aucun prototype ne doit présenter la fixture comme un site audité.
+- Continuer de distinguer la décision humaine, les suggestions automatisées, la revue terminée et les preuves ; afficher les limites de périmètre du WebView et de l’inspection par pointeur sans confondre page d’exemple et page réelle.
 
 ## Vérification
 

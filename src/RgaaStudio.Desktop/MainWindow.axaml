@@ -882,10 +882,10 @@
                 <TextBlock Text="Inspection" FontSize="17" FontWeight="SemiBold" Foreground="#171F3B" />
                 <TextBlock Text="La décision de conformité appartient à l’auditeur." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" />
                 <Border Background="#FFF4D9" BorderBrush="#E8D39D" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,2,0,4">
-                  <TextBlock x:Name="BrowserSafetyNote" Text="Démonstration locale uniquement : la page affichée est une fixture fictive, jamais le site saisi dans le dossier." FontSize="12" Foreground="#6A5016" TextWrapping="Wrap" />
+                  <TextBlock x:Name="BrowserSafetyNote" Text="Sans dossier ouvert, le navigateur affiche la page d’exemple. Dans un audit, seules les pages HTTPS sélectionnées du site peuvent s’ouvrir." FontSize="12" Foreground="#6A5016" TextWrapping="Wrap" />
                 </Border>
                 <TextBlock x:Name="SelectedElementHeading" Text="Élément sélectionné" FontSize="12" FontWeight="SemiBold" Foreground="#171F3B" />
-                <TextBlock x:Name="SelectionSummary" Text="Aucun élément sélectionné. Activez l’inspection pour essayer la fixture locale." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                <TextBlock x:Name="SelectionSummary" Text="Aucun élément sélectionné. L’inspection par pointeur est disponible sur la page d’exemple ; utilisez axe-core ou la pipette sur une page auditée." FontSize="12" Foreground="#555E70" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
                 <Border x:Name="ColorContrastPanel" IsVisible="False" Background="#F3F4F6" BorderBrush="#D8DAD9" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,4">
                   <StackPanel Spacing="7">
                     <TextBlock Text="Contraste des couleurs" FontSize="13" FontWeight="SemiBold" Foreground="#171F3B" />
