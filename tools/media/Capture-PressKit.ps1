@@ -3,6 +3,8 @@ param(
     [Parameter(Mandatory = $true)][string]$DatabasePath,
     [switch]$MenuOnly,
     [switch]$CreateOnly,
+    [switch]$ReadmeOnly,
+    [string]$ReferenceDatabasePath = '',
     [string]$DotnetPath = 'C:\Program Files\dotnet\dotnet.exe'
 )
 
@@ -116,6 +118,7 @@ function Click-At([int]$X, [int]$Y) {
 }
 
 function Save-AppScreenshot([string]$Name) {
+    if ($ReadmeOnly -and $Name -notin @('readme-criteres-du-lot', 'readme-critere-sur-la-page')) { return }
     $window = Get-AppWindow
     [PressKitNative]::SetForegroundWindow($window.MainWindowHandle) | Out-Null
     [PressKitNative]::SetCursorPos(1000, 75) | Out-Null
@@ -128,6 +131,7 @@ function Save-AppScreenshot([string]$Name) {
     $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
     $graphics.CopyFromScreen($rect.Left, $rect.Top, 0, 0, $bitmap.Size)
     $path = Join-Path $output ($Name + '.png')
+    if (Test-Path -LiteralPath $path) { Remove-Item -LiteralPath $path -Force }
     $bitmap.Save($path, [System.Drawing.Imaging.ImageFormat]::Png)
     $graphics.Dispose(); $bitmap.Dispose()
     Write-Host "Captured $path (${width}x${height})"
@@ -136,11 +140,15 @@ function Save-AppScreenshot([string]$Name) {
 $env:RGAA_STUDIO_DATABASE_PATH = $database
 $env:RGAA_STUDIO_AUDIT_ROOT = Join-Path (Split-Path $database) 'audit-data'
 $env:RGAA_STUDIO_SKIP_LEGACY_IMPORT = '1'
-& $DotnetPath run --project (Join-Path $PSScriptRoot 'PressKit.Seed.csproj') -- $database
+$seedArguments = @('run', '--project', (Join-Path $PSScriptRoot 'PressKit.Seed.csproj'), '--', $database)
+if (-not [string]::IsNullOrWhiteSpace($ReferenceDatabasePath)) {
+    $seedArguments += (Resolve-Path -LiteralPath $ReferenceDatabasePath).Path
+}
+& $DotnetPath @seedArguments
 if ($LASTEXITCODE -ne 0) { throw "Press-kit seed failed: $LASTEXITCODE" }
 
 $appProject = Join-Path $projectRoot 'src\RgaaStudio.Desktop\RgaaStudio.Desktop.csproj'
-$appProcess = Start-Process -FilePath $DotnetPath -ArgumentList @('run', '--no-build', '--project', $appProject) -WorkingDirectory $projectRoot -PassThru
+$appProcess = Start-Process -FilePath $DotnetPath -ArgumentList @('run', '--configuration', 'Release', '--no-build', '--project', $appProject) -WorkingDirectory $projectRoot -PassThru
 $window = $null
 try {
     $deadline = (Get-Date).AddSeconds(45)
@@ -170,6 +178,15 @@ try {
     Click-At 790 185
     Wait-Ui 2000
     Save-AppScreenshot '05-tableau-de-bord'
+    if ($ReadmeOnly) {
+        Click-At 90 240
+        Wait-Ui 900
+        Invoke-AppButtonMatch '^Crit.re 1\.1,'
+        Save-AppScreenshot 'readme-criteres-du-lot'
+        Invoke-AppButtonMatch '^Ouvrir la page Accueil'
+        Save-AppScreenshot 'readme-critere-sur-la-page'
+        return
+    }
     Click-At 90 280
     Wait-Ui 1500
     Save-AppScreenshot '06-espace-audit-site'

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Avalonia;
 using Avalonia.Automation;
@@ -2192,7 +2193,7 @@ public partial class MainWindow : Window
                 ? legacyPageDecisions.Contains(criterion.Id) ? "À réévaluer · ancienne décision page" : "À examiner"
                 : IsLotCriterionDecisionCurrent(criterion, decision, pages, latestApplicabilities) ? $"Revue terminée · {decision.HumanDecision}"
                 : decision.ReviewComplete ? "À reprendre · applicabilité modifiée" : $"À terminer · {decision.HumanDecision}";
-            FilteredAuditCriteria.Add(new AuditCriterionListItem(criterion.Id, criterion.Code, criterion.Title,
+            FilteredAuditCriteria.Add(new AuditCriterionListItem(criterion.Id, criterion.Code, FormatCatalogCopy(criterion.Title),
                 $"{criterion.ThemeNumber} — {criterion.ThemeTitle}", status, criterion.Id == _selectedCriterionId));
         }
         FilteredCriterionCountText.Text = AuditCriteria.Count == 0
@@ -2217,6 +2218,16 @@ public partial class MainWindow : Window
             test.Requirements.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
             test.Methodology.Contains(query, StringComparison.CurrentCultureIgnoreCase));
 
+    private static string FormatCatalogCopy(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return string.Empty;
+        var text = Regex.Replace(value, @"\[([^\]]+)\]\([^)]+\)", "$1");
+        text = Regex.Replace(text, @"\*\*(.*?)\*\*", "$1");
+        text = Regex.Replace(text, @"`([^`]+)`", "$1");
+        return text.Trim();
+    }
+
     private void LotCriterion_Click(object? sender, RoutedEventArgs e)
     {
         if ((sender as Button)?.Tag is not string criterionId)
@@ -2237,17 +2248,22 @@ public partial class MainWindow : Window
         if (criterion is null)
             return;
 
-        SelectedCriterionHeading.Text = criterion.Label;
+        SelectedCriterionHeading.Text = $"{criterion.Code} — {FormatCatalogCopy(criterion.Title)}";
         SelectedCriterionTheme.Text = $"Thème {criterion.ThemeNumber} — {criterion.ThemeTitle}";
-        SelectedCriterionSummary.Text = criterion.TechnicalNote;
+        SelectedCriterionSummary.Text = FormatCatalogCopy(criterion.TechnicalNote);
         var testDetails = criterion.Tests.Count == 0
             ? "Aucun sous-test n’est disponible dans ce catalogue."
-            : string.Join(Environment.NewLine, criterion.Tests.Select(test => $"{test.Code} · {test.Question}" +
-                (string.IsNullOrWhiteSpace(test.Requirements) ? string.Empty : Environment.NewLine + "Exigences : " + test.Requirements) +
-                (string.IsNullOrWhiteSpace(test.Methodology) ? string.Empty : Environment.NewLine + "Méthode : " + test.Methodology)));
-        if (!string.IsNullOrWhiteSpace(criterion.ParticularCases))
-            testDetails += Environment.NewLine + "Cas particuliers : " + criterion.ParticularCases;
+            : string.Join(Environment.NewLine, criterion.Tests.Select(test => $"{test.Code} · {FormatCatalogCopy(test.Question)}"));
         CriterionTestsText.Text = testDetails;
+        var methodologyDetails = criterion.Tests.Select(test =>
+                $"{test.Code}" +
+                (string.IsNullOrWhiteSpace(test.Requirements) ? string.Empty : Environment.NewLine + "Exigences : " + FormatCatalogCopy(test.Requirements)) +
+                (string.IsNullOrWhiteSpace(test.Methodology) ? string.Empty : Environment.NewLine + "Méthode : " + FormatCatalogCopy(test.Methodology)))
+            .Where(text => text.Contains(Environment.NewLine, StringComparison.Ordinal)).ToList();
+        if (!string.IsNullOrWhiteSpace(criterion.ParticularCases))
+            methodologyDetails.Add("Cas particuliers : " + FormatCatalogCopy(criterion.ParticularCases));
+        CriterionMethodologyText.Text = string.Join(Environment.NewLine + Environment.NewLine, methodologyDetails);
+        CriterionMethodologyExpander.IsVisible = methodologyDetails.Count > 0;
 
         CriterionPageReviews.Clear();
         var decisionHistory = _dossiers.ReadDecisions(_activeAudit!.Id);
@@ -2738,7 +2754,7 @@ public partial class MainWindow : Window
         }
 
         PageCriterionContextPanel.IsVisible = true;
-        PageCriterionContextHeading.Text = criterion.Label;
+        PageCriterionContextHeading.Text = $"{criterion.Code} — {FormatCatalogCopy(criterion.Title)}";
         var applicability = _dossiers.GetPageCriterionApplicability(_activeAudit.Id, page.Id, criterion.Id);
         PageCriterionApplicabilityText.Text = applicability is null
             ? "Applicabilité sur cette page : à déterminer dans la revue du lot."
@@ -2760,8 +2776,8 @@ public partial class MainWindow : Window
         var tests = criterion.Tests.Select(test =>
         {
             var result = page.TestResults.FirstOrDefault(item => item.ReferenceTestId == test.Id);
-            return $"{test.Code} — {test.Question} · {result?.Status ?? "À examiner"}" +
-                (string.IsNullOrWhiteSpace(result?.Notes) ? string.Empty : $" · {result.Notes}");
+            return $"{test.Code} — {FormatCatalogCopy(test.Question)} · {result?.Status ?? "À examiner"}" +
+                (string.IsNullOrWhiteSpace(result?.Notes) ? string.Empty : $" · {FormatCatalogCopy(result.Notes)}");
         }).ToArray();
         PageCriterionTestsText.Text = tests.Length == 0
             ? "Aucun sous-test n’est fourni par le catalogue pour ce critère."

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>fr.numera11y.RgaaStudio</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>RGAA Studio</name>
+  <summary>Application de bureau pour audits d’accessibilité RGAA</summary>
+  <description>
+    <p>RGAA Studio est une application de bureau multiplateforme, éditée par numera11y, destinée à réaliser et organiser des audits d’accessibilité selon le référentiel RGAA. Elle vise à faciliter le travail des auditeurs, développeurs et équipes produit dans la mise en conformité de sites et services numériques.</p>
+  </description>
+  <launchable type="desktop-id">rgaa-studio.desktop</launchable>
+  <url type="homepage">https://www.numera11y.fr</url>
+  <developer id="fr.numera11y">
+    <name>numera11y</name>
+  </developer>
+  <categories>
+    <category>Utility</category>
+    <category>Accessibility</category>
+  </categories>
+  <keywords>
+    <keyword>RGAA</keyword>
+    <keyword>WCAG</keyword>
+    <keyword>accessibilité</keyword>
+    <keyword>audit</keyword>
+  </keywords>
+  <icon type="stock">rgaa-studio</icon>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="@APP_VERSION@" date="@RELEASE_DATE@" type="development" />
+  </releases>
+</component>

@@ -1,39 +1,49 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 3 ]]; then
-  echo "Usage: $0 <published-linux-x64-dir> <output-dir> <version>" >&2
+if [[ $# -lt 3 || $# -gt 4 ]]; then
+  echo "Usage: $0 <published-linux-x64-dir> <output-dir> <version> [release-date]" >&2
   exit 2
 fi
 
 payload_dir="$(realpath "$1")"
 output_dir="$(realpath -m "$2")"
 version="$3"
+release_date="${4:-$(date -u +%F)}"
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 command -v dpkg-deb >/dev/null || { echo 'dpkg-deb is required (Ubuntu/Debian: dpkg).' >&2; exit 1; }
 command -v rpmbuild >/dev/null || { echo 'rpmbuild is required (Ubuntu WSL: sudo apt install rpm).' >&2; exit 1; }
+command -v appstreamcli >/dev/null || { echo 'appstreamcli is required (Ubuntu/Debian: appstream).' >&2; exit 1; }
 [[ -x "$payload_dir/RgaaStudio.Desktop" ]] || { echo "Linux apphost not found in $payload_dir" >&2; exit 1; }
+[[ "$release_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || { echo "Release date must use YYYY-MM-DD: $release_date" >&2; exit 1; }
 
 mkdir -p "$output_dir"
 stage="$(mktemp -d)"
 trap 'rm -rf "$stage"' EXIT
 
 deb_version="${version/-/\~}"
+deb_filename_version="${version/-/.}"
+metainfo_file="$stage/fr.numera11y.RgaaStudio.metainfo.xml"
+sed -e "s/@APP_VERSION@/$version/g" -e "s/@RELEASE_DATE@/$release_date/g" \
+  "$script_dir/fr.numera11y.RgaaStudio.metainfo.xml.in" > "$metainfo_file"
+appstreamcli validate --no-net --strict "$metainfo_file"
 deb_root="$stage/deb-root"
-install -d "$deb_root/opt/rgaa-studio" "$deb_root/usr/bin" "$deb_root/usr/share/applications" "$deb_root/usr/share/icons/hicolor/scalable/apps" "$deb_root/usr/share/doc/rgaa-studio/Assets" "$deb_root/DEBIAN"
+install -d "$deb_root/opt/rgaa-studio" "$deb_root/usr/bin" "$deb_root/usr/share/applications" "$deb_root/usr/share/metainfo" "$deb_root/usr/share/icons/hicolor/scalable/apps" "$deb_root/usr/share/doc/rgaa-studio/Assets" "$deb_root/DEBIAN"
 cp -a "$payload_dir/." "$deb_root/opt/rgaa-studio/"
 find "$deb_root/opt/rgaa-studio" -type d -exec chmod 0755 {} +
 find "$deb_root/opt/rgaa-studio" -type f -exec chmod 0644 {} +
 chmod 0755 "$deb_root/opt/rgaa-studio/RgaaStudio.Desktop"
 install -m 0755 "$script_dir/rgaa-studio-launcher" "$deb_root/usr/bin/rgaa-studio"
 install -m 0644 "$script_dir/rgaa-studio.desktop" "$deb_root/usr/share/applications/rgaa-studio.desktop"
+install -m 0644 "$metainfo_file" "$deb_root/usr/share/metainfo/fr.numera11y.RgaaStudio.metainfo.xml"
 install -m 0644 "$payload_dir/Assets/rgaa-studio-app-icon.svg" "$deb_root/usr/share/icons/hicolor/scalable/apps/rgaa-studio.svg"
 install -m 0644 "$script_dir/README-Linux.txt" "$deb_root/usr/share/doc/rgaa-studio/README-Linux.txt"
 install -m 0644 "$script_dir/DISTRIBUTION-NOTICE.txt" "$deb_root/usr/share/doc/rgaa-studio/DISTRIBUTION-NOTICE.txt"
-install -m 0644 "$payload_dir/LICENSE.txt" "$deb_root/usr/share/doc/rgaa-studio/copyright"
+install -m 0644 "$script_dir/DEBIAN-COPYRIGHT" "$deb_root/usr/share/doc/rgaa-studio/copyright"
 install -m 0644 "$payload_dir/Assets/LUCIDE-LICENSE.txt" "$deb_root/usr/share/doc/rgaa-studio/Assets/LUCIDE-LICENSE.txt"
 install -m 0644 "$payload_dir/Assets/AXE-CORE-LICENSE.txt" "$deb_root/usr/share/doc/rgaa-studio/Assets/AXE-CORE-LICENSE.txt"
+installed_size_kib="$(du -sk "$deb_root/opt" "$deb_root/usr" | awk '{ total += $1 } END { print total }')"
 
 cat > "$deb_root/DEBIAN/control" <<CONTROL
 Package: rgaa-studio
@@ -41,15 +51,20 @@ Version: $deb_version
 Section: utils
 Priority: optional
 Architecture: amd64
+Installed-Size: $installed_size_kib
 Maintainer: numera11y
 Homepage: https://www.numera11y.fr
 Depends: libgtk-3-0, libwebkit2gtk-4.1-0, libsoup-3.0-0
-Description: Espace de travail d’audit d’accessibilité RGAA/WCAG
- Application desktop Avalonia pour accompagner les audits d’accessibilité.
+Description: Application de bureau pour audits d’accessibilité RGAA
+ RGAA Studio est une application de bureau multiplateforme, éditée par numera11y,
+ destinée à réaliser et organiser des audits d’accessibilité selon le référentiel
+ RGAA. Elle vise à faciliter le travail des auditeurs, développeurs et équipes
+ produit dans la mise en conformité de sites et services numériques.
+ .
  Cette préversion inclut le runtime .NET et utilise le WebKitGTK du système.
 CONTROL
 
-deb_file="$output_dir/rgaa-studio_${deb_version}_amd64.deb"
+deb_file="$output_dir/rgaa-studio_${deb_filename_version}_amd64.deb"
 dpkg-deb --root-owner-group --build "$deb_root" "$deb_file" >/dev/null
 dpkg-deb --info "$deb_file" >/dev/null
 
@@ -68,6 +83,8 @@ cp "$script_dir/rgaa-studio-launcher" "$rpm_root/SOURCES/"
 cp "$script_dir/rgaa-studio.desktop" "$rpm_root/SOURCES/"
 cp "$script_dir/README-Linux.txt" "$rpm_root/SOURCES/"
 cp "$script_dir/DISTRIBUTION-NOTICE.txt" "$rpm_root/SOURCES/"
+cp "$metainfo_file" "$rpm_root/SOURCES/fr.numera11y.RgaaStudio.metainfo.xml"
+cp "$script_dir/DEBIAN-COPYRIGHT" "$rpm_root/SOURCES/DEBIAN-COPYRIGHT"
 sed -e "s/@RPM_VERSION@/$rpm_version/g" -e "s/@RPM_RELEASE@/$rpm_release/g" "$script_dir/rgaa-studio.spec.in" > "$rpm_root/SPECS/rgaa-studio.spec"
 rpmbuild -bb "$rpm_root/SPECS/rgaa-studio.spec" --define "_topdir $rpm_root" >/dev/null
 rpm_file="$(find "$rpm_root/RPMS/x86_64" -maxdepth 1 -name '*.rpm' -print -quit)"

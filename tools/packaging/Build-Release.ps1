@@ -1,7 +1,8 @@
 param(
     [string]$Version = '',
     [string]$LinuxDistro = 'Ubuntu-24.04',
-    [string]$WebView2InstallerPath = ''
+    [string]$WebView2InstallerPath = '',
+    [string]$ReleaseDate = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -53,6 +54,10 @@ if ($versionParts.Count -ne 4 -or ($versionParts | Where-Object { $_ -notmatch '
     throw "Version '$Version' must start with a numeric x.y.z version to stamp Windows executable metadata."
 }
 $versionNumeric = $versionParts -join '.'
+if ([string]::IsNullOrWhiteSpace($ReleaseDate)) {
+    $ReleaseDate = [DateTime]::Now.ToString('yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture)
+}
+if ($ReleaseDate -notmatch '^\d{4}-\d{2}-\d{2}$') { throw "ReleaseDate '$ReleaseDate' must use YYYY-MM-DD." }
 
 function ConvertTo-WslPath([string]$Path) {
     $fullPath = [System.IO.Path]::GetFullPath($Path)
@@ -181,8 +186,16 @@ $linuxPayloadPath = ConvertTo-WslPath $linuxPublish
 $linuxPackagePath = ConvertTo-WslPath $linuxPackages
 
 Write-Host "Assembling Debian and RPM packages in WSL ($LinuxDistro)..."
-& wsl.exe -d $LinuxDistro -- bash $linuxPackagingScript $linuxPayloadPath $linuxPackagePath $Version
+& wsl.exe -d $LinuxDistro -- bash $linuxPackagingScript $linuxPayloadPath $linuxPackagePath $Version $releaseDate
 if ($LASTEXITCODE -ne 0) { throw "Linux package assembly failed with exit code $LASTEXITCODE." }
+
+# GitHub normalizes tildes in release asset names; use the same stable filename in the checksum manifest.
+foreach ($debianPackage in Get-ChildItem -LiteralPath $linuxPackages -Filter '*.deb' -File) {
+    $normalizedName = $debianPackage.Name.Replace('~', '.')
+    if ($normalizedName -ne $debianPackage.Name) {
+        Rename-Item -LiteralPath $debianPackage.FullName -NewName $normalizedName
+    }
+}
 
 $packageFiles = @(Get-ChildItem -LiteralPath $linuxPackages -File) + @(Get-Item -LiteralPath $windowsZip)
 $packageFiles += Get-Item -LiteralPath $windowsInstaller

@@ -3,7 +3,7 @@ Version:        @RPM_VERSION@
 Release:        @RPM_RELEASE@%{?dist}
 %define debug_package %{nil}
 %define _build_id_links none
-Summary:        Espace de travail d’audit d’accessibilité RGAA/WCAG
+Summary:        Application de bureau pour audits d’accessibilité RGAA
 License:        MIT
 Vendor:         numera11y
 URL:            https://www.numera11y.fr
@@ -16,12 +16,15 @@ Source1:        rgaa-studio-launcher
 Source2:        rgaa-studio.desktop
 Source3:        README-Linux.txt
 Source4:        DISTRIBUTION-NOTICE.txt
+Source5:        fr.numera11y.RgaaStudio.metainfo.xml
+Source6:        DEBIAN-COPYRIGHT
 AutoReqProv:    no
 
 %description
-RGAA Studio is a desktop workspace for accessibility audits. This preview package
-is built for local installation evaluation. It requires the system GTK 3,
-WebKitGTK 4.1 and libsoup 3 runtime libraries.
+RGAA Studio est une application de bureau multiplateforme, éditée par numera11y,
+destinée à réaliser et organiser des audits d’accessibilité selon le référentiel
+RGAA. Elle vise à faciliter le travail des auditeurs, développeurs et équipes
+produit dans la mise en conformité de sites et services numériques.
 
 %prep
 %setup -q -n rgaa-studio
@@ -34,11 +37,12 @@ install -d %{buildroot}/opt/rgaa-studio
 cp -a . %{buildroot}/opt/rgaa-studio/
 install -D -m 0755 %{SOURCE1} %{buildroot}/usr/bin/rgaa-studio
 install -D -m 0644 %{SOURCE2} %{buildroot}/usr/share/applications/rgaa-studio.desktop
+install -D -m 0644 %{SOURCE5} %{buildroot}/usr/share/metainfo/fr.numera11y.RgaaStudio.metainfo.xml
 install -D -m 0644 Assets/rgaa-studio-app-icon.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/rgaa-studio.svg
 install -d %{buildroot}/usr/share/doc/rgaa-studio
 install -m 0644 %{SOURCE3} %{buildroot}/usr/share/doc/rgaa-studio/README-Linux.txt
 install -m 0644 %{SOURCE4} %{buildroot}/usr/share/doc/rgaa-studio/DISTRIBUTION-NOTICE.txt
-install -m 0644 LICENSE.txt %{buildroot}/usr/share/doc/rgaa-studio/copyright
-printf '%s\n' /opt/rgaa-studio /usr/bin/rgaa-studio /usr/share/applications/rgaa-studio.desktop /usr/share/icons/hicolor /usr/share/doc/rgaa-studio > %{_builddir}/rgaa-studio-files.list
+install -m 0644 %{SOURCE6} %{buildroot}/usr/share/doc/rgaa-studio/copyright
+printf '%s\n' /opt/rgaa-studio /usr/bin/rgaa-studio /usr/share/applications/rgaa-studio.desktop /usr/share/metainfo /usr/share/icons/hicolor /usr/share/doc/rgaa-studio > %{_builddir}/rgaa-studio-files.list
 
 %files -f %{_builddir}/rgaa-studio-files.list

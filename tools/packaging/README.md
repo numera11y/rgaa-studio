@@ -13,14 +13,18 @@ Run from the repository root on Windows with .NET SDK 10, NSIS 3.13 and WSL enab
 .\tools\packaging\Build-Release.ps1
 ```
 
-Install the Windows setup compiler with `winget install --id NSIS.NSIS --exact`. The default WSL distribution is `Ubuntu-24.04`; it needs `dpkg-deb` and `rpmbuild` (`sudo apt install rpm`). To select another installed WSL distribution or override the shared version:
+Install the Windows setup compiler with `winget install --id NSIS.NSIS --exact`. The default WSL distribution is `Ubuntu-24.04`; it needs `dpkg-deb`, `rpmbuild` and `appstreamcli` (`sudo apt install rpm appstream`). To select another installed WSL distribution or override the shared version:
 
 ```powershell
 .\tools\packaging\Build-Release.ps1 -LinuxDistro Ubuntu-24.04 -Version 1.0.0-preview.1
 ```
 
-Output is written under `artifacts/packages/<version>/`, with `SHA256SUMS.txt`. The setup EXE carries Windows file-version metadata and numera11y publisher metadata, provides a branded setup/splash, and supports per-user install/update/uninstall while preserving audit data. It bundles the Microsoft Edge WebView2 Evergreen Standalone Installer (x64), installs it only when missing, and leaves Evergreen updates enabled. The app and setup icons are generated from `src/RgaaStudio.Desktop/Assets/rgaa-studio-app-icon.svg` by `tools/packaging/RgaaStudio.IconBuilder`; the separate Windows ZIP is a portable/manual-install alternative and requires WebView2 to be present. The Linux packages depend on GTK 3, WebKitGTK 4.1 and libsoup 3; the apphost and .NET runtime are bundled.
+Output is written under `artifacts/packages/<version>/`, with `SHA256SUMS.txt`. The Debian package sets `Installed-Size`, includes AppStream metadata for the release date and MIT license, and installs a DEP-5 copyright record. The setup EXE carries Windows file-version metadata and numera11y publisher metadata, provides a branded setup/splash, and supports per-user install/update/uninstall while preserving audit data. It bundles the Microsoft Edge WebView2 Evergreen Standalone Installer (x64), installs it only when missing, and leaves Evergreen updates enabled. The app and setup icons are generated from `src/RgaaStudio.Desktop/Assets/rgaa-studio-app-icon.svg` by `tools/packaging/RgaaStudio.IconBuilder`; the separate Windows ZIP is a portable/manual-install alternative and requires WebView2 to be present. The Linux packages depend on GTK 3, WebKitGTK 4.1 and libsoup 3; the apphost and .NET runtime are bundled.
 
 The Linux package files are assembled on Ubuntu 24.04 WSL, not installed or runtime-tested on Ubuntu 26.04 or Fedora 44. Their Debian/RPM metadata and payload contents are validated during packaging; test installation and WebKit rendering on the target distributions before general distribution. The WSL package-building toolchain is not part of the deliverables.
 
 The application is licensed under MIT (`LICENSE`). `DISTRIBUTION-NOTICE.txt` and third-party notices accompany the packages. The setup is unsigned. Linux package metadata and dependency resolution were checked on Ubuntu 24.04 WSL, but installation and rendering on Ubuntu 26.04/Fedora 44 still require validation.
+
+The signed Ubuntu repository workflow, its required owner-managed signing key, and Ubuntu installation instructions are documented in [`APT-REPOSITORY.md`](APT-REPOSITORY.md). Installing a downloaded `.deb` directly remains an untrusted local-package installation; use the signed repository after its key and GitHub Pages source have been configured.
+
+The `.deb` carries AppStream metainfo and its installed-size field. This improves the information shown by Ubuntu Software, but a locally downloaded `.deb` is still not an authenticated software source. The signed APT repository is a separate distribution channel and requires an owner-managed signing key; do not treat AppStream metadata or the package checksum as a publisher signature.

@@ -1,0 +1,72 @@
+name: Publier le dépôt APT signé
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Tag de la GitHub Release contenant le paquet .deb
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: signed-apt-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: ${{ inputs.release_tag }}
+      APT_REPOSITORY_SIGNING_FINGERPRINT: ${{ vars.APT_REPOSITORY_SIGNING_FINGERPRINT }}
+    steps:
+      - name: Checkout packaging tools
+        uses: actions/checkout@v5
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install repository tools
+        run: sudo apt-get update && sudo apt-get install -y apt-utils appstream appstream-compose gnupg
+
+      - name: Verify signing secrets are configured
+        env:
+          APT_REPOSITORY_SIGNING_KEY_ASCII: ${{ secrets.APT_REPOSITORY_SIGNING_KEY_ASCII }}
+        run: |
+          test -n "$APT_REPOSITORY_SIGNING_KEY_ASCII" || { echo 'Configure repository secret APT_REPOSITORY_SIGNING_KEY_ASCII.' >&2; exit 1; }
+          test -n "$APT_REPOSITORY_SIGNING_FINGERPRINT" || { echo 'Configure repository variable APT_REPOSITORY_SIGNING_FINGERPRINT.' >&2; exit 1; }
+          test -n "$RELEASE_TAG" || { echo 'Choose the release_tag input.' >&2; exit 1; }
+
+      - name: Download Debian package from the release
+        run: |
+          mkdir -p "$RUNNER_TEMP/deb"
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern 'rgaa-studio_*_amd64.deb' --dir "$RUNNER_TEMP/deb"
+          test "$(find "$RUNNER_TEMP/deb" -maxdepth 1 -name '*.deb' | wc -l)" -eq 1
+
+      - name: Build and sign the APT repository
+        env:
+          APT_REPOSITORY_SIGNING_KEY_ASCII: ${{ secrets.APT_REPOSITORY_SIGNING_KEY_ASCII }}
+        run: |
+          printf '%s' "$APT_REPOSITORY_SIGNING_KEY_ASCII" > "$RUNNER_TEMP/apt-signing-key.asc"
+          : > "$RUNNER_TEMP/apt-signing-passphrase"
+          chmod 600 "$RUNNER_TEMP/apt-signing-key.asc" "$RUNNER_TEMP/apt-signing-passphrase"
+          deb_file="$(find "$RUNNER_TEMP/deb" -maxdepth 1 -name '*.deb' -print -quit)"
+          tools/packaging/build-signed-apt-repository.sh "$deb_file" "$RUNNER_TEMP/site/apt" \
+            "$RUNNER_TEMP/apt-signing-key.asc" "$RUNNER_TEMP/apt-signing-passphrase" "$APT_REPOSITORY_SIGNING_FINGERPRINT"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/site
+
+      - name: Deploy signed APT repository
+        id: deployment
+        uses: actions/deploy-pages@v4

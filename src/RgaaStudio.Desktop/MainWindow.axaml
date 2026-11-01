@@ -836,6 +836,9 @@
                             <TextBlock x:Name="SelectedCriterionTheme" FontSize="11" Foreground="#214B9A" />
                             <TextBlock x:Name="SelectedCriterionSummary" FontSize="12" Foreground="#45536D" TextWrapping="Wrap" />
                             <TextBlock x:Name="CriterionTestsText" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" />
+                            <Expander x:Name="CriterionMethodologyExpander" Header="Exigences et méthodes des tests" IsExpanded="False">
+                              <TextBlock x:Name="CriterionMethodologyText" FontSize="11" Foreground="#45536D" TextWrapping="Wrap" Margin="8,4" />
+                            </Expander>
                           </StackPanel>
                           <Border Height="1" Background="#D8DAD9" />
                           <StackPanel Spacing="8">

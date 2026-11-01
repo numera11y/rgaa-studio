@@ -1,8 +1,8 @@
 using RgaaStudio.Core.Audits;
 
-if (args.Length != 1)
+if (args.Length is < 1 or > 2)
 {
-    Console.Error.WriteLine("Usage: PressKit.Seed <path-to-temporary-litedb>");
+    Console.Error.WriteLine("Usage: PressKit.Seed <path-to-temporary-litedb> [path-to-catalog-source-litedb]");
     return 2;
 }
 
@@ -17,17 +17,35 @@ if (File.Exists(databasePath) || File.Exists(logPath) || File.Exists(settingsPat
 }
 
 using var database = new EmbeddedAuditDatabase(databasePath, importLegacyData: false);
-database.StoreReferenceVersion(new StoredReferenceVersion
+if (args.Length == 2)
 {
-    StableId = "press-kit:rgaa:4.1.2",
-    FrameworkId = "rgaa",
-    FrameworkName = "RGAA",
-    VersionCode = "4.1.2",
-    Jurisdiction = "France",
-    Language = "fr",
-    LicenseName = "Licence ouverte Etalab 2.0",
-    CatalogStatus = "Importé"
-});
+    var catalogPath = Path.GetFullPath(args[1]);
+    using var sourceCatalog = new EmbeddedAuditDatabase(catalogPath, importLegacyData: false);
+    var reference = sourceCatalog.GetReferenceVersions().FirstOrDefault(item =>
+        item.FrameworkId.Equals("rgaa", StringComparison.OrdinalIgnoreCase) && item.VersionCode == "4.1.2" &&
+        item.CatalogStatus.Equals("Importé", StringComparison.OrdinalIgnoreCase));
+    if (reference is null)
+    {
+        Console.Error.WriteLine("A complete imported RGAA 4.1.2 catalog was not found in the source database.");
+        return 4;
+    }
+    database.StoreReferenceVersion(reference);
+    Console.WriteLine($"Copied only the RGAA {reference.VersionCode} reference catalog; no audit dossier or evidence was imported.");
+}
+else
+{
+    database.StoreReferenceVersion(new StoredReferenceVersion
+    {
+        StableId = "press-kit:rgaa:4.1.2",
+        FrameworkId = "rgaa",
+        FrameworkName = "RGAA",
+        VersionCode = "4.1.2",
+        Jurisdiction = "France",
+        Language = "fr",
+        LicenseName = "Licence ouverte Etalab 2.0",
+        CatalogStatus = "Importé"
+    });
+}
 database.StoreReferenceVersion(new StoredReferenceVersion
 {
     StableId = "press-kit:wcag:2.2",

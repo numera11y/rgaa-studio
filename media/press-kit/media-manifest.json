@@ -1,7 +1,7 @@
 {
   "product": "RGAA Studio",
   "publisher": "numera11y",
-  "captureDate": "2026-10-30",
+  "captureDate": "2026-10-31",
   "capturePlatform": "Windows desktop · application window at 1920×1032",
   "websiteShown": "https://www.numera11y.fr",
   "auditData": "isolated synthetic dossier; no previous local dossiers imported",
@@ -703,6 +703,22 @@
       "width": 1600,
       "height": 900,
       "bytes": 97894
+    },
+    {
+      "path": "readme-screenshots/readme-criteres-du-lot.png",
+      "category": "readme-capture",
+      "alt": "Critères du lot avec recherche et applicabilité page par page",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 213779
+    },
+    {
+      "path": "readme-screenshots/readme-critere-sur-la-page.png",
+      "category": "readme-capture",
+      "alt": "Critère du lot, tests et observations dans le contexte de la page",
+      "width": 1920,
+      "height": 1032,
+      "bytes": 218243
     }
   ]
 }

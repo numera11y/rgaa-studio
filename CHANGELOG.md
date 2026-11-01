@@ -6,6 +6,19 @@ Les changements notables de RGAA Studio sont consignés dans ce fichier. Le form
 
 Cette section regroupe les changements déjà apportés au code mais qui ne sont pas encore inclus dans une version publiée.
 
+## [1.0.0-preview.6] - 2026-10-31
+
+### Modifié
+
+- Paquets Debian mieux intégrés à Ubuntu Software grâce à la taille installée, aux métadonnées AppStream (nom RGAA Studio, description française, licence MIT, date et page d’accueil) et à l’avis de copyright DEP-5.
+- Dépôt APT signé numera11y disponible pour authentifier les installations Ubuntu indépendamment du téléchargement manuel du `.deb`.
+
+### Limites connues
+
+- Le dépôt APT signé est une source tierce numera11y, pas une publication Canonical dans l’Ubuntu App Center.
+- L’Ubuntu App Center peut toujours identifier le dépôt comme tiers, même si APT en vérifie la signature ; l’installation directe du `.deb` reste non authentifiée.
+- L’installateur Windows n’est pas signé et les paquets Linux restent à valider à l’exécution sur Ubuntu 26.04 et Fedora 44.
+
 ## [1.0.0-preview.5] - 2026-10-31
 
 ### Ajouté
@@ -49,6 +62,7 @@ Cette section regroupe les changements déjà apportés au code mais qui ne sont
 - L’installateur Windows n’est pas signé.
 - Les paquets Linux ont été assemblés sous Ubuntu 24.04 WSL, mais l’installation et le rendu doivent encore être validés sur Ubuntu 26.04 et Fedora 44.
 
-[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.5...HEAD
+[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.6...HEAD
+[1.0.0-preview.6]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.6
 [1.0.0-preview.5]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.5
 [1.0.0-preview.1]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.1

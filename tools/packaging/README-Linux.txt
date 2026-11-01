@@ -5,9 +5,11 @@ Le paquet inclut le runtime .NET. Le navigateur natif Avalonia utilise WebKitGTK
 - WebKitGTK 4.1
 - libsoup 3
 
-Installation Debian/Ubuntu : sudo apt install ./rgaa-studio_*.deb
+Installation Ubuntu depuis le dépôt signé numera11y : suivre APT-REPOSITORY.md après publication du dépôt. Installation manuelle pour tester le paquet : sudo apt install ./rgaa-studio_*.deb (Ubuntu peut afficher un avertissement de provenance pour un fichier local).
 Installation Fedora : sudo dnf install ./rgaa-studio-*.rpm
 Lancer l’application depuis le menu Applications (« RGAA Studio ») ou avec : rgaa-studio
+
+Le paquet déclare sa taille installée et inclut les métadonnées AppStream pour le nom, la licence MIT, la page d’accueil et la date de version. Installer directement un fichier .deb téléchargé peut encore déclencher l’avertissement de provenance d’Ubuntu. Le dépôt APT signé numera11y sera accessible après activation de GitHub Pages ; voir APT-REPOSITORY.md.
 
 Les dossiers d’audit sont conservés dans le répertoire LocalApplicationData de l’utilisateur. La désinstallation du paquet ne supprime pas ces données.
 
