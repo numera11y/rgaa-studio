@@ -28,3 +28,5 @@ The application is licensed under MIT (`LICENSE`). `DISTRIBUTION-NOTICE.txt` and
 The signed Ubuntu repository workflow, its required owner-managed signing key, and Ubuntu installation instructions are documented in [`APT-REPOSITORY.md`](APT-REPOSITORY.md). Installing a downloaded `.deb` directly remains an untrusted local-package installation; use the signed repository after its key and GitHub Pages source have been configured.
 
 The `.deb` carries AppStream metainfo and its installed-size field. This improves the information shown by Ubuntu Software, but a locally downloaded `.deb` is still not an authenticated software source. The signed APT repository is a separate distribution channel and requires an owner-managed signing key; do not treat AppStream metadata or the package checksum as a publisher signature.
+
+An experimental strict-confinement Snap prototype is maintained under [`snap/`](../../snap/README.md). It is not published to the Snap Store; test its WebKitGTK confinement, audit-data persistence and permissions on a disposable Ubuntu installation before considering store submission.

@@ -4,7 +4,7 @@ using Svg.Skia;
 
 if (args.Length != 2)
 {
-    Console.Error.WriteLine("Usage: RgaaStudio.IconBuilder <source.svg> <output.ico>");
+    Console.Error.WriteLine("Usage: RgaaStudio.IconBuilder <source.svg> <output.ico|output.png>");
     return 2;
 }
 
@@ -22,6 +22,27 @@ if (picture is null || picture.CullRect.Width <= 0 || picture.CullRect.Height <=
 {
     Console.Error.WriteLine("The application SVG did not produce a renderable image.");
     return 1;
+}
+
+if (Path.GetExtension(output).Equals(".png", StringComparison.OrdinalIgnoreCase))
+{
+    const int size = 512;
+    using var bitmap = new SKBitmap(size, size, SKColorType.Rgba8888, SKAlphaType.Premul);
+    using (var canvas = new SKCanvas(bitmap))
+    {
+        canvas.Clear(SKColors.Transparent);
+        canvas.Scale(size / picture.CullRect.Width, size / picture.CullRect.Height);
+        canvas.Translate(-picture.CullRect.Left, -picture.CullRect.Top);
+        canvas.DrawPicture(picture);
+        canvas.Flush();
+    }
+
+    using var encoded = bitmap.Encode(SKEncodedImageFormat.Png, 100)
+        ?? throw new InvalidOperationException("Failed to encode the application PNG icon.");
+    Directory.CreateDirectory(Path.GetDirectoryName(output)!);
+    File.WriteAllBytes(output, encoded.ToArray());
+    Console.WriteLine($"Generated {size}px RGAA Studio app icon: {output}");
+    return 0;
 }
 
 var sizes = new[] { 16, 24, 32, 48, 64, 128, 256 };

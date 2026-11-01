@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=RGAA Studio
+Comment=Application de bureau pour audits d’accessibilité RGAA
+Exec=rgaa-studio %U
+Icon=rgaa-studio
+Terminal=false
+Categories=Utility;Accessibility;
+StartupNotify=true

@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+data_dir="${SNAP_USER_COMMON:?Snap user data directory is unavailable}/Numera11y/RGAAStudio"
+mkdir -p "$data_dir" "$SNAP_USER_COMMON/.local/share" "$SNAP_USER_COMMON/.config" "$SNAP_USER_COMMON/.cache"
+export RGAA_STUDIO_DATABASE_PATH="$data_dir/rgaa-studio.litedb"
+export XDG_DATA_HOME="$SNAP_USER_COMMON/.local/share"
+export XDG_CONFIG_HOME="$SNAP_USER_COMMON/.config"
+export XDG_CACHE_HOME="$SNAP_USER_COMMON/.cache"
+: "${WEBKIT_DISABLE_COMPOSITING_MODE:=1}"
+export WEBKIT_DISABLE_COMPOSITING_MODE
+
+exec "$SNAP/opt/rgaa-studio/RgaaStudio.Desktop" "$@"

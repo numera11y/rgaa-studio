@@ -1,0 +1,49 @@
+name: rgaa-studio
+title: RGAA Studio
+version: 1.0.0-preview.8
+summary: Organize accessibility audits for websites
+description: |
+  RGAA Studio is a desktop application for organizing RGAA and WCAG accessibility
+  audits. Inspect selected pages in an integrated browser, keep observations and
+  evidence attached to their pages, and record the auditor's result per criterion.
+license: MIT
+website: https://www.numera11y.fr
+icon: gui/icon.png
+base: core24
+confinement: strict
+grade: devel
+architectures:
+  - build-on: [amd64]
+    build-for: [amd64]
+
+apps:
+  rgaa-studio:
+    command: bin/rgaa-studio
+    desktop: share/applications/rgaa-studio.desktop
+    plugs:
+      - desktop
+      - desktop-legacy
+      - network
+      - opengl
+      - wayland
+      - x11
+      - browser-support
+    environment:
+      RGAA_STUDIO_DATABASE_PATH: $SNAP_USER_COMMON/Numera11y/RGAAStudio/rgaa-studio.litedb
+      XDG_DATA_HOME: $SNAP_USER_COMMON/.local/share
+      XDG_CONFIG_HOME: $SNAP_USER_COMMON/.config
+      XDG_CACHE_HOME: $SNAP_USER_COMMON/.cache
+
+parts:
+  rgaa-studio:
+    plugin: dump
+    source: payload
+    stage-packages:
+      - ca-certificates
+      - libgtk-3-0
+      - libwebkit2gtk-4.1-0
+      - libsoup-3.0-0
+
+  desktop-integration:
+    plugin: dump
+    source: integration

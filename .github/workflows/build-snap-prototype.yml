@@ -1,0 +1,40 @@
+name: Build experimental Snap
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install .NET 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install Snapcraft
+        run: sudo snap install snapcraft --classic
+
+      - name: Read package version
+        id: version
+        shell: bash
+        run: echo "value=$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' Directory.Build.props)" >> "$GITHUB_OUTPUT"
+
+      - name: Build experimental Snap
+        run: bash tools/packaging/build-snap.sh
+
+      - name: Upload Snap artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rgaa-studio-snap-${{ steps.version.outputs.value }}-amd64
+          path: |
+            artifacts/packages/${{ steps.version.outputs.value }}/rgaa-studio_${{ steps.version.outputs.value }}_amd64.snap
+            artifacts/packages/${{ steps.version.outputs.value }}/rgaa-studio_${{ steps.version.outputs.value }}_amd64.snap.sha256
+          if-no-files-found: error
+          retention-days: 30

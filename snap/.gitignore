@@ -1,0 +1,8 @@
+/payload/
+/integration/share/
+/gui/icon.png
+/parts/
+/prime/
+/stage/
+/*.snap
+/snapcraft-state
