@@ -59,7 +59,7 @@ jobs:
           : > "$RUNNER_TEMP/apt-signing-passphrase"
           chmod 600 "$RUNNER_TEMP/apt-signing-key.asc" "$RUNNER_TEMP/apt-signing-passphrase"
           deb_file="$(find "$RUNNER_TEMP/deb" -maxdepth 1 -name '*.deb' -print -quit)"
-          tools/packaging/build-signed-apt-repository.sh "$deb_file" "$RUNNER_TEMP/site/apt" \
+          bash tools/packaging/build-signed-apt-repository.sh "$deb_file" "$RUNNER_TEMP/site/apt" \
             "$RUNNER_TEMP/apt-signing-key.asc" "$RUNNER_TEMP/apt-signing-passphrase" "$APT_REPOSITORY_SIGNING_FINGERPRINT"
 
       - name: Upload Pages artifact
