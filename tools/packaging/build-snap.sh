@@ -20,7 +20,7 @@ if [[ -r /etc/os-release ]]; then
 fi
 
 rm -rf "$snap_root/payload" "$snap_root/integration/share"
-mkdir -p "$payload_root" "$integration_root/bin" \
+mkdir -p "$payload_root" "$snap_root/gui" "$integration_root/bin" \
   "$integration_root/share/applications" \
   "$integration_root/share/icons/hicolor/scalable/apps" \
   "$integration_root/share/doc/rgaa-studio"
