@@ -18,8 +18,11 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Install Snapcraft
+      - name: Install Snapcraft and SVG tools
         run: sudo snap install snapcraft --classic
+
+      - name: Install SVG converter
+        run: sudo apt-get update && sudo apt-get install --yes librsvg2-bin
 
       - name: Read package version
         id: version

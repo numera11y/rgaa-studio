@@ -4,7 +4,7 @@ This is an experimental strict-confinement Snap for Linux x86-64. It is intended
 
 ## Build on Ubuntu
 
-Build on a native Ubuntu 24.04 machine with .NET SDK 10 and Snapcraft installed (`sudo snap install snapcraft --classic`). The script publishes the self-contained Linux app, assembles the Snap project and runs Snapcraft in destructive mode on the host:
+Build on a native Ubuntu 24.04 machine with .NET SDK 10, Snapcraft and `librsvg2-bin` installed (`sudo snap install snapcraft --classic`, `sudo apt install librsvg2-bin`). The script publishes the self-contained Linux app, assembles the Snap project and runs Snapcraft in destructive mode on the host:
 
 ```bash
 bash tools/packaging/build-snap.sh

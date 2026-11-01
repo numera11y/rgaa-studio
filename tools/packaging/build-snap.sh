@@ -10,6 +10,7 @@ version="$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' "$repo_root/Directory.
 [[ -n "$version" ]] || { echo 'Could not read the project version from Directory.Build.props.' >&2; exit 1; }
 command -v dotnet >/dev/null || { echo '.NET SDK 10 is required.' >&2; exit 1; }
 command -v snapcraft >/dev/null || { echo 'Install Snapcraft on a native Ubuntu build machine.' >&2; exit 1; }
+command -v rsvg-convert >/dev/null || { echo 'Install librsvg2-bin to generate the Snap Store icon.' >&2; exit 1; }
 if [[ -r /etc/os-release ]]; then
   . /etc/os-release
   [[ "${ID:-}" == ubuntu && "${VERSION_ID:-}" == 24.04 ]] || {
@@ -38,9 +39,9 @@ install -m 0644 "$repo_root/tools/packaging/DEBIAN-COPYRIGHT" \
 install -m 0644 "$repo_root/tools/packaging/DISTRIBUTION-NOTICE.txt" \
   "$integration_root/share/doc/rgaa-studio/DISTRIBUTION-NOTICE.txt"
 
-dotnet run --project "$repo_root/tools/packaging/RgaaStudio.IconBuilder/RgaaStudio.IconBuilder.csproj" \
-  --configuration Release -- "$repo_root/src/RgaaStudio.Desktop/Assets/rgaa-studio-app-icon.svg" \
-  "$snap_root/gui/icon.png"
+rsvg-convert --width=512 --height=512 \
+  --output "$snap_root/gui/icon.png" \
+  "$repo_root/src/RgaaStudio.Desktop/Assets/rgaa-studio-app-icon.svg"
 
 (
   cd "$snap_root"
