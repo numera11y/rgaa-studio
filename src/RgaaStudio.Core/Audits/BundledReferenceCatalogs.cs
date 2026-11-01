@@ -36,10 +36,30 @@ internal static class BundledReferenceCatalogs
         var catalog = JsonSerializer.Deserialize<StoredReferenceVersion>(stream)
             ?? throw new InvalidDataException($"Bundled reference catalog is empty: {expected.ResourceName}");
 
+        if (expected.StableId == "wcag:2.2")
+            RestoreWcagLevels(catalog);
+
         if (catalog.StableId != expected.StableId || !IsComplete(catalog, expected))
             throw new InvalidDataException($"Bundled reference catalog failed validation: {expected.StableId}");
 
         return catalog;
+    }
+
+    private static void RestoreWcagLevels(StoredReferenceVersion catalog)
+    {
+        foreach (var criterion in catalog.Themes.SelectMany(theme => theme.Criteria))
+        {
+            using var references = JsonDocument.Parse(criterion.ReferencesJson);
+            var level = references.RootElement.ValueKind == JsonValueKind.Array
+                ? references.RootElement.EnumerateArray()
+                    .Where(item => item.ValueKind == JsonValueKind.Object && item.TryGetProperty("wcagLevel", out _))
+                    .Select(item => item.GetProperty("wcagLevel").GetString())
+                    .FirstOrDefault(value => value is "A" or "AA" or "AAA")
+                : null;
+            if (level is null)
+                throw new InvalidDataException($"The WCAG level is missing for criterion {criterion.Code}.");
+            criterion.Level = level;
+        }
     }
 
     private static bool IsComplete(StoredReferenceVersion catalog, BundledCatalog expected) =>
@@ -49,5 +69,7 @@ internal static class BundledReferenceCatalogs
         catalog.ExpectedTestCount == expected.Tests &&
         catalog.Themes.Count == expected.Themes &&
         catalog.Themes.Sum(theme => theme.Criteria.Count) == expected.Criteria &&
-        catalog.Themes.Sum(theme => theme.Criteria.Sum(criterion => criterion.Tests.Count)) == expected.Tests;
+        catalog.Themes.Sum(theme => theme.Criteria.Sum(criterion => criterion.Tests.Count)) == expected.Tests &&
+        (expected.StableId != "wcag:2.2" || catalog.Themes.SelectMany(theme => theme.Criteria)
+            .All(criterion => criterion.Level is "A" or "AA" or "AAA"));
 }

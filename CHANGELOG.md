@@ -6,6 +6,17 @@ Les changements notables de RGAA Studio sont consignés dans ce fichier. Le form
 
 Cette section regroupe les changements déjà apportés au code mais qui ne sont pas encore inclus dans une version publiée.
 
+## [1.0.0-preview.8] - 2026-11-01
+
+### Corrigé
+
+- Niveaux A/AA/AAA des critères WCAG restaurés depuis les métadonnées du catalogue ; les critères du lot s’affichent pour WCAG et les catalogues incomplets déjà présents sont actualisés sans perdre les audits.
+- Le lanceur Linux désactive le compositing WebKitGTK dans les machines virtuelles VMware, où il empêchait l’affichage des pages dans la WebView.
+
+### Limites connues
+
+- L’installateur Windows n’est pas signé et les paquets Linux restent à valider à l’exécution sur Ubuntu 26.04 et Fedora 44.
+
 ## [1.0.0-preview.7] - 2026-11-01
 
 ### Corrigé
@@ -73,7 +84,8 @@ Cette section regroupe les changements déjà apportés au code mais qui ne sont
 - L’installateur Windows n’est pas signé.
 - Les paquets Linux ont été assemblés sous Ubuntu 24.04 WSL, mais l’installation et le rendu doivent encore être validés sur Ubuntu 26.04 et Fedora 44.
 
-[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.7...HEAD
+[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.8...HEAD
+[1.0.0-preview.8]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.8
 [1.0.0-preview.7]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.7
 [1.0.0-preview.6]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.6
 [1.0.0-preview.5]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.5

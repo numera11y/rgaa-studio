@@ -13,6 +13,8 @@ Le paquet déclare sa taille installée et inclut les métadonnées AppStream po
 
 Les catalogues complets RGAA 4.1.2 et WCAG 2.2 sont inclus dans l’application et ajoutés à la base locale au premier démarrage. Les catalogues et leurs licences d’origine sont décrits dans le fichier copyright du paquet.
 
+Sur une machine virtuelle VMware, le lanceur désactive le compositing accéléré de WebKitGTK pour éviter les pages blanches dans la WebView. La variable `WEBKIT_DISABLE_COMPOSITING_MODE` peut être définie avant le lancement pour remplacer ce réglage.
+
 Les dossiers d’audit sont conservés dans le répertoire LocalApplicationData de l’utilisateur. La désinstallation du paquet ne supprime pas ces données.
 
 La construction a été réalisée sous Ubuntu 24.04 WSL. Les paquets ciblent amd64/x86_64 ; leur installation et le moteur WebView doivent être validés sur Ubuntu 26.04 et Fedora 44 avant une diffusion générale. Le code applicatif est sous licence MIT ; voir LICENSE.txt.

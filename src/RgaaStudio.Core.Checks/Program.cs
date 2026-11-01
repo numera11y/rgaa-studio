@@ -65,11 +65,40 @@ try
                 [new SitePageCandidate("Accueil", "https://catalog-bootstrap.example/", "Accueil", true)], null);
             Check(bootstrap.GetAuditCriteria(bundledAudit.Id).Count == 106,
                 "an audit can use the bundled RGAA catalog immediately after first launch");
+            var bundledWcagAudit = bootstrap.Create(new NewAudit("https://catalog-bootstrap.example/wcag", "WCAG", "WCAG 2.2", "AA"),
+                [new SitePageCandidate("Accueil", "https://catalog-bootstrap.example/wcag", "Accueil", true)], null);
+            var bundledWcagCriteria = bootstrap.GetAuditCriteria(bundledWcagAudit.Id);
+            Check(bundledWcagCriteria.Count > 0 && bundledWcagCriteria.All(criterion => criterion.Level is "A" or "AA"),
+                "a bundled WCAG AA audit exposes criteria with correctly restored conformance levels");
         }
 
         using var reopenedBootstrap = new EmbeddedAuditDatabase(bootstrapDatabasePath);
         Check(reopenedBootstrap.GetReferenceVersions().Count == 2,
             "bundled reference catalog bootstrap is idempotent on subsequent launches");
+
+        var incompleteCatalogPath = Path.Combine(root, "incomplete-catalog-upgrade.litedb");
+        AuditManifest legacyWcagAudit;
+        using (var incompleteCatalog = new EmbeddedAuditDatabase(incompleteCatalogPath, importLegacyData: false))
+        {
+            incompleteCatalog.StoreReferenceVersion(new StoredReferenceVersion
+            {
+                StableId = "wcag:2.2", FrameworkId = "wcag", FrameworkName = "WCAG", VersionCode = "2.2",
+                CatalogStatus = "Importé", ExpectedThemeCount = 4, ExpectedCriterionCount = 86, ExpectedTestCount = 86,
+                Themes = [new StoredCatalogTheme { Number = "1", Title = "Perceptible", Criteria = [
+                    new StoredCatalogCriterion { Code = "1.1.1", Title = "Contenu non textuel", Tests = [new StoredCatalogTest { Code = "1.1.1", Question = "Vérifier" }] }
+                ] }]
+            });
+            legacyWcagAudit = incompleteCatalog.Create(new NewAudit("https://catalog-upgrade.example/", "WCAG", "WCAG 2.2", "AA"),
+                [new SitePageCandidate("Accueil", "https://catalog-upgrade.example/", "Accueil", true)], null);
+        }
+
+        using (var upgradedCatalog = new EmbeddedAuditDatabase(incompleteCatalogPath))
+        {
+            var criteria = upgradedCatalog.GetAuditCriteria(legacyWcagAudit.Id);
+            Check(upgradedCatalog.Get(legacyWcagAudit.Id) is not null && criteria.Count > 0 &&
+                  criteria.All(criterion => criterion.Level is "A" or "AA"),
+                "an existing dossier survives replacement of a metadata-complete but unusable WCAG catalog");
+        }
     }
     finally
     {

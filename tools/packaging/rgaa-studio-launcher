@@ -1,4 +1,14 @@
 #!/bin/sh
 set -eu
 APP_DIR=/opt/rgaa-studio
+if [ -z "${WEBKIT_DISABLE_COMPOSITING_MODE:-}" ]; then
+  virtualizer=
+  if command -v systemd-detect-virt >/dev/null 2>&1; then
+    virtualizer=$(systemd-detect-virt --vm 2>/dev/null || true)
+  fi
+  if [ "$virtualizer" = vmware ] || grep -qi vmware /sys/class/dmi/id/sys_vendor /sys/class/dmi/id/product_name 2>/dev/null; then
+    WEBKIT_DISABLE_COMPOSITING_MODE=1
+    export WEBKIT_DISABLE_COMPOSITING_MODE
+  fi
+fi
 exec "$APP_DIR/RgaaStudio.Desktop" "$@"
