@@ -1,0 +1,1955 @@
+{
+  "Id": "56c3f01a-54e9-4d8f-9a21-c504e49c167a",
+  "StableId": "wcag:2.2",
+  "LegacySqliteId": 2,
+  "FrameworkId": "wcag",
+  "FrameworkName": "WCAG",
+  "VersionCode": "2.2",
+  "Jurisdiction": "INT",
+  "Language": "fr-FR",
+  "ContentTypesJson": "[\u0022web\u0022]",
+  "DataFormat": "w3c-wcag-html-v1",
+  "ExpectedThemeCount": 4,
+  "ExpectedCriterionCount": 86,
+  "ExpectedTestCount": 86,
+  "LicenseName": "W3C Document License 2023",
+  "LicenseUrl": "https://www.w3.org/copyright/document-license-2023/",
+  "RequireMethodologies": false,
+  "SourceUrl": "https://www.w3.org/Translations/WCAG22-fr-20260922/",
+  "SourceRevision": "WCAG22-fr-20260922",
+  "WcagVersion": "2.2",
+  "PublishedAtUtc": "2026-09-21T20:00:00-04:00",
+  "ImportedAtUtc": "2026-10-28T19:42:24.523-04:00",
+  "CatalogStatus": "Import\u00E9",
+  "CatalogChecksum": "A1C98308B6E9230850621F45BCB96F0423F17C958123855D8F834A54B678B646",
+  "Themes": [
+    {
+      "Id": "2533af75-69a0-465e-8b4a-2debe011c896",
+      "LegacySqliteId": 14,
+      "Number": "1",
+      "Title": "Perceptible",
+      "Position": 0,
+      "Criteria": [
+        {
+          "Id": "d814443c-880f-4e48-85d7-35a020558e6e",
+          "LegacySqliteId": 107,
+          "Code": "1.1.1",
+          "Level": "",
+          "Title": "Contenu non textuel (A)",
+          "TechnicalNote": "R\u00E8gle 1.1 \u2014 \u00C9quivalents textuels",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.1\u0022,\u0022guidelineTitle\u0022:\u0022\\u00C9quivalents textuels\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#non-text-content\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 0,
+          "Tests": [
+            {
+              "Id": "88fb7f6c-3a0d-4b94-8c8c-ce6127e9d984",
+              "LegacySqliteId": 259,
+              "Code": "1.1.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.1.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Tout contenu non textuel pr\u00E9sent\u00E9 \u00E0 l\u2019utilisateur a un \u00E9quivalent textuel qui remplit une fonction \u00E9quivalente sauf dans les situations \u00E9num\u00E9r\u00E9es ci-dessous.\r\n\r\nComposant d\u2019interface ou de saisie si le contenu non textuel est un composant d\u2019interface ou s\u2019il permet la saisie d\u2019informations par l\u2019utilisateur, alors il a un nom qui d\u00E9crit sa fonction. (Se r\u00E9f\u00E9rer au Crit\u00E8re de succ\u00E8s 4.1.2 pour des exigences suppl\u00E9mentaires \u00E0 propos des composants d\u2019interfaces utilisateur ou des contenus qui permettent la saisie d\u2019informations par l\u2019utilisateur.) M\u00E9dia temporel si le contenu non textuel est un m\u00E9dia temporel, alors l\u2019\u00E9quivalent textuel fournit au moins une identification descriptive du contenu non textuel. (Se r\u00E9f\u00E9rer \u00E0 la R\u00E8gle 1.2 pour des exigences suppl\u00E9mentaires concernant les m\u00E9dias temporels.) Test si le contenu non textuel est un test ou un exercice qui serait invalide s\u2019il \u00E9tait pr\u00E9sent\u00E9 en texte, alors l\u2019\u00E9quivalent textuel fournit au moins une identification descriptive du contenu non textuel. Contenu sensoriel si le contenu non textuel vise d\u2019abord \u00E0 cr\u00E9er une exp\u00E9rience sensorielle sp\u00E9cifique, l\u2019\u00E9quivalent textuel fournit au moins une identification descriptive de ce contenu non textuel. CAPTCHA si ce contenu non textuel vise \u00E0 confirmer que le contenu est consult\u00E9 par une personne plut\u00F4t que par un ordinateur, alors un \u00E9quivalent textuel est fourni pour identifier et d\u00E9crire la fonction du contenu non textuel, et des formes alternatives du CAPTCHA sont propos\u00E9es pour diff\u00E9rents types de perception sensorielle afin d\u2019accommoder diff\u00E9rents types de limitations fonctionnelles. D\u00E9coration, formatage, invisibilit\u00E9 si le contenu non textuel est purement d\u00E9coratif, s\u2019il est utilis\u00E9 seulement pour un formatage visuel ou s\u2019il n\u2019est pas pr\u00E9sent\u00E9 \u00E0 l\u2019utilisateur, alors il est impl\u00E9ment\u00E9 de mani\u00E8re \u00E0 \u00EAtre ignor\u00E9 par les technologies d\u2019assistance.",
+              "Methodology": null,
+              "Position": 0
+            }
+          ]
+        },
+        {
+          "Id": "ec7b6de3-38d2-474e-8f7f-414ee79ad4f8",
+          "LegacySqliteId": 108,
+          "Code": "1.2.1",
+          "Level": "",
+          "Title": "Contenus seulement audio et seulement vid\u00E9o (pr\u00E9-enregistr\u00E9s) (A)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#audio-only-and-video-only-prerecorded\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 1,
+          "Tests": [
+            {
+              "Id": "85224368-e3bc-444a-884e-1a59bce8fb88",
+              "LegacySqliteId": 260,
+              "Code": "1.2.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour des m\u00E9dias pr\u00E9-enregistr\u00E9s seulement audio et pr\u00E9-enregistr\u00E9s seulement vid\u00E9o, sauf si l\u2019audio ou la vid\u00E9o sont un m\u00E9dia de remplacement pour un texte et qu\u2019ils sont clairement identifi\u00E9s comme tels, les points suivants sont vrais :\r\n\r\nContenu pr\u00E9-enregistr\u00E9 seulement audio fournir une version de remplacement pour un m\u00E9dia temporel, pr\u00E9sentant une information \u00E9quivalente au contenu seulement audio. Contenu pr\u00E9-enregistr\u00E9 seulement vid\u00E9o fournir, soit une version de remplacement pour un m\u00E9dia temporel, soit une piste audio (pr\u00E9sentant une information \u00E9quivalente) pour un contenu pr\u00E9-enregistr\u00E9 seulement vid\u00E9o.",
+              "Methodology": null,
+              "Position": 1
+            }
+          ]
+        },
+        {
+          "Id": "d49c41e7-5b88-44bf-a067-9e2ff93b90b4",
+          "LegacySqliteId": 109,
+          "Code": "1.2.2",
+          "Level": "",
+          "Title": "Sous-titres (pr\u00E9-enregistr\u00E9s) (A)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#captions-prerecorded\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 2,
+          "Tests": [
+            {
+              "Id": "0173bae4-7c03-4ad8-a0f3-e72473941f20",
+              "LegacySqliteId": 261,
+              "Code": "1.2.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Fournir des sous-titres pour tout contenu audio pr\u00E9-enregistr\u00E9 dans un m\u00E9dia synchronis\u00E9, except\u00E9 lorsque le m\u00E9dia est un m\u00E9dia de remplacement pour un texte et qu\u2019il est clairement identifi\u00E9 comme tel.",
+              "Methodology": null,
+              "Position": 2
+            }
+          ]
+        },
+        {
+          "Id": "aee66702-fec9-4977-8caf-a0e02669d14a",
+          "LegacySqliteId": 110,
+          "Code": "1.2.3",
+          "Level": "",
+          "Title": "Audio-description ou version de remplacement pour un m\u00E9dia temporel (pr\u00E9-enregistr\u00E9) (A)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#audio-description-or-media-alternative-prerecorded\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 3,
+          "Tests": [
+            {
+              "Id": "bf3aa2a3-1ed1-4fb2-baee-d9f89d37132d",
+              "LegacySqliteId": 262,
+              "Code": "1.2.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Fournir une version de remplacement pour un m\u00E9dia temporel ou une audio-description du contenu vid\u00E9o pr\u00E9-enregistr\u00E9 pour un m\u00E9dia synchronis\u00E9, except\u00E9 quand le m\u00E9dia est un m\u00E9dia de remplacement pour un texte et qu\u2019il est clairement identifi\u00E9 comme tel.",
+              "Methodology": null,
+              "Position": 3
+            }
+          ]
+        },
+        {
+          "Id": "f99810e0-899c-47d1-b18c-d1a6c01ebd25",
+          "LegacySqliteId": 111,
+          "Code": "1.2.4",
+          "Level": "",
+          "Title": "Sous-titres (en direct) (AA)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#captions-live\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 4,
+          "Tests": [
+            {
+              "Id": "538138ca-d1b3-4c88-a4ee-72c3f718b30c",
+              "LegacySqliteId": 263,
+              "Code": "1.2.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Fournir des sous-titres pour tout contenu audio en direct, sous forme de m\u00E9dia synchronis\u00E9.",
+              "Methodology": null,
+              "Position": 4
+            }
+          ]
+        },
+        {
+          "Id": "a5ce7361-5397-4a8e-accd-8ebc502bf7d6",
+          "LegacySqliteId": 112,
+          "Code": "1.2.5",
+          "Level": "",
+          "Title": "Audio-description (pr\u00E9-enregistr\u00E9e) (AA)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#audio-description-prerecorded\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 5,
+          "Tests": [
+            {
+              "Id": "8fb1da76-e029-4d83-b14d-d37553d01375",
+              "LegacySqliteId": 264,
+              "Code": "1.2.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Fournir une audio-description pour tout contenu vid\u00E9o pr\u00E9-enregistr\u00E9, sous forme de m\u00E9dia synchronis\u00E9.",
+              "Methodology": null,
+              "Position": 5
+            }
+          ]
+        },
+        {
+          "Id": "ccc5213f-d17b-4fdf-88b3-22e29f1a342b",
+          "LegacySqliteId": 113,
+          "Code": "1.2.6",
+          "Level": "",
+          "Title": "Langue des signes (pr\u00E9-enregistr\u00E9e) (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#sign-language-prerecorded\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 6,
+          "Tests": [
+            {
+              "Id": "999ad013-dee4-458d-a0ed-842462c4dad2",
+              "LegacySqliteId": 265,
+              "Code": "1.2.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Fournir une interpr\u00E9tation en langue des signes pour tout contenu audio pr\u00E9-enregistr\u00E9, sous forme de m\u00E9dia synchronis\u00E9.",
+              "Methodology": null,
+              "Position": 6
+            }
+          ]
+        },
+        {
+          "Id": "b1adb7a2-13e3-47c8-b655-64204b618137",
+          "LegacySqliteId": 114,
+          "Code": "1.2.7",
+          "Level": "",
+          "Title": "Audio-description \u00E9tendue (pr\u00E9-enregistr\u00E9e) (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#extended-audio-description-prerecorded\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 7,
+          "Tests": [
+            {
+              "Id": "8731aa1d-f3c8-4a4f-bd65-9f730bbdcd1f",
+              "LegacySqliteId": 266,
+              "Code": "1.2.7",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.7 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Lorsque les blancs pr\u00E9sents dans le fond sonore ne sont pas suffisants pour permettre \u00E0 l\u2019audio-description de transmettre le sens de la vid\u00E9o, fournir une audio-description \u00E9tendue pour tout contenu vid\u00E9o pr\u00E9-enregistr\u00E9 sous la forme de m\u00E9dia synchronis\u00E9.",
+              "Methodology": null,
+              "Position": 7
+            }
+          ]
+        },
+        {
+          "Id": "d45e8c54-5d05-4137-b7c5-6e9a0db1b0d1",
+          "LegacySqliteId": 115,
+          "Code": "1.2.8",
+          "Level": "",
+          "Title": "Version de remplacement pour un m\u00E9dia temporel (pr\u00E9-enregistr\u00E9e) (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#media-alternative-prerecorded\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 8,
+          "Tests": [
+            {
+              "Id": "b3638569-fba4-4cbb-a3e9-5df05ff87609",
+              "LegacySqliteId": 267,
+              "Code": "1.2.8",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.8 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Fournir une version de remplacement pour un m\u00E9dia temporel, pour tout contenu de type m\u00E9dia synchronis\u00E9 pr\u00E9-enregistr\u00E9 et pour tout m\u00E9dia pr\u00E9-enregistr\u00E9 seulement vid\u00E9o.",
+              "Methodology": null,
+              "Position": 8
+            }
+          ]
+        },
+        {
+          "Id": "08d53e4d-197c-42ae-8d83-3a5a1e929e17",
+          "LegacySqliteId": 116,
+          "Code": "1.2.9",
+          "Level": "",
+          "Title": "Seulement audio (en direct) (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.2 \u2014 M\u00E9dia temporel",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.2\u0022,\u0022guidelineTitle\u0022:\u0022M\\u00E9dia temporel\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#audio-only-live\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 9,
+          "Tests": [
+            {
+              "Id": "4fde570a-c6bb-487e-ab77-c6c3a844dcaa",
+              "LegacySqliteId": 268,
+              "Code": "1.2.9",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.2.9 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Fournir une version de remplacement pour un m\u00E9dia temporel, donnant une information \u00E9quivalente pour un contenu seulement audio en direct.",
+              "Methodology": null,
+              "Position": 9
+            }
+          ]
+        },
+        {
+          "Id": "d8ff0570-353a-4129-83d0-464ff3da8ef1",
+          "LegacySqliteId": 117,
+          "Code": "1.3.1",
+          "Level": "",
+          "Title": "Information et relations (A)",
+          "TechnicalNote": "R\u00E8gle 1.3 \u2014 Adaptable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.3\u0022,\u0022guidelineTitle\u0022:\u0022Adaptable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#info-and-relationships\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 10,
+          "Tests": [
+            {
+              "Id": "034bd7ca-bce2-402a-be20-0c70e40796e7",
+              "LegacySqliteId": 269,
+              "Code": "1.3.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.3.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "L\u2019information, la structure, et les relations v\u00E9hicul\u00E9es par la pr\u00E9sentation peuvent \u00EAtre d\u00E9termin\u00E9es par un programme informatique ou sont disponibles sous forme de texte.",
+              "Methodology": null,
+              "Position": 10
+            }
+          ]
+        },
+        {
+          "Id": "1f9299e1-8f95-4c8b-a7a2-aa42674b3f47",
+          "LegacySqliteId": 118,
+          "Code": "1.3.2",
+          "Level": "",
+          "Title": "Ordre s\u00E9quentiel logique (A)",
+          "TechnicalNote": "R\u00E8gle 1.3 \u2014 Adaptable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.3\u0022,\u0022guidelineTitle\u0022:\u0022Adaptable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#meaningful-sequence\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 11,
+          "Tests": [
+            {
+              "Id": "897c4bcf-a2d5-4531-81d2-3cfbaf8450f4",
+              "LegacySqliteId": 270,
+              "Code": "1.3.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.3.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Lorsque l\u2019ordre de pr\u00E9sentation du contenu affecte sa signification, un ordre de lecture correct peut \u00EAtre d\u00E9termin\u00E9 par un programme informatique.",
+              "Methodology": null,
+              "Position": 11
+            }
+          ]
+        },
+        {
+          "Id": "2d8e7fb3-6766-4c0c-aee1-3e9b77c59da9",
+          "LegacySqliteId": 119,
+          "Code": "1.3.3",
+          "Level": "",
+          "Title": "Caract\u00E9ristiques sensorielles (A)",
+          "TechnicalNote": "R\u00E8gle 1.3 \u2014 Adaptable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.3\u0022,\u0022guidelineTitle\u0022:\u0022Adaptable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#sensory-characteristics\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 12,
+          "Tests": [
+            {
+              "Id": "718229dc-d843-4f6e-bb2a-9b00e5d43a3d",
+              "LegacySqliteId": 271,
+              "Code": "1.3.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.3.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Les instructions donn\u00E9es pour la compr\u00E9hension et l\u2019utilisation du contenu ne doivent pas reposer uniquement sur les caract\u00E9ristiques sensorielles des \u00E9l\u00E9ments comme la forme, la couleur, la taille, l\u2019emplacement visuel, l\u2019orientation ou le son.\r\n\r\nNotePour les exigences li\u00E9es \u00E0 la couleur, se r\u00E9f\u00E9rer \u00E0 la R\u00E8gle 1.4.",
+              "Methodology": null,
+              "Position": 12
+            }
+          ]
+        },
+        {
+          "Id": "785b8db4-9d25-47de-a843-64bd794894db",
+          "LegacySqliteId": 120,
+          "Code": "1.3.4",
+          "Level": "",
+          "Title": "Orientation (AA)",
+          "TechnicalNote": "R\u00E8gle 1.3 \u2014 Adaptable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.3\u0022,\u0022guidelineTitle\u0022:\u0022Adaptable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#orientation\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 13,
+          "Tests": [
+            {
+              "Id": "e849948d-a1b1-4a46-864b-c1f31158a38e",
+              "LegacySqliteId": 272,
+              "Code": "1.3.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.3.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La consultation et le fonctionnement du contenu ne sont pas limit\u00E9s \u00E0 une seule orientation de l\u2019affichage, comme le portrait ou le paysage, \u00E0 moins qu\u2019une orientation sp\u00E9cifique de l\u2019affichage ne soit essentielle.\r\n\r\nNoteOn compte parmi les exemples o\u00F9 une orientation sp\u00E9cifique de l\u2019affichage peut \u00EAtre essentielle : un ch\u00E8que de banque, une application de piano, des diapositives pour un projecteur ou une t\u00E9l\u00E9vision, ou un contenu de r\u00E9alit\u00E9 virtuelle, o\u00F9 le contenu n\u2019est pas n\u00E9cessairement limit\u00E9 \u00E0 une orientation d\u2019affichage en mode paysage ou portrait.",
+              "Methodology": null,
+              "Position": 13
+            }
+          ]
+        },
+        {
+          "Id": "c649a3f3-0824-4a7b-9ffa-369e4a98fbd5",
+          "LegacySqliteId": 121,
+          "Code": "1.3.5",
+          "Level": "",
+          "Title": "Identifier la finalit\u00E9 de la saisie (AA)",
+          "TechnicalNote": "R\u00E8gle 1.3 \u2014 Adaptable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.3\u0022,\u0022guidelineTitle\u0022:\u0022Adaptable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#identify-input-purpose\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 14,
+          "Tests": [
+            {
+              "Id": "3a5d37e5-1c4d-4ef6-96c7-749f67ef8135",
+              "LegacySqliteId": 273,
+              "Code": "1.3.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.3.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La finalit\u00E9 de chaque champ de saisie recueillant des informations sur l\u2019utilisateur peut \u00EAtre d\u00E9termin\u00E9e par un programme informatique lorsque :\r\n\r\nLe champ de saisie r\u00E9pond \u00E0 une finalit\u00E9 identifi\u00E9e dans la section Finalit\u00E9s de saisie des composants d\u2019interface utilisateur ; et Le contenu est impl\u00E9ment\u00E9 via des technologies permettant d\u2019identifier la finalit\u00E9 de la saisie attendue pour le champ.",
+              "Methodology": null,
+              "Position": 14
+            }
+          ]
+        },
+        {
+          "Id": "ff2ac6e2-3cc9-49c7-bd25-085efb225753",
+          "LegacySqliteId": 122,
+          "Code": "1.3.6",
+          "Level": "",
+          "Title": "Identifier la fonction (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.3 \u2014 Adaptable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.3\u0022,\u0022guidelineTitle\u0022:\u0022Adaptable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#identify-purpose\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 15,
+          "Tests": [
+            {
+              "Id": "06e3ee39-edfe-4d22-b2fc-3e4aaa17cbc4",
+              "LegacySqliteId": 274,
+              "Code": "1.3.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.3.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Dans un contenu impl\u00E9ment\u00E9 via un langage de balisage, la fonction des composants d\u2019interface utilisateur, des ic\u00F4nes et des r\u00E9gions peut \u00EAtre d\u00E9termin\u00E9e par un programme informatique.",
+              "Methodology": null,
+              "Position": 15
+            }
+          ]
+        },
+        {
+          "Id": "02501efc-afbd-4a77-9846-f8ad7b5e3f8c",
+          "LegacySqliteId": 123,
+          "Code": "1.4.1",
+          "Level": "",
+          "Title": "Utilisation de la couleur (A)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#use-of-color\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 16,
+          "Tests": [
+            {
+              "Id": "be9edac9-44a1-44f3-bb2e-04dcdce60be3",
+              "LegacySqliteId": 275,
+              "Code": "1.4.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La couleur n\u2019est pas utilis\u00E9e comme la seule fa\u00E7on de v\u00E9hiculer de l\u2019information, d\u2019indiquer une action, de solliciter une r\u00E9ponse ou de distinguer un \u00E9l\u00E9ment visuel.\r\n\r\nNoteCe crit\u00E8re de succ\u00E8s traite sp\u00E9cifiquement de la perception des couleurs. Les autres formes de perception sont trait\u00E9es \u00E0 la r\u00E8gle 1.3 comme l\u2019acc\u00E8s \u00E0 la couleur par programme informatique et les autres formes de codage de la pr\u00E9sentation visuelle.",
+              "Methodology": null,
+              "Position": 16
+            }
+          ]
+        },
+        {
+          "Id": "ca16b346-1dda-4604-90cd-a61e31d0b5f4",
+          "LegacySqliteId": 124,
+          "Code": "1.4.2",
+          "Level": "",
+          "Title": "Contr\u00F4le du son (A)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#audio-control\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 17,
+          "Tests": [
+            {
+              "Id": "26f2dc54-7c9f-43a6-9d09-10f0508ae731",
+              "LegacySqliteId": 276,
+              "Code": "1.4.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Si du son sur une page web est audible automatiquement pendant plus de 3 secondes, un m\u00E9canisme est disponible pour le mettre en pause, l\u2019arr\u00EAter ou pour en contr\u00F4ler le volume de fa\u00E7on ind\u00E9pendante du niveau de volume du syst\u00E8me g\u00E9n\u00E9ral.\r\n\r\nNotePuisque tout contenu ne satisfaisant pas \u00E0 ce crit\u00E8re de succ\u00E8s peut interf\u00E9rer avec la capacit\u00E9 de l\u2019utilisateur \u00E0 exploiter la page enti\u00E8re, tout le contenu pr\u00E9sent dans la page web (qu\u2019il soit utilis\u00E9 pour satisfaire \u00E0 d\u2019autres crit\u00E8res de succ\u00E8s ou non) doit satisfaire \u00E0 ce crit\u00E8re de succ\u00E8s. Voir l\u2019exigence de conformit\u00E9 5 : Non-interf\u00E9rence.",
+              "Methodology": null,
+              "Position": 17
+            }
+          ]
+        },
+        {
+          "Id": "648c1cd0-2f09-49ce-a66a-000b849b20d2",
+          "LegacySqliteId": 125,
+          "Code": "1.4.3",
+          "Level": "",
+          "Title": "Contraste (minimum) (AA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#contrast-minimum\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 18,
+          "Tests": [
+            {
+              "Id": "cbb579c5-c24e-4f1f-82ec-3ea00634cb56",
+              "LegacySqliteId": 277,
+              "Code": "1.4.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La pr\u00E9sentation visuelle du texte et du texte sous forme d\u2019image a un rapport de contraste d\u2019au moins 4,5:1, sauf dans les cas suivants :\r\n\r\nTexte agrandi le texte agrandi et le texte agrandi sous forme d\u2019image ont un rapport de contraste d\u2019au moins 3:1. Texte d\u00E9coratif aucune exigence de contraste pour le texte ou le texte sous forme d\u2019image qui fait partie d\u2019un composant d\u2019interface utilisateur inactif, qui est purement d\u00E9coratif, qui est invisible pour tous ou qui est une partie d\u2019une image contenant un autre contenu significatif. Logotypes aucune exigence de contraste pour le texte faisant partie d\u2019un logo ou d\u2019un nom de marque.",
+              "Methodology": null,
+              "Position": 18
+            }
+          ]
+        },
+        {
+          "Id": "104291db-42c4-478a-b154-95d2a24969f9",
+          "LegacySqliteId": 126,
+          "Code": "1.4.4",
+          "Level": "",
+          "Title": "Redimensionnement du texte (AA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#resize-text\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 19,
+          "Tests": [
+            {
+              "Id": "52046f9d-177b-47ad-8eb1-b73a4db57474",
+              "LegacySqliteId": 278,
+              "Code": "1.4.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "\u00C0 l\u2019exception des sous-titres et du texte sous forme d\u2019image, le texte peut \u00EAtre redimensionn\u00E9 jusqu\u2019\u00E0 200 pour cent sans l\u2019aide d\u2019une technologie d\u2019assistance et sans perte de contenu ou de fonctionnalit\u00E9.",
+              "Methodology": null,
+              "Position": 19
+            }
+          ]
+        },
+        {
+          "Id": "8deb758c-e116-4735-a6c1-bce7deea4c41",
+          "LegacySqliteId": 127,
+          "Code": "1.4.5",
+          "Level": "",
+          "Title": "Texte sous forme d\u2019image (AA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#images-of-text\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 20,
+          "Tests": [
+            {
+              "Id": "6493c1db-883f-4371-a0d9-81094e9fbc1a",
+              "LegacySqliteId": 279,
+              "Code": "1.4.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Si les technologies utilis\u00E9es peuvent r\u00E9aliser la pr\u00E9sentation visuelle, du texte est utilis\u00E9 pour v\u00E9hiculer l\u2019information plut\u00F4t que du texte sous forme d\u2019image sauf dans les cas suivants :\r\n\r\nPersonnalisable le texte sous forme d\u2019image peut \u00EAtre personnalis\u00E9 visuellement selon les exigences de l\u2019utilisateur ; Essentielle une pr\u00E9sentation sp\u00E9cifique du texte est essentielle \u00E0 l\u2019information v\u00E9hicul\u00E9e.\r\n\r\nNoteLes logotypes sont consid\u00E9r\u00E9s comme essentiels (le texte qui fait partie d\u2019un logo ou d\u2019un nom de marque).",
+              "Methodology": null,
+              "Position": 20
+            }
+          ]
+        },
+        {
+          "Id": "829c25c5-337c-4e64-b4d0-28ef46bc3eea",
+          "LegacySqliteId": 128,
+          "Code": "1.4.6",
+          "Level": "",
+          "Title": "Contraste (am\u00E9lior\u00E9) (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#contrast-enhanced\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 21,
+          "Tests": [
+            {
+              "Id": "b9e646d9-19fe-4e75-86cd-163b1b90426a",
+              "LegacySqliteId": 280,
+              "Code": "1.4.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La pr\u00E9sentation visuelle du texte et du texte sous forme d\u2019image a un rapport de contraste d\u2019au moins 7:1, sauf dans les cas suivants :\r\n\r\nTexte agrandi le texte agrandi et le texte agrandi sous forme d\u2019image ont un rapport de contraste d\u2019au moins 4,5:1 ; Texte d\u00E9coratif aucune exigence de contraste pour le texte ou le texte sous forme d\u2019image qui fait partie d\u2019un composant d\u2019interface utilisateur inactif, qui est purement d\u00E9coratif, qui est invisible pour tous ou qui est une partie d\u2019une image contenant un autre contenu significatif. Logotypes aucune exigence de contraste pour le texte faisant partie d\u2019un logo ou d\u2019un nom de marque.",
+              "Methodology": null,
+              "Position": 21
+            }
+          ]
+        },
+        {
+          "Id": "05078f90-0136-43c3-8b6a-44e832664757",
+          "LegacySqliteId": 129,
+          "Code": "1.4.7",
+          "Level": "",
+          "Title": "Arri\u00E8re-plan sonore de faible volume ou absent (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#low-or-no-background-audio\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 22,
+          "Tests": [
+            {
+              "Id": "97826cc6-a025-415d-8a01-88499d77dbc1",
+              "LegacySqliteId": 281,
+              "Code": "1.4.7",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.7 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour un contenu seulement audio pr\u00E9-enregistr\u00E9 qui (1) contient principalement de la parole au premier plan, (2) n\u2019est pas un CAPTCHA ou un logo sonore et (3) qui n\u2019est pas une vocalisation dont l\u2019intention est principalement d\u2019\u00EAtre musicale comme une chanson ou un rap, au moins l\u2019une des conditions suivantes est vraie :\r\n\r\nSans arri\u00E8re-plan le contenu audio ne contient pas d\u2019arri\u00E8re-plan sonore. D\u00E9sactivation l\u2019arri\u00E8re-plan sonore peut \u00EAtre d\u00E9sactiv\u00E9. 20 dB l\u2019arri\u00E8re-plan sonore est au moins 20 d\u00E9cibels plus faible que le contenu parl\u00E9 au premier plan sauf pour certains effets sonores occasionnels durant seulement une ou deux secondes. NotePar la d\u00E9finition du \u00AB d\u00E9cibel \u00BB, le volume de l\u2019arri\u00E8re-plan sonore correspondant \u00E0 cette exigence est approximativement quatre fois plus faible que le contenu parl\u00E9 au premier plan.",
+              "Methodology": null,
+              "Position": 22
+            }
+          ]
+        },
+        {
+          "Id": "9337af33-9b01-471d-8db9-8d9afdb1cc1d",
+          "LegacySqliteId": 130,
+          "Code": "1.4.8",
+          "Level": "",
+          "Title": "Pr\u00E9sentation visuelle (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#visual-presentation\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 23,
+          "Tests": [
+            {
+              "Id": "71d1187a-763b-4c4c-9056-c65d39f84817",
+              "LegacySqliteId": 282,
+              "Code": "1.4.8",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.8 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour la pr\u00E9sentation visuelle des blocs de texte, un m\u00E9canisme est disponible permettant de r\u00E9aliser ce qui suit :\r\n\r\nLes couleurs de premier plan et d\u2019arri\u00E8re-plan peuvent \u00EAtre choisies par l\u2019utilisateur. La largeur n\u2019exc\u00E8de pas 80 caract\u00E8res ou glyphes (40 si CJK). Le texte n\u2019est pas justifi\u00E9 (align\u00E9 simultan\u00E9ment \u00E0 droite et \u00E0 gauche). L\u2019espacement entre les lignes (interlignage) est d\u2019une valeur d\u2019au moins 1,5 dans les paragraphes et l\u2019espacement entre les paragraphes est au moins 1,5 fois plus grand que la valeur de l\u2019interligne. La taille du texte peut \u00EAtre redimensionn\u00E9e jusqu\u2019\u00E0 200 pour cent sans l\u2019aide d\u2019une technologie d\u2019assistance et sans que l\u2019utilisateur soit oblig\u00E9 de faire d\u00E9filer le texte horizontalement pour lire une ligne compl\u00E8te dans une fen\u00EAtre plein \u00E9cran.\r\n\r\nNote 1Le contenu n\u2019est pas tenu d\u2019utiliser ces valeurs. L\u2019exigence est qu\u2019il existe un m\u00E9canisme permettant aux utilisateurs de modifier ces aspects de la pr\u00E9sentation. Ce m\u00E9canisme peut \u00EAtre fourni par le navigateur ou un autre agent utilisateur. Le contenu n\u2019est pas tenu de fournir ce m\u00E9canisme.\r\n\r\nNote 2Les syst\u00E8mes d\u2019\u00E9criture de certaines langues utilisent des aspects de pr\u00E9sentation diff\u00E9rents pour am\u00E9liorer la lisibilit\u00E9 visuelle et textuelle. Si un aspect de pr\u00E9sentation de ce crit\u00E8re de succ\u00E8s n\u2019est pas utilis\u00E9 dans un syst\u00E8me d\u2019\u00E9criture, le contenu n\u2019a pas besoin d\u2019utiliser ce param\u00E8tre et peut \u00EAtre conforme sans lui. Les auteurs sont encourag\u00E9s \u00E0 suivre les conseils pour am\u00E9liorer la lisibilit\u00E9 visuelle et textuelle dans leur syst\u00E8me d\u2019\u00E9criture.",
+              "Methodology": null,
+              "Position": 23
+            }
+          ]
+        },
+        {
+          "Id": "9bc5d3fa-a105-4c91-8ea7-9f7b521d121f",
+          "LegacySqliteId": 131,
+          "Code": "1.4.9",
+          "Level": "",
+          "Title": "Texte sous forme d\u2019image (sans exception) (AAA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#images-of-text-no-exception\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 24,
+          "Tests": [
+            {
+              "Id": "b2a41085-71ea-47af-b85e-a9065722fb5f",
+              "LegacySqliteId": 283,
+              "Code": "1.4.9",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.9 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Le texte sous forme d\u2019image est utilis\u00E9 seulement pour du texte purement d\u00E9coratif ou lorsqu\u2019une pr\u00E9sentation sp\u00E9cifique du texte est essentielle \u00E0 l\u2019information v\u00E9hicul\u00E9e.\r\n\r\nNoteLes logotypes (le texte qui fait partie d\u2019un logo ou d\u2019un nom de marque) sont consid\u00E9r\u00E9s comme essentiels.",
+              "Methodology": null,
+              "Position": 24
+            }
+          ]
+        },
+        {
+          "Id": "d5a985a8-915f-450e-857e-721d5aefeaf0",
+          "LegacySqliteId": 132,
+          "Code": "1.4.10",
+          "Level": "",
+          "Title": "Redistribution (AA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#reflow\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 25,
+          "Tests": [
+            {
+              "Id": "c189cfdc-e832-422d-8524-b8ebdb892e81",
+              "LegacySqliteId": 284,
+              "Code": "1.4.10",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.10 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Le contenu peut \u00EAtre pr\u00E9sent\u00E9 sans perte d\u2019information ou de fonctionnalit\u00E9 et sans n\u00E9cessit\u00E9 de d\u00E9filement dans les deux dimensions pour :\r\n\r\nun contenu \u00E0 d\u00E9filement vertical avec une largeur \u00E9quivalente \u00E0 320 pixels CSS ; un contenu \u00E0 d\u00E9filement horizontal avec une hauteur \u00E9quivalente \u00E0 256 pixels CSS.\r\n\r\nSauf pour les parties du contenu dont l\u2019utilisation ou la compr\u00E9hension n\u00E9cessite une mise en page en deux dimensions.\r\n\r\nNote 1320 pixels CSS \u00E9quivaut \u00E0 une largeur initiale d\u2019espace de restitution de 1280 pixels CSS avec un zoom de 400 %. Pour un contenu web con\u00E7u pour d\u00E9filer horizontalement (par exemple, avec du texte vertical), la valeur de 256 pixels CSS \u00E9quivaut \u00E0 une hauteur d\u2019affichage initiale de 1024 pixels CSS avec un zoom de 400 %.\r\n\r\nNote 2On compte parmi les exemples de contenu n\u00E9cessitant une mise en page en deux dimensions les images n\u00E9cessaires \u00E0 la compr\u00E9hension (comme les cartes ou les diagrammes), les vid\u00E9os, les jeux, les pr\u00E9sentations, les tableaux de donn\u00E9es (non pas les cellules individuelles), et les interfaces o\u00F9 il est n\u00E9cessaire de garder les barres d\u2019outils visibles pendant la manipulation du contenu. Un d\u00E9filement bidimensionnel pour ces parties du contenu est acceptable.",
+              "Methodology": null,
+              "Position": 25
+            }
+          ]
+        },
+        {
+          "Id": "898c579c-9fbd-4659-bc38-9bedb7f59bf7",
+          "LegacySqliteId": 133,
+          "Code": "1.4.11",
+          "Level": "",
+          "Title": "Contraste du contenu non textuel (AA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#non-text-contrast\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 26,
+          "Tests": [
+            {
+              "Id": "03112adf-1b92-496e-9d3b-6eae646d4bad",
+              "LegacySqliteId": 285,
+              "Code": "1.4.11",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.11 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La pr\u00E9sentation visuelle des \u00E9l\u00E9ments suivants a un rapport de contraste d\u2019au moins 3:1 avec la ou les couleurs adjacentes :\r\n\r\nComposants d\u2019interface utilisateur informations visuelles n\u00E9cessaires \u00E0 l\u2019identification des composants et des \u00E9tats de l\u2019interface utilisateur, \u00E0 l\u2019exception des composants inactifs ou lorsque l\u2019apparence du composant est d\u00E9termin\u00E9e par l\u2019agent utilisateur et non modifi\u00E9e par l\u2019auteur ; Objets graphiques parties d\u2019\u00E9l\u00E9ments graphiques n\u00E9cessaires \u00E0 la compr\u00E9hension du contenu, sauf si une pr\u00E9sentation sp\u00E9cifique de ces \u00E9l\u00E9ments est essentielle \u00E0 l\u2019information transmise.",
+              "Methodology": null,
+              "Position": 26
+            }
+          ]
+        },
+        {
+          "Id": "09a82e42-a608-4013-8f6f-8c10df3be41e",
+          "LegacySqliteId": 134,
+          "Code": "1.4.12",
+          "Level": "",
+          "Title": "Espacement du texte (AA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#text-spacing\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 27,
+          "Tests": [
+            {
+              "Id": "c95ff3c3-db2a-41e1-bdf0-2b5c8700edc6",
+              "LegacySqliteId": 286,
+              "Code": "1.4.12",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.12 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Dans un contenu impl\u00E9ment\u00E9 via un langage de balisage qui prend en charge les propri\u00E9t\u00E9s de style de texte suivantes, il n\u2019y a aucune perte de contenu ou de fonctionnalit\u00E9 lorsqu\u2019on applique toutes les valeurs ci-dessous sans modifier aucune autre propri\u00E9t\u00E9 de style :\r\n\r\nLa hauteur de ligne (interlignage) d\u00E9finie \u00E0 au moins 1,5 fois la taille de la police ; L\u2019espacement entre les paragraphes cons\u00E9cutifs d\u00E9fini \u00E0 au moins 2 fois la taille de la police ; L\u2019espacement des lettres (interlettrage) d\u00E9fini \u00E0 au moins 0,12 fois la taille de la police ; L\u2019espacement entre les mots d\u00E9fini \u00E0 au moins 0,16 fois la taille de la police.\r\n\r\nException : les langues et syst\u00E8mes d\u2019\u00E9critures qui n\u2019utilisent pas une ou plusieurs de ces propri\u00E9t\u00E9s de style de texte pour le texte \u00E9crit peuvent \u00EAtre conformes en utilisant uniquement les propri\u00E9t\u00E9s qui existent pour cette combinaison de langue et de syst\u00E8me d\u2019\u00E9criture.\r\n\r\nNote 1Il n\u2019est pas obligatoire d\u2019utiliser ces valeurs d\u2019espacement du texte. L\u2019exigence consiste \u00E0 s\u2019assurer que, lorsqu\u2019un utilisateur modifie l\u2019espacement du texte d\u00E9fini par l\u2019auteur, le contenu ou la fonctionnalit\u00E9 ne soient pas perdus.\r\n\r\nNote 2Dans certaines langues, les syst\u00E8mes d\u2019\u00E9criture utilisent des param\u00E8tres d\u2019espacement de texte diff\u00E9rents, tels que l\u2019indentation au d\u00E9but des paragraphes. Les auteurs sont encourag\u00E9s \u00E0 suivre les recommandations disponibles \u00E0 l\u2019\u00E9chelle locale pour am\u00E9liorer la lisibilit\u00E9 et la clart\u00E9 du texte dans leur propre syst\u00E8me d\u2019\u00E9criture.",
+              "Methodology": null,
+              "Position": 27
+            }
+          ]
+        },
+        {
+          "Id": "462246b2-9e21-4e10-8d29-5d619bd5f35e",
+          "LegacySqliteId": 135,
+          "Code": "1.4.13",
+          "Level": "",
+          "Title": "Contenu au survol ou au focus (AA)",
+          "TechnicalNote": "R\u00E8gle 1.4 \u2014 Distinguable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00221.4\u0022,\u0022guidelineTitle\u0022:\u0022Distinguable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#content-on-hover-or-focus\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 28,
+          "Tests": [
+            {
+              "Id": "52f34e3e-8722-4893-a469-2e94e7ca7f5d",
+              "LegacySqliteId": 287,
+              "Code": "1.4.13",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 1.4.13 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Lorsque la r\u00E9ception puis le retrait du survol du pointeur ou du focus du clavier d\u00E9clenche l\u2019affichage puis le masquage d\u2019un contenu additionnel, les \u00E9l\u00E9ments suivants sont vrais :\r\n\r\nMasquable il existe un m\u00E9canisme permettant de masquer le contenu additionnel sans d\u00E9placer le pointeur ou le focus du clavier, \u00E0 moins que le contenu additionnel ne communique une erreur de saisie ou ne masque ni ne remplace un autre contenu ; Survolable si le survol du pointeur peut d\u00E9clencher le contenu additionnel, alors le pointeur peut \u00EAtre d\u00E9plac\u00E9 sur le contenu additionnel sans que celui-ci disparaisse ; Persistant le contenu additionnel reste visible jusqu\u2019\u00E0 ce que le survol ou le focus soit retir\u00E9, que l\u2019utilisateur le masque ou que ses informations ne soient plus valables.\r\n\r\nException : la pr\u00E9sentation visuelle du contenu additionnel est contr\u00F4l\u00E9e par l\u2019agent utilisateur et n\u2019est pas modifi\u00E9e par l\u2019auteur.\r\n\r\nNote 1Parmi les exemples de contenu additionnel contr\u00F4l\u00E9 par l\u2019agent utilisateur figurent les infobulles du navigateur cr\u00E9\u00E9es \u00E0 l\u2019aide de l\u2019attribut HTML title [HTML].\r\n\r\nNote 2Les infobulles personnalis\u00E9es, les sous-menus et autres fen\u00EAtres non modales qui s\u2019affichent au survol et \u00E0 la prise de focus sont des exemples de contenu additionnel couvert par ce crit\u00E8re.\r\n\r\nNote 3Ce crit\u00E8re s\u2019applique au contenu qui appara\u00EEt en plus du composant d\u00E9clencheur lui-m\u00EAme. \u00C9tant donn\u00E9 que les composants cach\u00E9s qui deviennent visibles au focus du clavier (comme les liens d\u2019acc\u00E8s rapide \u00E0 une autre partie d\u2019une page) ne pr\u00E9sentent pas de contenu additionnel, ils ne sont pas couverts par ce crit\u00E8re.",
+              "Methodology": null,
+              "Position": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "1aec25d4-da0c-42bd-9a39-8850cf560b74",
+      "LegacySqliteId": 15,
+      "Number": "2",
+      "Title": "Utilisable",
+      "Position": 1,
+      "Criteria": [
+        {
+          "Id": "050f2c65-f085-4697-8f94-cf994a538dd6",
+          "LegacySqliteId": 136,
+          "Code": "2.1.1",
+          "Level": "",
+          "Title": "Clavier (A)",
+          "TechnicalNote": "R\u00E8gle 2.1 \u2014 Accessibilit\u00E9 au clavier",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.1\u0022,\u0022guidelineTitle\u0022:\u0022Accessibilit\\u00E9 au clavier\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#keyboard\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 29,
+          "Tests": [
+            {
+              "Id": "ca3be795-b904-4247-8b7a-51dc8f590d63",
+              "LegacySqliteId": 288,
+              "Code": "2.1.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.1.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Toutes les fonctionnalit\u00E9s du contenu sont utilisables \u00E0 l\u2019aide d\u2019une interface clavier sans exiger un rythme de frappe propre \u00E0 l\u2019utilisateur, sauf lorsque la fonction sous-jacente n\u00E9cessite une saisie qui d\u00E9pend du trac\u00E9 du mouvement effectu\u00E9 par l\u2019utilisateur et pas seulement des points de d\u00E9part et d\u2019arriv\u00E9e de ce trac\u00E9.\r\n\r\nNote 1Cette exception ne concerne que la fonction sous-jacente et non la technique de saisie. Par exemple, lorsqu\u2019on utilise l\u2019\u00E9criture manuscrite pour saisir du texte, la technique de saisie (l\u2019\u00E9criture manuscrite) n\u00E9cessite une saisie qui d\u00E9pend d\u2019un trac\u00E9, mais la fonction sous-jacente (la saisie de texte) ne le requiert pas.\r\n\r\nNote 2Cela n\u2019interdit pas et ne devrait pas d\u00E9courager l\u2019utilisation de la souris ou de toute autre m\u00E9thode de saisie en plus de l\u2019utilisation du clavier.",
+              "Methodology": null,
+              "Position": 29
+            }
+          ]
+        },
+        {
+          "Id": "5be9b4c7-0131-4b0e-9140-a946704204e8",
+          "LegacySqliteId": 137,
+          "Code": "2.1.2",
+          "Level": "",
+          "Title": "Pas de pi\u00E8ge au clavier (A)",
+          "TechnicalNote": "R\u00E8gle 2.1 \u2014 Accessibilit\u00E9 au clavier",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.1\u0022,\u0022guidelineTitle\u0022:\u0022Accessibilit\\u00E9 au clavier\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#no-keyboard-trap\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 30,
+          "Tests": [
+            {
+              "Id": "737f2ba0-8cde-4928-ab43-bbd8b3fe6395",
+              "LegacySqliteId": 289,
+              "Code": "2.1.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.1.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Si le focus du clavier peut \u00EAtre positionn\u00E9 sur un \u00E9l\u00E9ment de la page \u00E0 l\u2019aide d\u2019une interface clavier, r\u00E9ciproquement, il peut \u00EAtre d\u00E9plac\u00E9 hors de ce m\u00EAme composant simplement \u00E0 l\u2019aide d\u2019une interface clavier et, si ce d\u00E9placement exige plus que l\u2019utilisation d\u2019une simple touche fl\u00E8che ou tabulation ou toute autre m\u00E9thode standard de sortie, l\u2019utilisateur est inform\u00E9 de la m\u00E9thode permettant de d\u00E9placer le focus hors de ce composant.\r\n\r\nNotePuisque tout contenu ne satisfaisant pas \u00E0 ce crit\u00E8re de succ\u00E8s peut interf\u00E9rer avec la capacit\u00E9 de l\u2019utilisateur \u00E0 exploiter la page enti\u00E8re, tout le contenu pr\u00E9sent dans la page web (qu\u2019il soit utilis\u00E9 pour satisfaire \u00E0 d\u2019autres crit\u00E8res de succ\u00E8s ou non) doit satisfaire \u00E0 ce crit\u00E8re de succ\u00E8s. Voir l\u2019exigence de conformit\u00E9 5 : Non-interf\u00E9rence.",
+              "Methodology": null,
+              "Position": 30
+            }
+          ]
+        },
+        {
+          "Id": "dbb72b12-b44b-4c3c-acf7-59e4462ea889",
+          "LegacySqliteId": 138,
+          "Code": "2.1.3",
+          "Level": "",
+          "Title": "Clavier (pas d\u2019exception) (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.1 \u2014 Accessibilit\u00E9 au clavier",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.1\u0022,\u0022guidelineTitle\u0022:\u0022Accessibilit\\u00E9 au clavier\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#keyboard-no-exception\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 31,
+          "Tests": [
+            {
+              "Id": "ec11a392-d6d2-40af-b575-f2dc136a6511",
+              "LegacySqliteId": 290,
+              "Code": "2.1.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.1.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Toutes les fonctionnalit\u00E9s du contenu sont utilisables \u00E0 l\u2019aide d\u2019une interface clavier sans exiger un rythme de frappe propre \u00E0 l\u2019utilisateur.",
+              "Methodology": null,
+              "Position": 31
+            }
+          ]
+        },
+        {
+          "Id": "9c4ab4db-0780-4493-ba13-42c9eb9e4e36",
+          "LegacySqliteId": 139,
+          "Code": "2.1.4",
+          "Level": "",
+          "Title": "Raccourcis clavier utilisant des caract\u00E8res (A)",
+          "TechnicalNote": "R\u00E8gle 2.1 \u2014 Accessibilit\u00E9 au clavier",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.1\u0022,\u0022guidelineTitle\u0022:\u0022Accessibilit\\u00E9 au clavier\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#character-key-shortcuts\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 32,
+          "Tests": [
+            {
+              "Id": "ff102c07-ab0f-4239-a922-e098e680ba5a",
+              "LegacySqliteId": 291,
+              "Code": "2.1.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.1.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Si un raccourci clavier est impl\u00E9ment\u00E9 dans du contenu en utilisant uniquement des caract\u00E8res de type lettres (y compris les majuscules et les minuscules), des signes de ponctuation, des chiffres ou des symboles, alors au moins l\u2019une des conditions suivantes est vraie :\r\n\r\nD\u00E9sactivation un m\u00E9canisme est disponible pour d\u00E9sactiver le raccourci ; R\u00E9assignation un m\u00E9canisme est disponible pour r\u00E9assigner le raccourci afin d\u2019inclure une ou plusieurs touches non imprimables du clavier (par exemple, Ctrl, Alt) ; Actif uniquement au focus le raccourci clavier pour un composant d\u2019interface utilisateur n\u2019est actif que lorsque ce composant a le focus.",
+              "Methodology": null,
+              "Position": 32
+            }
+          ]
+        },
+        {
+          "Id": "a1f9e182-6441-4af8-92de-2e128fbb451d",
+          "LegacySqliteId": 140,
+          "Code": "2.2.1",
+          "Level": "",
+          "Title": "R\u00E9glage du d\u00E9lai (A)",
+          "TechnicalNote": "R\u00E8gle 2.2 \u2014 D\u00E9lai suffisant",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.2\u0022,\u0022guidelineTitle\u0022:\u0022D\\u00E9lai suffisant\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#timing-adjustable\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 33,
+          "Tests": [
+            {
+              "Id": "acb0f3ad-71ea-4a1d-a64c-6cd41e253ccb",
+              "LegacySqliteId": 292,
+              "Code": "2.2.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.2.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour chaque limite de temps fix\u00E9e par le contenu, au moins l\u2019un des points suivants est vrai :\r\n\r\nSuppression l\u2019utilisateur a la possibilit\u00E9 de supprimer la limite de temps avant de la rencontrer ; ou Ajustement l\u2019utilisateur a la possibilit\u00E9 d\u2019ajuster la limite de temps avant de la rencontrer dans un intervalle d\u2019au moins dix fois la dur\u00E9e param\u00E9tr\u00E9e par d\u00E9faut ; ou Extension l\u2019utilisateur est averti avant que la limite de temps n\u2019expire et il lui est accord\u00E9 au moins 20 secondes pour \u00E9tendre cette limite par une action simple (par exemple, \u00AB appuyer sur la barre d\u2019espace \u00BB) et l\u2019utilisateur a la possibilit\u00E9 d\u2019\u00E9tendre la limite de temps au moins dix fois ; ou L\u2019exception du temps r\u00E9el la limite de temps est une partie constitutive d\u2019un \u00E9v\u00E9nement en temps r\u00E9el (par exemple, une ench\u00E8re) et aucune alternative n\u2019est possible ; ou L\u2019exception de la limite essentielle la limite de temps est essentielle et l\u2019\u00E9tendre invaliderait alors l\u2019activit\u00E9 ; ou L\u2019exception des 20 heures la limite de temps est sup\u00E9rieure \u00E0 20 heures.\r\n\r\nNoteCe crit\u00E8re de succ\u00E8s permet de s\u2019assurer que les utilisateurs peuvent compl\u00E9ter leurs t\u00E2ches sans changement inattendu de contenu ou de contexte r\u00E9sultant de la limite de temps. Il devrait \u00EAtre consid\u00E9r\u00E9 conjointement avec le crit\u00E8re de succ\u00E8s 3.2.1, qui pose des limites aux changements de contenu ou de contexte r\u00E9sultant d\u2019une action de l\u2019utilisateur.",
+              "Methodology": null,
+              "Position": 33
+            }
+          ]
+        },
+        {
+          "Id": "1652366d-acc8-4528-b9b3-3c60c11fa3d2",
+          "LegacySqliteId": 141,
+          "Code": "2.2.2",
+          "Level": "",
+          "Title": "Mettre en pause, arr\u00EAter, masquer (A)",
+          "TechnicalNote": "R\u00E8gle 2.2 \u2014 D\u00E9lai suffisant",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.2\u0022,\u0022guidelineTitle\u0022:\u0022D\\u00E9lai suffisant\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#pause-stop-hide\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 34,
+          "Tests": [
+            {
+              "Id": "f3e690a9-0daf-4486-992c-536194869200",
+              "LegacySqliteId": 293,
+              "Code": "2.2.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.2.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour toute information en mouvement, clignotante, d\u00E9filante ou mise \u00E0 jour automatiquement, tous les points suivants sont vrais :\r\n\r\nD\u00E9placement, clignotement, d\u00E9filement pour toute information en mouvement, clignotante ou d\u00E9filante qui (1) d\u00E9marre automatiquement, (2) dure plus de cinq secondes et (3) est pr\u00E9sent\u00E9e conjointement avec un autre contenu, il y a un m\u00E9canisme \u00E0 la disposition de l\u2019utilisateur pour la mettre en pause, l\u2019arr\u00EAter ou la masquer, \u00E0 moins que le mouvement, le clignotement ou le d\u00E9filement s\u2019av\u00E8re un \u00E9l\u00E9ment essentiel au bon d\u00E9roulement de l\u2019activit\u00E9; et Mise \u00E0 jour automatique pour toute information mise \u00E0 jour automatiquement qui (1) d\u00E9marre automatiquement (2) et est pr\u00E9sent\u00E9e conjointement avec un autre contenu, il y a un m\u00E9canisme \u00E0 la disposition de l\u2019utilisateur pour la mettre en pause, l\u2019arr\u00EAter ou pour en contr\u00F4ler la fr\u00E9quence des mises \u00E0 jour \u00E0 moins que la mise \u00E0 jour automatique s\u2019av\u00E8re essentielle au bon d\u00E9roulement de l\u2019activit\u00E9.\r\n\r\nNote 1Pour les exigences relatives au contenu scintillant ou flashant, se r\u00E9f\u00E9rer \u00E0 la r\u00E8gle 2.3.\r\n\r\nNote 2Puisque tout contenu ne satisfaisant pas \u00E0 ce crit\u00E8re de succ\u00E8s peut interf\u00E9rer avec la capacit\u00E9 de l\u2019utilisateur \u00E0 exploiter la page enti\u00E8re, tout le contenu pr\u00E9sent dans la page web (qu\u2019il soit utilis\u00E9 pour satisfaire \u00E0 d\u2019autres crit\u00E8res de succ\u00E8s ou non) doit satisfaire \u00E0 ce crit\u00E8re de succ\u00E8s. Lire Exigence de conformit\u00E9 5 : Non-interf\u00E9rence.\r\n\r\nNote 3Il n\u2019est pas exig\u00E9 que le contenu mis \u00E0 jour p\u00E9riodiquement par logiciel ou diffus\u00E9 en flux \u00E0 l\u2019agent utilisateur conserve ou pr\u00E9sente l\u2019information g\u00E9n\u00E9r\u00E9e ou re\u00E7ue entre la mise en pause et la reprise de la pr\u00E9sentation, puisque cela peut ne pas \u00EAtre techniquement possible et s\u2019av\u00E9rer trompeur dans beaucoup de situations.\r\n\r\nNote 4Une animation survenant dans une phase de pr\u00E9-chargement ou dans une situation similaire peut \u00EAtre consid\u00E9r\u00E9e comme essentielle si aucune interaction n\u2019est permise \u00E0 tous les utilisateurs durant cette phase et si l\u2019absence d\u2019indication de progression est susceptible de perturber les utilisateurs ou de leur faire croire que le contenu est fig\u00E9 ou d\u00E9fectueux.",
+              "Methodology": null,
+              "Position": 34
+            }
+          ]
+        },
+        {
+          "Id": "370ce215-f558-4716-8691-4ce9a3f33c0f",
+          "LegacySqliteId": 142,
+          "Code": "2.2.3",
+          "Level": "",
+          "Title": "Pas de d\u00E9lai d\u2019ex\u00E9cution (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.2 \u2014 D\u00E9lai suffisant",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.2\u0022,\u0022guidelineTitle\u0022:\u0022D\\u00E9lai suffisant\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#no-timing\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 35,
+          "Tests": [
+            {
+              "Id": "364a6951-44ab-4b03-a6e6-89e08e0be73e",
+              "LegacySqliteId": 294,
+              "Code": "2.2.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.2.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Le temps n\u2019est pas un facteur essentiel dans le d\u00E9roulement de l\u2019\u00E9v\u00E9nement ou de l\u2019activit\u00E9, \u00E0 l\u2019exception des m\u00E9dias synchronis\u00E9s non interactifs et des \u00E9v\u00E9nements en temps r\u00E9el.",
+              "Methodology": null,
+              "Position": 35
+            }
+          ]
+        },
+        {
+          "Id": "d6c774fd-1769-46da-96ba-bdd23b053e57",
+          "LegacySqliteId": 143,
+          "Code": "2.2.4",
+          "Level": "",
+          "Title": "Interruptions (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.2 \u2014 D\u00E9lai suffisant",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.2\u0022,\u0022guidelineTitle\u0022:\u0022D\\u00E9lai suffisant\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#interruptions\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 36,
+          "Tests": [
+            {
+              "Id": "fc64992c-f742-4c9b-88d7-c6a68abb2a96",
+              "LegacySqliteId": 295,
+              "Code": "2.2.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.2.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Les interruptions peuvent \u00EAtre report\u00E9es ou supprim\u00E9es par l\u2019utilisateur, \u00E0 l\u2019exception des interruptions impliquant une urgence.",
+              "Methodology": null,
+              "Position": 36
+            }
+          ]
+        },
+        {
+          "Id": "7c186fda-8b1b-4cc7-902e-6c6c625db28b",
+          "LegacySqliteId": 144,
+          "Code": "2.2.5",
+          "Level": "",
+          "Title": "Nouvelle authentification (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.2 \u2014 D\u00E9lai suffisant",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.2\u0022,\u0022guidelineTitle\u0022:\u0022D\\u00E9lai suffisant\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#re-authenticating\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 37,
+          "Tests": [
+            {
+              "Id": "e5b9b99d-6889-4845-848e-64f10e63c6db",
+              "LegacySqliteId": 296,
+              "Code": "2.2.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.2.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Quand une session authentifi\u00E9e expire, l\u2019utilisateur peut poursuivre son activit\u00E9 sans perte de donn\u00E9es apr\u00E8s une nouvelle authentification.",
+              "Methodology": null,
+              "Position": 37
+            }
+          ]
+        },
+        {
+          "Id": "4fa60cc6-9a9d-478d-a50f-3af3ac41c2e8",
+          "LegacySqliteId": 145,
+          "Code": "2.2.6",
+          "Level": "",
+          "Title": "D\u00E9lais d\u2019expiration (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.2 \u2014 D\u00E9lai suffisant",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.2\u0022,\u0022guidelineTitle\u0022:\u0022D\\u00E9lai suffisant\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#timeouts\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 38,
+          "Tests": [
+            {
+              "Id": "e1ad2716-962f-4353-8b13-dfd5ae93127e",
+              "LegacySqliteId": 297,
+              "Code": "2.2.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.2.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Les utilisateurs sont avertis de la dur\u00E9e de leur inactivit\u00E9 qui pourrait entra\u00EEner une perte de donn\u00E9es, \u00E0 moins que les donn\u00E9es ne soient conserv\u00E9es pendant plus de 20 heures lorsque l\u2019utilisateur n\u2019effectue aucune action.\r\n\r\nNoteLes r\u00E9glementations relatives \u00E0 la protection de la vie priv\u00E9e peuvent exiger le consentement explicite de l\u2019utilisateur avant qu\u2019il ait \u00E9t\u00E9 authentifi\u00E9 et avant que ses donn\u00E9es soient conserv\u00E9es. Dans la plupart des juridictions, pays ou r\u00E9gions, le consentement explicite d\u2019une personne mineure ne peut pas \u00EAtre sollicit\u00E9. Lorsque la conservation des donn\u00E9es est envisag\u00E9e comme une m\u00E9thode pour satisfaire \u00E0 ce crit\u00E8re de succ\u00E8s, il est conseill\u00E9 de consulter des professionnels de la protection de la vie priv\u00E9e et un conseiller juridique.",
+              "Methodology": null,
+              "Position": 38
+            }
+          ]
+        },
+        {
+          "Id": "582998df-cd30-4698-90c1-b8af29965e0f",
+          "LegacySqliteId": 146,
+          "Code": "2.3.1",
+          "Level": "",
+          "Title": "Pas plus de trois flashs ou sous le seuil critique (A)",
+          "TechnicalNote": "R\u00E8gle 2.3 \u2014 Crises et r\u00E9actions physiques",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.3\u0022,\u0022guidelineTitle\u0022:\u0022Crises et r\\u00E9actions physiques\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#three-flashes-or-below-threshold\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 39,
+          "Tests": [
+            {
+              "Id": "fb527586-1555-4145-b1fb-94728ca5f53a",
+              "LegacySqliteId": 298,
+              "Code": "2.3.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.3.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Une page web doit \u00EAtre exempte de tout \u00E9l\u00E9ment qui flashe plus de trois fois dans n\u2019importe quel intervalle d\u2019une seconde ou ce flash doit se situer sous le seuil de flash g\u00E9n\u00E9rique et le seuil de flash rouge.\r\n\r\nNotePuisque tout contenu ne satisfaisant pas \u00E0 ce crit\u00E8re de succ\u00E8s peut interf\u00E9rer avec la capacit\u00E9 de l\u2019utilisateur \u00E0 exploiter la page enti\u00E8re, tout le contenu pr\u00E9sent dans la page web (qu\u2019il soit utilis\u00E9 pour satisfaire \u00E0 d\u2019autres crit\u00E8res de succ\u00E8s ou non) doit satisfaire \u00E0 ce crit\u00E8re de succ\u00E8s. Voir l\u2019exigence de conformit\u00E9 5 : Non-interf\u00E9rence.",
+              "Methodology": null,
+              "Position": 39
+            }
+          ]
+        },
+        {
+          "Id": "915b2576-23fb-4979-a26f-c3dddbedabbe",
+          "LegacySqliteId": 147,
+          "Code": "2.3.2",
+          "Level": "",
+          "Title": "Trois flashs (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.3 \u2014 Crises et r\u00E9actions physiques",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.3\u0022,\u0022guidelineTitle\u0022:\u0022Crises et r\\u00E9actions physiques\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#three-flashes\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 40,
+          "Tests": [
+            {
+              "Id": "f2b138df-7050-47fd-881c-bb8ec429c821",
+              "LegacySqliteId": 299,
+              "Code": "2.3.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.3.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Une page web doit \u00EAtre exempte de tout \u00E9l\u00E9ment qui flashe plus de trois fois dans n\u2019importe quel intervalle d\u2019une seconde.",
+              "Methodology": null,
+              "Position": 40
+            }
+          ]
+        },
+        {
+          "Id": "45360282-671e-461e-add6-6906987f30f9",
+          "LegacySqliteId": 148,
+          "Code": "2.3.3",
+          "Level": "",
+          "Title": "Animation r\u00E9sultant d\u2019interactions (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.3 \u2014 Crises et r\u00E9actions physiques",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.3\u0022,\u0022guidelineTitle\u0022:\u0022Crises et r\\u00E9actions physiques\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#animation-from-interactions\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 41,
+          "Tests": [
+            {
+              "Id": "d193d463-667a-427d-8ed6-52e9d5169174",
+              "LegacySqliteId": 300,
+              "Code": "2.3.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.3.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "L\u2019animation bas\u00E9e sur le mouvement, d\u00E9clench\u00E9e par une interaction, peut \u00EAtre d\u00E9sactiv\u00E9e sauf si l\u2019animation est essentielle \u00E0 la fonctionnalit\u00E9 ou \u00E0 l\u2019information transmise.",
+              "Methodology": null,
+              "Position": 41
+            }
+          ]
+        },
+        {
+          "Id": "f2999dd5-c77f-4c2c-bb52-f4ac323e6650",
+          "LegacySqliteId": 149,
+          "Code": "2.4.1",
+          "Level": "",
+          "Title": "Contourner des blocs (A)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#bypass-blocks\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 42,
+          "Tests": [
+            {
+              "Id": "5295be03-7940-4818-b5d0-25be377df380",
+              "LegacySqliteId": 301,
+              "Code": "2.4.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Un m\u00E9canisme permet de contourner les blocs de contenu qui sont r\u00E9p\u00E9t\u00E9s sur plusieurs pages web.",
+              "Methodology": null,
+              "Position": 42
+            }
+          ]
+        },
+        {
+          "Id": "31985459-beed-487e-9d2b-ad4f9d6a7213",
+          "LegacySqliteId": 150,
+          "Code": "2.4.2",
+          "Level": "",
+          "Title": "Titre de page (A)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#page-titled\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 43,
+          "Tests": [
+            {
+              "Id": "7230a07b-d4d8-4fda-9f83-c9dc9b3ac189",
+              "LegacySqliteId": 302,
+              "Code": "2.4.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Les pages web pr\u00E9sentent un titre qui d\u00E9crit leur sujet ou leur but.",
+              "Methodology": null,
+              "Position": 43
+            }
+          ]
+        },
+        {
+          "Id": "5dc51f44-9348-48bc-9e5c-05d7bb0a3edf",
+          "LegacySqliteId": 151,
+          "Code": "2.4.3",
+          "Level": "",
+          "Title": "Parcours du focus (A)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#focus-order\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 44,
+          "Tests": [
+            {
+              "Id": "7f83357b-89e9-41ea-bb16-05aeab0e3a1b",
+              "LegacySqliteId": 303,
+              "Code": "2.4.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Si une page web peut \u00EAtre parcourue de fa\u00E7on s\u00E9quentielle et que les s\u00E9quences de navigation affectent la signification ou l\u2019action, les \u00E9l\u00E9ments re\u00E7oivent le focus dans un ordre qui pr\u00E9serve la signification et l\u2019op\u00E9rabilit\u00E9.",
+              "Methodology": null,
+              "Position": 44
+            }
+          ]
+        },
+        {
+          "Id": "a422e8c3-27c2-4b6d-8f54-318c6827aaab",
+          "LegacySqliteId": 152,
+          "Code": "2.4.4",
+          "Level": "",
+          "Title": "Fonction du lien (selon le contexte) (A)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#link-purpose-in-context\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 45,
+          "Tests": [
+            {
+              "Id": "a6dfac08-2756-4372-90a2-1157c66bd8db",
+              "LegacySqliteId": 304,
+              "Code": "2.4.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La fonction de chaque lien est d\u00E9termin\u00E9e par le texte du lien seul ou par le texte du lien associ\u00E9 \u00E0 un contexte du lien d\u00E9termin\u00E9 par un programme informatique, sauf si la fonction du lien est ambigu\u00EB pour tout utilisateur.",
+              "Methodology": null,
+              "Position": 45
+            }
+          ]
+        },
+        {
+          "Id": "927c472a-b4e3-4ff9-ac03-bc3d62b58812",
+          "LegacySqliteId": 153,
+          "Code": "2.4.5",
+          "Level": "",
+          "Title": "Acc\u00E8s multiples (AA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#multiple-ways\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 46,
+          "Tests": [
+            {
+              "Id": "de879ee9-ed86-42e0-86c4-db99e67755cb",
+              "LegacySqliteId": 305,
+              "Code": "2.4.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Une page web peut \u00EAtre situ\u00E9e par plus d\u2019un moyen dans un ensemble de pages web sauf si cette page est le r\u00E9sultat ou une \u00E9tape d\u2019un processus.",
+              "Methodology": null,
+              "Position": 46
+            }
+          ]
+        },
+        {
+          "Id": "80829ea4-d767-4549-af75-457a24bafe57",
+          "LegacySqliteId": 154,
+          "Code": "2.4.6",
+          "Level": "",
+          "Title": "En-t\u00EAtes et \u00E9tiquettes (AA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#headings-and-labels\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 47,
+          "Tests": [
+            {
+              "Id": "84720b77-7505-4308-8026-c866f6d2b495",
+              "LegacySqliteId": 306,
+              "Code": "2.4.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Les en-t\u00EAtes et les \u00E9tiquettes d\u00E9crivent le sujet ou le but.",
+              "Methodology": null,
+              "Position": 47
+            }
+          ]
+        },
+        {
+          "Id": "f698aec7-82ec-4b05-86e3-55aac222983a",
+          "LegacySqliteId": 155,
+          "Code": "2.4.7",
+          "Level": "",
+          "Title": "Visibilit\u00E9 du focus (AA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#focus-visible\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 48,
+          "Tests": [
+            {
+              "Id": "770d1ac0-3711-46f7-83b3-020df11eacb4",
+              "LegacySqliteId": 307,
+              "Code": "2.4.7",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.7 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Toute interface utilisable au clavier comporte un mode de fonctionnement o\u00F9 l\u2019indicateur de focus est visible.",
+              "Methodology": null,
+              "Position": 48
+            }
+          ]
+        },
+        {
+          "Id": "555e3e6d-321c-47a5-b0b2-fa70c3679b99",
+          "LegacySqliteId": 156,
+          "Code": "2.4.8",
+          "Level": "",
+          "Title": "Localisation (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#location\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 49,
+          "Tests": [
+            {
+              "Id": "8e3c5ceb-9c41-4008-9767-56052f50c544",
+              "LegacySqliteId": 308,
+              "Code": "2.4.8",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.8 sur la page et le processus concern\u00E9s.",
+              "Requirements": "L\u2019utilisateur dispose d\u2019informations pour se situer dans un ensemble de pages web.",
+              "Methodology": null,
+              "Position": 49
+            }
+          ]
+        },
+        {
+          "Id": "21dc607f-bdec-47cb-ae2b-a996f4b2ff5c",
+          "LegacySqliteId": 157,
+          "Code": "2.4.9",
+          "Level": "",
+          "Title": "Fonction du lien (lien uniquement) (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#link-purpose-link-only\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 50,
+          "Tests": [
+            {
+              "Id": "f25db0d9-7b96-48ba-9387-b1a6763f54e9",
+              "LegacySqliteId": 309,
+              "Code": "2.4.9",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.9 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Un m\u00E9canisme permet de d\u00E9terminer la fonction de chaque lien par le texte du lien uniquement, sauf si la fonction du lien est ambigu\u00EB pour tout utilisateur.",
+              "Methodology": null,
+              "Position": 50
+            }
+          ]
+        },
+        {
+          "Id": "83349dac-e663-4187-b445-396b45e96581",
+          "LegacySqliteId": 158,
+          "Code": "2.4.10",
+          "Level": "",
+          "Title": "En-t\u00EAtes de section (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#section-headings\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 51,
+          "Tests": [
+            {
+              "Id": "16d7ed30-eae9-47bf-baa6-b20760e27c6d",
+              "LegacySqliteId": 310,
+              "Code": "2.4.10",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.10 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Les en-t\u00EAtes de section sont utilis\u00E9s pour organiser le contenu.\r\n\r\nNote 1\u00AB En-t\u00EAte \u00BB est utilis\u00E9 dans le sens g\u00E9n\u00E9ral et comprend les titres et autres moyens de structurer les diff\u00E9rents types de contenus.\r\n\r\nNote 2Ce crit\u00E8re de succ\u00E8s concerne les contenus de sections et non les composants d\u2019interface utilisateur. Les composants d\u2019interface utilisateur sont trait\u00E9s par le crit\u00E8re de succ\u00E8s 4.1.2.",
+              "Methodology": null,
+              "Position": 51
+            }
+          ]
+        },
+        {
+          "Id": "036a73dd-087b-4f5f-b12a-c75b806a700e",
+          "LegacySqliteId": 159,
+          "Code": "2.4.11",
+          "Level": "",
+          "Title": "Focus non masqu\u00E9 (minimum) (AA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#focus-not-obscured-minimum\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 52,
+          "Tests": [
+            {
+              "Id": "4b7e490d-758b-42b0-9eba-2b3c41ce44b9",
+              "LegacySqliteId": 311,
+              "Code": "2.4.11",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.11 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nLorsqu\u2019un composant d\u2019interface utilisateur re\u00E7oit le focus du clavier, ce composant n\u2019est pas enti\u00E8rement masqu\u00E9 par du contenu cr\u00E9\u00E9 par l\u2019auteur.\r\n\r\nNote 1Lorsqu\u2019un contenu d\u2019une interface configurable peut \u00EAtre repositionn\u00E9 par l\u2019utilisateur, alors seules les positions initiales du contenu d\u00E9pla\u00E7able sont prises en compte pour les tests et la conformit\u00E9 \u00E0 ce crit\u00E8re de succ\u00E8s.\r\n\r\nNote 2Il arrive que du contenu ouvert par l\u2019utilisateur masque le composant qui re\u00E7oit le focus. Si l\u2019utilisateur peut r\u00E9v\u00E9ler le composant ayant le focus sans d\u00E9placer le focus du clavier, alors le composant ayant le focus n\u2019est pas consid\u00E9r\u00E9 comme visuellement masqu\u00E9 par du contenu cr\u00E9\u00E9 par l\u2019auteur.",
+              "Methodology": null,
+              "Position": 52
+            }
+          ]
+        },
+        {
+          "Id": "9d5f67f8-62fe-42d1-bbaa-53d8d226c24f",
+          "LegacySqliteId": 160,
+          "Code": "2.4.12",
+          "Level": "",
+          "Title": "Focus non masqu\u00E9 (am\u00E9lior\u00E9) (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#focus-not-obscured-enhanced\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 53,
+          "Tests": [
+            {
+              "Id": "903e73a8-1d77-478e-857c-56c26d859b22",
+              "LegacySqliteId": 312,
+              "Code": "2.4.12",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.12 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nLorsqu\u2019un composant d\u2019interface utilisateur re\u00E7oit le focus du clavier, aucune partie de ce composant n\u2019est masqu\u00E9e par du contenu cr\u00E9\u00E9 par l\u2019auteur.",
+              "Methodology": null,
+              "Position": 53
+            }
+          ]
+        },
+        {
+          "Id": "08a8f960-67f4-4eeb-8156-d0a217df093d",
+          "LegacySqliteId": 161,
+          "Code": "2.4.13",
+          "Level": "",
+          "Title": "Apparence du focus (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.4 \u2014 Navigable",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.4\u0022,\u0022guidelineTitle\u0022:\u0022Navigable\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#focus-appearance\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 54,
+          "Tests": [
+            {
+              "Id": "c55e36b6-37ad-49a2-90a2-352ce49653ef",
+              "LegacySqliteId": 313,
+              "Code": "2.4.13",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.4.13 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nLorsque le focus est visible, une partie de l\u2019indicateur de focus satisfait \u00E0 toutes les exigences suivantes :\r\n\r\nelle est au moins aussi grande que la surface d\u2019un p\u00E9rim\u00E8tre de 2 pixels CSS d\u2019\u00E9paisseur du composant ou du sous-composant \u00E0 l\u2019\u00E9tat non focalis\u00E9, et le rapport de contraste est d\u2019au moins 3:1 entre l\u2019\u00E9tat focalis\u00E9 et non focalis\u00E9 de chacun des pixels.\r\n\r\nExceptions :\r\n\r\nL\u2019indicateur de focus est d\u00E9termin\u00E9 par l\u2019agent utilisateur et ne peut pas \u00EAtre ajust\u00E9 par l\u2019auteur, ou L\u2019indicateur de focus et sa couleur d\u2019arri\u00E8re-plan ne sont pas modifi\u00E9s par l\u2019auteur.\r\n\r\nNote 1Ce qui est per\u00E7u comme le composant ou sous-composant d\u2019interface utilisateur (pour d\u00E9terminer le p\u00E9rim\u00E8tre) d\u00E9pend de sa pr\u00E9sentation visuelle. La pr\u00E9sentation visuelle inclut le contenu visible du composant, la bordure et l\u2019arri\u00E8re-plan sp\u00E9cifique au composant. Elle n\u2019inclut pas les effets d\u2019ombre et de brillance \u00E0 l\u2019ext\u00E9rieur du contenu, de l\u2019arri\u00E8re-plan ou de la bordure du composant.\r\n\r\nNote 2Des exemples de sous-composants qui peuvent recevoir le focus sont les \u00E9l\u00E9ments de menu dans un menu d\u00E9roulant ouvert, ou les cellules focalisables dans une grille.\r\n\r\nNote 3Les calculs de contraste peuvent \u00EAtre bas\u00E9s sur les couleurs d\u00E9finies au niveau de la technologie (comme HTML, CSS et SVG). Les pixels modifi\u00E9s par les am\u00E9liorations de r\u00E9solution de l\u2019agent utilisateur et l\u2019anti-cr\u00E9nelage peuvent \u00EAtre ignor\u00E9s.",
+              "Methodology": null,
+              "Position": 54
+            }
+          ]
+        },
+        {
+          "Id": "fc399670-9c0e-4e59-8d82-b5c56a6f8b5c",
+          "LegacySqliteId": 162,
+          "Code": "2.5.1",
+          "Level": "",
+          "Title": "Gestes pour le contr\u00F4le du pointeur (A)",
+          "TechnicalNote": "R\u00E8gle 2.5 \u2014 Modalit\u00E9s d\u2019entr\u00E9e",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.5\u0022,\u0022guidelineTitle\u0022:\u0022Modalit\\u00E9s d\\u2019entr\\u00E9e\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#pointer-gestures\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 55,
+          "Tests": [
+            {
+              "Id": "5d9eb352-ff50-48a1-a651-0077e15ad5bd",
+              "LegacySqliteId": 314,
+              "Code": "2.5.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.5.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Toutes les fonctionnalit\u00E9s qui utilisent des gestes multipoints ou bas\u00E9s sur un trac\u00E9 peuvent \u00EAtre utilis\u00E9es avec un pointeur unique sans geste bas\u00E9 sur un trac\u00E9, \u00E0 moins qu\u2019un geste multipoint ou bas\u00E9 sur un trac\u00E9 ne soit essentiel.\r\n\r\nNoteCette exigence s\u2019applique aux contenus web qui interpr\u00E8tent les actions du pointeur (elle ne s\u2019applique donc pas aux actions n\u00E9cessaires \u00E0 l\u2019utilisation d\u2019un agent utilisateur ou d\u2019une technologie d\u2019assistance).",
+              "Methodology": null,
+              "Position": 55
+            }
+          ]
+        },
+        {
+          "Id": "a2949334-1ed3-4b61-ac50-58b60e437d8c",
+          "LegacySqliteId": 163,
+          "Code": "2.5.2",
+          "Level": "",
+          "Title": "Annulation de l\u2019action du pointeur (A)",
+          "TechnicalNote": "R\u00E8gle 2.5 \u2014 Modalit\u00E9s d\u2019entr\u00E9e",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.5\u0022,\u0022guidelineTitle\u0022:\u0022Modalit\\u00E9s d\\u2019entr\\u00E9e\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#pointer-cancellation\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 56,
+          "Tests": [
+            {
+              "Id": "ad3998f9-d12e-4531-831a-bc90bb8ec088",
+              "LegacySqliteId": 315,
+              "Code": "2.5.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.5.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour une fonctionnalit\u00E9 qui peut \u00EAtre activ\u00E9e avec un pointeur unique, au moins une des conditions suivantes est vraie :\r\n\r\nAucun \u00E9v\u00E9nement descendant l\u2019\u00E9v\u00E9nement descendant (down-event) du pointeur n\u2019est pas utilis\u00E9 pour ex\u00E9cuter une partie ou la totalit\u00E9 de la fonction ; Abandon ou annulation l\u2019ach\u00E8vement de la fonction se fait sur l\u2019\u00E9v\u00E9nement ascendant (up-event), et un m\u00E9canisme est disponible pour interrompre la fonction avant l\u2019ach\u00E8vement ou pour annuler la fonction apr\u00E8s l\u2019ach\u00E8vement ; Inversion sur l\u2019\u00E9v\u00E9nement ascendant l\u2019\u00E9v\u00E9nement ascendant inverse tout r\u00E9sultat de l\u2019\u00E9v\u00E9nement descendant pr\u00E9c\u00E9dent ; Essentiel l\u2019ach\u00E8vement de la fonction lors de l\u2019\u00E9v\u00E9nement descendant est essentiel.\r\n\r\nNote 1Les fonctions qui \u00E9mulent l\u2019appui d\u2019une touche du clavier ou du pav\u00E9 num\u00E9rique sont consid\u00E9r\u00E9es comme essentielles.\r\n\r\nNote 2Cette exigence s\u2019applique aux contenus web qui interpr\u00E8tent les actions du pointeur (elle ne s\u2019applique donc pas aux actions n\u00E9cessaires \u00E0 l\u2019utilisation d\u2019un agent utilisateur ou d\u2019une technologie d\u2019assistance).",
+              "Methodology": null,
+              "Position": 56
+            }
+          ]
+        },
+        {
+          "Id": "2f045673-33d8-4ac0-9fd5-19e25835f346",
+          "LegacySqliteId": 164,
+          "Code": "2.5.3",
+          "Level": "",
+          "Title": "\u00C9tiquette dans le nom (A)",
+          "TechnicalNote": "R\u00E8gle 2.5 \u2014 Modalit\u00E9s d\u2019entr\u00E9e",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.5\u0022,\u0022guidelineTitle\u0022:\u0022Modalit\\u00E9s d\\u2019entr\\u00E9e\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#label-in-name\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 57,
+          "Tests": [
+            {
+              "Id": "958bf1e2-cc77-4a22-980b-1019cdc9da47",
+              "LegacySqliteId": 316,
+              "Code": "2.5.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.5.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour les composants d\u2019interface utilisateur dont les \u00E9tiquettes contiennent du texte ou du texte sous forme d\u2019image, le nom contient le texte qui est pr\u00E9sent\u00E9 visuellement.\r\n\r\nNoteUne bonne pratique consiste \u00E0 placer le texte de l\u2019\u00E9tiquette au d\u00E9but du nom.",
+              "Methodology": null,
+              "Position": 57
+            }
+          ]
+        },
+        {
+          "Id": "de1c15b5-f705-47b3-abf3-1937f0888b65",
+          "LegacySqliteId": 165,
+          "Code": "2.5.4",
+          "Level": "",
+          "Title": "Activation par le mouvement (A)",
+          "TechnicalNote": "R\u00E8gle 2.5 \u2014 Modalit\u00E9s d\u2019entr\u00E9e",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00222.5\u0022,\u0022guidelineTitle\u0022:\u0022Modalit\\u00E9s d\\u2019entr\\u00E9e\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#motion-actuation\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 58,
+          "Tests": [
+            {
+              "Id": "52c47fe7-b89c-43cc-8b4c-0b52c08159ad",
+              "LegacySqliteId": 317,
+              "Code": "2.5.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.5.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Les fonctionnalit\u00E9s qui peuvent \u00EAtre activ\u00E9es par un mouvement de l\u2019appareil ou un mouvement de l\u2019utilisateur peuvent \u00E9galement \u00EAtre activ\u00E9es par des composants d\u2019interface utilisateur et la r\u00E9ponse au mouvement peut \u00EAtre d\u00E9sactiv\u00E9e pour \u00E9viter une activation accidentelle, sauf dans les cas suivants :\r\n\r\nInterface compatible le mouvement est utilis\u00E9 pour activer la fonctionnalit\u00E9 par l\u2019interm\u00E9diaire d\u2019une interface compatible avec l\u2019accessibilit\u00E9 ; Essentiel le mouvement est essentiel \u00E0 la fonction et le d\u00E9sactiver invaliderait l\u2019activit\u00E9.",
+              "Methodology": null,
+              "Position": 58
+            }
+          ]
+        },
+        {
+          "Id": "2e1d0817-8726-421b-be33-c58fdcc0a7ba",
+          "LegacySqliteId": 166,
+          "Code": "2.5.5",
+          "Level": "",
+          "Title": "Taille de la cible (am\u00E9lior\u00E9) (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.5 \u2014 Modalit\u00E9s d\u2019entr\u00E9e",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.5\u0022,\u0022guidelineTitle\u0022:\u0022Modalit\\u00E9s d\\u2019entr\\u00E9e\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#target-size-enhanced\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 59,
+          "Tests": [
+            {
+              "Id": "d8024743-127b-4e6b-a48f-f80ff248ea4a",
+              "LegacySqliteId": 318,
+              "Code": "2.5.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.5.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La taille de la cible pour les entr\u00E9es de pointeur est d\u2019au moins 44 par 44 pixels CSS, sauf quand :\r\n\r\n\u00C9quivalence la cible est disponible depuis un lien ou un contr\u00F4le \u00E9quivalent sur la m\u00EAme page qui mesure au moins 44 par 44 pixels CSS ; En ligne la cible se trouve dans une phrase ou un bloc de texte ; Contr\u00F4le par l\u2019agent utilisateur la taille de la cible est d\u00E9termin\u00E9e par l\u2019agent utilisateur et n\u2019est pas modifi\u00E9e par l\u2019auteur ; Essentiel une pr\u00E9sentation sp\u00E9cifique de la cible est essentielle pour transmettre l\u2019information.",
+              "Methodology": null,
+              "Position": 59
+            }
+          ]
+        },
+        {
+          "Id": "fa967a0a-e9b6-4078-ad05-bfcab5520046",
+          "LegacySqliteId": 167,
+          "Code": "2.5.6",
+          "Level": "",
+          "Title": "Modalit\u00E9s d\u2019entr\u00E9es concurrentes (AAA)",
+          "TechnicalNote": "R\u00E8gle 2.5 \u2014 Modalit\u00E9s d\u2019entr\u00E9e",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00222.5\u0022,\u0022guidelineTitle\u0022:\u0022Modalit\\u00E9s d\\u2019entr\\u00E9e\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#concurrent-input-mechanisms\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 60,
+          "Tests": [
+            {
+              "Id": "3daed1aa-2089-4f4e-a3ef-3be45859d2e2",
+              "LegacySqliteId": 319,
+              "Code": "2.5.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.5.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Le contenu web ne restreint pas l\u2019utilisation des modalit\u00E9s d\u2019entr\u00E9e disponibles sur une plateforme, sauf si la restriction est essentielle, n\u00E9cessaire pour garantir la s\u00E9curit\u00E9 du contenu ou n\u00E9cessaire pour respecter les param\u00E8tres de l\u2019utilisateur.",
+              "Methodology": null,
+              "Position": 60
+            }
+          ]
+        },
+        {
+          "Id": "762e20ba-c167-4040-b3e6-9bdb09d27a76",
+          "LegacySqliteId": 168,
+          "Code": "2.5.7",
+          "Level": "",
+          "Title": "Mouvements de glissement (AA)",
+          "TechnicalNote": "R\u00E8gle 2.5 \u2014 Modalit\u00E9s d\u2019entr\u00E9e",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00222.5\u0022,\u0022guidelineTitle\u0022:\u0022Modalit\\u00E9s d\\u2019entr\\u00E9e\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#dragging-movements\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 61,
+          "Tests": [
+            {
+              "Id": "bb690cf0-a77c-467f-be36-4c4cfec8f93d",
+              "LegacySqliteId": 320,
+              "Code": "2.5.7",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.5.7 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nToutes les fonctionnalit\u00E9s qui utilisent un mouvement de glissement peuvent \u00EAtre r\u00E9alis\u00E9es par un pointeur unique sans glissement, sauf si le glissement est essentiel ou que la fonctionnalit\u00E9 est d\u00E9termin\u00E9e par l\u2019agent utilisateur et non modifi\u00E9e par l\u2019auteur.\r\n\r\nNoteCette exigence s\u2019applique aux contenus web qui interpr\u00E8tent les actions du pointeur (c\u2019est-\u00E0-dire qu\u2019elle ne s\u2019applique pas aux actions n\u00E9cessaires pour faire fonctionner l\u2019agent utilisateur ou la technologie d\u2019assistance).",
+              "Methodology": null,
+              "Position": 61
+            }
+          ]
+        },
+        {
+          "Id": "7073870f-30ad-4c58-b5c2-0ebed592dd19",
+          "LegacySqliteId": 169,
+          "Code": "2.5.8",
+          "Level": "",
+          "Title": "Taille de la cible (minimum) (AA)",
+          "TechnicalNote": "R\u00E8gle 2.5 \u2014 Modalit\u00E9s d\u2019entr\u00E9e",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00222.5\u0022,\u0022guidelineTitle\u0022:\u0022Modalit\\u00E9s d\\u2019entr\\u00E9e\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#target-size-minimum\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 62,
+          "Tests": [
+            {
+              "Id": "bb78e729-5d50-4ca0-ac8b-cccbbe3d415c",
+              "LegacySqliteId": 321,
+              "Code": "2.5.8",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 2.5.8 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nLa taille de la cible pour les entr\u00E9es de pointeur est d\u2019au moins 24 par 24 pixels CSS, sauf dans les cas suivants :\r\n\r\nEspacement les cibles de taille r\u00E9duite (de moins de 24 par 24 pixels CSS) sont positionn\u00E9es de telle sorte que si un cercle de 24 pixels CSS de diam\u00E8tre est centr\u00E9 sur la bo\u00EEte de d\u00E9limitation de chacune d\u2019elles, les cercles ne croisent pas d\u2019autre cible ni le cercle d\u2019une autre cible de taille r\u00E9duite ; \u00C9quivalence la fonction peut \u00EAtre r\u00E9alis\u00E9e gr\u00E2ce \u00E0 un \u00E9l\u00E9ment de contr\u00F4le diff\u00E9rent sur la m\u00EAme page, et qui satisfait \u00E0 ce crit\u00E8re ; En ligne la cible se trouve dans une phrase, ou bien sa taille est limit\u00E9e par la hauteur de ligne du texte non cibl\u00E9 ; Contr\u00F4le par l\u2019agent utilisateur la taille de la cible est d\u00E9termin\u00E9e par l\u2019agent utilisateur et n\u2019est pas modifi\u00E9e par l\u2019auteur ; Essentiel une pr\u00E9sentation sp\u00E9cifique de la cible est essentielle ou est l\u00E9galement requise pour transmettre l\u2019information.\r\n\r\nNote 1Pour ce crit\u00E8re de succ\u00E8s, les cibles qui permettent de s\u00E9lectionner des valeurs en fonction de leur position dans la cible sont consid\u00E9r\u00E9es comme une seule cible. Cela inclut par exemple les curseurs (slider), les s\u00E9lecteurs de couleurs affichant un d\u00E9grad\u00E9 de couleurs, ou les zones \u00E9ditables o\u00F9 l\u2019on positionne le curseur.\r\n\r\nNote 2Pour les cibles en ligne, la hauteur de ligne doit \u00EAtre interpr\u00E9t\u00E9e comme \u00E9tant perpendiculaire au flux de texte. Par exemple, dans une langue affich\u00E9e verticalement, la hauteur de ligne serait horizontale.",
+              "Methodology": null,
+              "Position": 62
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "88480582-7679-4787-adb9-0845ab3ed930",
+      "LegacySqliteId": 16,
+      "Number": "3",
+      "Title": "Compr\u00E9hensible",
+      "Position": 2,
+      "Criteria": [
+        {
+          "Id": "4d1588f2-a475-42fc-b9aa-9deb26c2568c",
+          "LegacySqliteId": 170,
+          "Code": "3.1.1",
+          "Level": "",
+          "Title": "Langue de la page (A)",
+          "TechnicalNote": "R\u00E8gle 3.1 \u2014 Lisible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00223.1\u0022,\u0022guidelineTitle\u0022:\u0022Lisible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#language-of-page\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 63,
+          "Tests": [
+            {
+              "Id": "43dfd3f9-fc4a-4f2f-9a0e-5e98f3946271",
+              "LegacySqliteId": 322,
+              "Code": "3.1.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.1.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La langue par d\u00E9faut de chaque page web peut \u00EAtre d\u00E9termin\u00E9e par un programme informatique.",
+              "Methodology": null,
+              "Position": 63
+            }
+          ]
+        },
+        {
+          "Id": "f2611eb5-0a30-4845-9b9a-7f71adb9838e",
+          "LegacySqliteId": 171,
+          "Code": "3.1.2",
+          "Level": "",
+          "Title": "Langue d\u2019un passage (AA)",
+          "TechnicalNote": "R\u00E8gle 3.1 \u2014 Lisible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00223.1\u0022,\u0022guidelineTitle\u0022:\u0022Lisible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#language-of-parts\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 64,
+          "Tests": [
+            {
+              "Id": "6f1b7a30-dc90-47ae-922b-4cd72aee4b41",
+              "LegacySqliteId": 323,
+              "Code": "3.1.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.1.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "La langue de chaque passage ou expression du contenu peut \u00EAtre d\u00E9termin\u00E9e par un programme informatique sauf dans le cas des noms propres, des termes techniques, des mots dont la langue est ind\u00E9termin\u00E9e, ou des mots ou expressions faisant partie du langage courant de la langue utilis\u00E9e dans le texte directement environnant.",
+              "Methodology": null,
+              "Position": 64
+            }
+          ]
+        },
+        {
+          "Id": "c56f4b62-fdfc-4f20-be79-3fe663207239",
+          "LegacySqliteId": 172,
+          "Code": "3.1.3",
+          "Level": "",
+          "Title": "Mots rares (AAA)",
+          "TechnicalNote": "R\u00E8gle 3.1 \u2014 Lisible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00223.1\u0022,\u0022guidelineTitle\u0022:\u0022Lisible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#unusual-words\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 65,
+          "Tests": [
+            {
+              "Id": "7b5e5e28-5269-4f0d-a0f0-66f91a509e85",
+              "LegacySqliteId": 324,
+              "Code": "3.1.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.1.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Un m\u00E9canisme est disponible pour identifier la d\u00E9finition sp\u00E9cifique des mots ou expressions utilis\u00E9s de mani\u00E8re inhabituelle ou de fa\u00E7on limit\u00E9e, y compris les expressions idiomatiques et le jargon.",
+              "Methodology": null,
+              "Position": 65
+            }
+          ]
+        },
+        {
+          "Id": "65820a40-2a26-44e4-9008-4d416b889536",
+          "LegacySqliteId": 173,
+          "Code": "3.1.4",
+          "Level": "",
+          "Title": "Abr\u00E9viations (AAA)",
+          "TechnicalNote": "R\u00E8gle 3.1 \u2014 Lisible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00223.1\u0022,\u0022guidelineTitle\u0022:\u0022Lisible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#abbreviations\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 66,
+          "Tests": [
+            {
+              "Id": "d92e968f-8d03-42e7-99f5-30c327327d17",
+              "LegacySqliteId": 325,
+              "Code": "3.1.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.1.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Un m\u00E9canisme est disponible pour identifier la forme compl\u00E8te ou la signification d\u2019une abr\u00E9viation.",
+              "Methodology": null,
+              "Position": 66
+            }
+          ]
+        },
+        {
+          "Id": "5cec65f4-0e4e-43e6-b395-d20da20401ec",
+          "LegacySqliteId": 174,
+          "Code": "3.1.5",
+          "Level": "",
+          "Title": "Niveau de lecture (AAA)",
+          "TechnicalNote": "R\u00E8gle 3.1 \u2014 Lisible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00223.1\u0022,\u0022guidelineTitle\u0022:\u0022Lisible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#reading-level\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 67,
+          "Tests": [
+            {
+              "Id": "b5fb011d-5cbf-458b-b333-d75299d610db",
+              "LegacySqliteId": 326,
+              "Code": "3.1.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.1.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Lorsqu\u2019un texte n\u00E9cessite une capacit\u00E9 de lecture plus avanc\u00E9e que le premier cycle de l\u2019enseignement secondaire apr\u00E8s la suppression des noms propres et des titres, un contenu additionnel, ou une version qui ne requiert pas de capacit\u00E9 de lecture sup\u00E9rieure au premier cycle de l\u2019enseignement secondaire est disponible.",
+              "Methodology": null,
+              "Position": 67
+            }
+          ]
+        },
+        {
+          "Id": "2556553e-277e-4df4-8d82-c9dc1b948c6a",
+          "LegacySqliteId": 175,
+          "Code": "3.1.6",
+          "Level": "",
+          "Title": "Prononciation (AAA)",
+          "TechnicalNote": "R\u00E8gle 3.1 \u2014 Lisible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00223.1\u0022,\u0022guidelineTitle\u0022:\u0022Lisible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#pronunciation\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 68,
+          "Tests": [
+            {
+              "Id": "a4595b2d-4d4d-4414-abaf-518fddbff35e",
+              "LegacySqliteId": 327,
+              "Code": "3.1.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.1.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Un m\u00E9canisme permet d\u2019identifier la prononciation sp\u00E9cifique des mots dont la signification est ambigu\u00EB dans le contexte si leur prononciation n\u2019est pas connue.",
+              "Methodology": null,
+              "Position": 68
+            }
+          ]
+        },
+        {
+          "Id": "42458369-35d4-4e2d-befa-084e5baee96d",
+          "LegacySqliteId": 176,
+          "Code": "3.2.1",
+          "Level": "",
+          "Title": "Au focus (A)",
+          "TechnicalNote": "R\u00E8gle 3.2 \u2014 Pr\u00E9visible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00223.2\u0022,\u0022guidelineTitle\u0022:\u0022Pr\\u00E9visible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#on-focus\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 69,
+          "Tests": [
+            {
+              "Id": "51da3a24-0f7c-4a28-a3c8-8f3aaaa4c0fb",
+              "LegacySqliteId": 328,
+              "Code": "3.2.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.2.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Quand un composant d\u2019interface utilisateur re\u00E7oit le focus, il ne doit pas initier de changement de contexte.",
+              "Methodology": null,
+              "Position": 69
+            }
+          ]
+        },
+        {
+          "Id": "55551ddb-22e2-4577-8163-2491582dce20",
+          "LegacySqliteId": 177,
+          "Code": "3.2.2",
+          "Level": "",
+          "Title": "\u00C0 la saisie (A)",
+          "TechnicalNote": "R\u00E8gle 3.2 \u2014 Pr\u00E9visible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00223.2\u0022,\u0022guidelineTitle\u0022:\u0022Pr\\u00E9visible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#on-input\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 70,
+          "Tests": [
+            {
+              "Id": "3481ea47-7ed1-449c-a4d6-e122970a506e",
+              "LegacySqliteId": 329,
+              "Code": "3.2.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.2.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Le changement de param\u00E8tre d\u2019un composant d\u2019interface utilisateur ne doit pas initier de changement de contexte \u00E0 moins que l\u2019utilisateur n\u2019ait \u00E9t\u00E9 avis\u00E9 de ce comportement avant d\u2019utiliser le composant.",
+              "Methodology": null,
+              "Position": 70
+            }
+          ]
+        },
+        {
+          "Id": "fd61f996-b949-4c12-8ee1-5652b8dec653",
+          "LegacySqliteId": 178,
+          "Code": "3.2.3",
+          "Level": "",
+          "Title": "Navigation coh\u00E9rente (AA)",
+          "TechnicalNote": "R\u00E8gle 3.2 \u2014 Pr\u00E9visible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00223.2\u0022,\u0022guidelineTitle\u0022:\u0022Pr\\u00E9visible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#consistent-navigation\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 71,
+          "Tests": [
+            {
+              "Id": "fd8fd7e9-2b9f-4087-90ee-95f7e9aaa111",
+              "LegacySqliteId": 330,
+              "Code": "3.2.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.2.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Dans un ensemble de pages web, les m\u00E9canismes de navigation qui se r\u00E9p\u00E8tent sur plusieurs pages web se pr\u00E9sentent dans le m\u00EAme ordre relatif chaque fois qu\u2019ils sont r\u00E9p\u00E9t\u00E9s, \u00E0 moins qu\u2019un changement soit initi\u00E9 par l\u2019utilisateur.",
+              "Methodology": null,
+              "Position": 71
+            }
+          ]
+        },
+        {
+          "Id": "0c8662cf-6d5a-4920-ace5-6cf722579097",
+          "LegacySqliteId": 179,
+          "Code": "3.2.4",
+          "Level": "",
+          "Title": "Identification coh\u00E9rente (AA)",
+          "TechnicalNote": "R\u00E8gle 3.2 \u2014 Pr\u00E9visible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00223.2\u0022,\u0022guidelineTitle\u0022:\u0022Pr\\u00E9visible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#consistent-identification\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 72,
+          "Tests": [
+            {
+              "Id": "c6011265-03b8-4404-b48b-1d923f24f224",
+              "LegacySqliteId": 331,
+              "Code": "3.2.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.2.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Dans un ensemble de pages web les composants qui ont la m\u00EAme fonctionnalit\u00E9 sont identifi\u00E9s de la m\u00EAme fa\u00E7on.",
+              "Methodology": null,
+              "Position": 72
+            }
+          ]
+        },
+        {
+          "Id": "63d1e8e8-25f3-43cb-a4c6-c1e9baf84129",
+          "LegacySqliteId": 180,
+          "Code": "3.2.5",
+          "Level": "",
+          "Title": "Changement \u00E0 la demande (AAA)",
+          "TechnicalNote": "R\u00E8gle 3.2 \u2014 Pr\u00E9visible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00223.2\u0022,\u0022guidelineTitle\u0022:\u0022Pr\\u00E9visible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#change-on-request\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 73,
+          "Tests": [
+            {
+              "Id": "0c551e81-6f8d-4728-ac5c-079820966324",
+              "LegacySqliteId": 332,
+              "Code": "3.2.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.2.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Un changement de contexte est initi\u00E9 uniquement sur demande de l\u2019utilisateur ou un m\u00E9canisme est disponible pour d\u00E9sactiver un tel changement.",
+              "Methodology": null,
+              "Position": 73
+            }
+          ]
+        },
+        {
+          "Id": "f6e45043-60a0-40b8-99b5-f0d9287444cd",
+          "LegacySqliteId": 181,
+          "Code": "3.2.6",
+          "Level": "",
+          "Title": "Aide coh\u00E9rente (A)",
+          "TechnicalNote": "R\u00E8gle 3.2 \u2014 Pr\u00E9visible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00223.2\u0022,\u0022guidelineTitle\u0022:\u0022Pr\\u00E9visible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#consistent-help\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 74,
+          "Tests": [
+            {
+              "Id": "7b6f155b-a30b-4526-bbb9-182342ebfe5e",
+              "LegacySqliteId": 333,
+              "Code": "3.2.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.2.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nSi une page web contient l\u2019un des m\u00E9canismes d\u2019aide suivants et que ces m\u00E9canismes sont r\u00E9p\u00E9t\u00E9s sur plusieurs pages web d\u2019un ensemble de pages web, alors ils se pr\u00E9sentent dans le m\u00EAme ordre relativement aux autres contenus de la page ; \u00E0 moins qu\u2019un changement soit initi\u00E9 par l\u2019utilisateur :\r\n\r\ndes coordonn\u00E9es de personnes ; un m\u00E9canisme pour contacter une personne ; une option d\u2019auto-assistance ; un m\u00E9canisme de contact enti\u00E8rement automatis\u00E9.\r\n\r\nNote 1Les m\u00E9canismes d\u2019aide peuvent \u00EAtre fournis directement sur la page, ou \u00EAtre fournis gr\u00E2ce \u00E0 un lien direct vers une page distincte contenant les informations.\r\n\r\nNote 2Pour ce crit\u00E8re de succ\u00E8s, \u00AB le m\u00EAme ordre relativement aux autres contenus de la page \u00BB peut \u00EAtre consid\u00E9r\u00E9 comme la mani\u00E8re dont le contenu est ordonn\u00E9 lorsque la page est lin\u00E9aris\u00E9e. La position visuelle d\u2019un m\u00E9canisme d\u2019aide sera probablement coh\u00E9rente d\u2019une page \u00E0 l\u2019autre pour la m\u00EAme variante de page (par exemple, un point de rupture CSS). L\u2019utilisateur peut initier un changement, comme modifier le zoom de la page ou son orientation, ce qui peut d\u00E9clencher l\u2019affichage d\u2019une variante diff\u00E9rente de la page. Ce crit\u00E8re s\u2019int\u00E9resse \u00E0 l\u2019ordre relatif dans des pages affich\u00E9es avec la m\u00EAme variante de page (par exemple, le m\u00EAme niveau de zoom et la m\u00EAme orientation).",
+              "Methodology": null,
+              "Position": 74
+            }
+          ]
+        },
+        {
+          "Id": "bce6c501-2a09-421a-8204-f313e89b486c",
+          "LegacySqliteId": 182,
+          "Code": "3.3.1",
+          "Level": "",
+          "Title": "Identification des erreurs (A)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#error-identification\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 75,
+          "Tests": [
+            {
+              "Id": "60956095-4140-430c-be4a-d7b1daa1b5eb",
+              "LegacySqliteId": 334,
+              "Code": "3.3.1",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.1 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Si une erreur de saisie est d\u00E9tect\u00E9e automatiquement, l\u2019\u00E9l\u00E9ment en erreur est identifi\u00E9 et l\u2019erreur est d\u00E9crite \u00E0 l\u2019utilisateur sous forme de texte.",
+              "Methodology": null,
+              "Position": 75
+            }
+          ]
+        },
+        {
+          "Id": "04686a64-a8f2-4acf-ae56-a6031cf4231e",
+          "LegacySqliteId": 183,
+          "Code": "3.3.2",
+          "Level": "",
+          "Title": "\u00C9tiquettes ou instructions (A)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#labels-or-instructions\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 76,
+          "Tests": [
+            {
+              "Id": "a623432a-3c4d-4242-b5a3-b440c3d721c5",
+              "LegacySqliteId": 335,
+              "Code": "3.3.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Des \u00E9tiquettes sont pr\u00E9sent\u00E9es ou des instructions sont fournies quand un contenu requiert une saisie utilisateur.",
+              "Methodology": null,
+              "Position": 76
+            }
+          ]
+        },
+        {
+          "Id": "8ef8a33d-fe6b-4078-a1ed-570d41bf1c6c",
+          "LegacySqliteId": 184,
+          "Code": "3.3.3",
+          "Level": "",
+          "Title": "Suggestion apr\u00E8s une erreur (AA)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#error-suggestion\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 77,
+          "Tests": [
+            {
+              "Id": "b0942ddc-ef39-4e43-82d0-245a59e68360",
+              "LegacySqliteId": 336,
+              "Code": "3.3.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Si une erreur de saisie est automatiquement d\u00E9tect\u00E9e et que des suggestions de corrections sont connues, ces suggestions sont alors propos\u00E9es \u00E0 l\u2019utilisateur \u00E0 moins que cela puisse compromettre la s\u00E9curit\u00E9 ou la finalit\u00E9 du contenu.",
+              "Methodology": null,
+              "Position": 77
+            }
+          ]
+        },
+        {
+          "Id": "75a283d6-c328-447b-9009-9f567dedc708",
+          "LegacySqliteId": 185,
+          "Code": "3.3.4",
+          "Level": "",
+          "Title": "Pr\u00E9vention des erreurs (juridiques, financi\u00E8res, de donn\u00E9es) (AA)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#error-prevention-legal-financial-data\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 78,
+          "Tests": [
+            {
+              "Id": "cbdefa1f-a2b5-4bfd-a815-91dd51bf6cf0",
+              "LegacySqliteId": 337,
+              "Code": "3.3.4",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.4 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour les pages web qui entra\u00EEnent des engagements juridiques ou des transactions financi\u00E8res de la part de l\u2019utilisateur, qui modifient ou effacent des donn\u00E9es contr\u00F4lables par l\u2019utilisateur dans des syst\u00E8mes de stockages de donn\u00E9es, qui enregistrent les r\u00E9ponses de l\u2019utilisateur \u00E0 un test ou un examen, au moins l\u2019une des conditions suivantes est vraie :\r\n\r\nR\u00E9versibleles actions d\u2019envoi sont r\u00E9versibles. V\u00E9rifi\u00E9eles donn\u00E9es saisies par l\u2019utilisateur sont v\u00E9rifi\u00E9es au niveau des erreurs de saisie et la possibilit\u00E9 est donn\u00E9e \u00E0 l\u2019utilisateur de les corriger. Confirm\u00E9eun m\u00E9canisme est disponible pour revoir, confirmer et corriger les informations avant leur soumission finale.",
+              "Methodology": null,
+              "Position": 78
+            }
+          ]
+        },
+        {
+          "Id": "20faa5c1-e83c-4d2c-a6d1-9ef6b2c3e355",
+          "LegacySqliteId": 186,
+          "Code": "3.3.5",
+          "Level": "",
+          "Title": "Aide (AAA)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#help\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 79,
+          "Tests": [
+            {
+              "Id": "6ad82254-6020-479f-8916-8d80683b46dc",
+              "LegacySqliteId": 338,
+              "Code": "3.3.5",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.5 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Une aide contextuelle est disponible.",
+              "Methodology": null,
+              "Position": 79
+            }
+          ]
+        },
+        {
+          "Id": "b130f279-4e84-4335-91b3-76a3a64e2c93",
+          "LegacySqliteId": 187,
+          "Code": "3.3.6",
+          "Level": "",
+          "Title": "Pr\u00E9vention des erreurs (toutes) (AAA)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#error-prevention-all\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 80,
+          "Tests": [
+            {
+              "Id": "f8c72f7f-5982-486b-89f1-1533dbde3e74",
+              "LegacySqliteId": 339,
+              "Code": "3.3.6",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.6 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour des pages web demandant \u00E0 l\u2019utilisateur de soumettre des informations, au moins l\u2019une des conditions suivantes est vraie :\r\n\r\nR\u00E9versibleles actions d\u2019envoi sont r\u00E9versibles. V\u00E9rifi\u00E9eles donn\u00E9es saisies par l\u2019utilisateur sont v\u00E9rifi\u00E9es au niveau des erreurs de saisie et la possibilit\u00E9 est donn\u00E9e \u00E0 l\u2019utilisateur de les corriger. Confirm\u00E9eun m\u00E9canisme est disponible pour revoir, confirmer et corriger les informations avant leur soumission finale.",
+              "Methodology": null,
+              "Position": 80
+            }
+          ]
+        },
+        {
+          "Id": "9b3b2608-bc7c-4ab4-8e23-d42c7776eac4",
+          "LegacySqliteId": 188,
+          "Code": "3.3.7",
+          "Level": "",
+          "Title": "Saisie redondante (A)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#redundant-entry\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 81,
+          "Tests": [
+            {
+              "Id": "12b44130-60b2-47ba-8fb2-cde63dee5c2e",
+              "LegacySqliteId": 340,
+              "Code": "3.3.7",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.7 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nLes informations pr\u00E9c\u00E9demment saisies par l\u2019utilisateur ou fournies \u00E0 l\u2019utilisateur, et qui doivent \u00EAtre \u00E0 nouveau saisies dans le m\u00EAme processus sont soit :\r\n\r\npr\u00E9remplies, ou disponibles pour \u00EAtre s\u00E9lectionn\u00E9es par l\u2019utilisateur.\r\n\r\nSauf dans les cas suivants :\r\n\r\nil est essentiel de ressaisir les informations soi-m\u00EAme, les informations sont requises pour assurer la s\u00E9curit\u00E9 du contenu, ou les informations pr\u00E9c\u00E9demment saisies ne sont plus valides.",
+              "Methodology": null,
+              "Position": 81
+            }
+          ]
+        },
+        {
+          "Id": "128cf4a8-fade-4946-98ba-eda0cfdf5364",
+          "LegacySqliteId": 189,
+          "Code": "3.3.8",
+          "Level": "",
+          "Title": "Authentification accessible (minimum) (AA)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#accessible-authentication-minimum\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 82,
+          "Tests": [
+            {
+              "Id": "e4647189-089a-45da-8b36-822bf1b8b4de",
+              "LegacySqliteId": 341,
+              "Code": "3.3.8",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.8 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nAucune \u00E9tape d\u2019un processus d\u2019authentification ne requiert de test cognitif (comme la m\u00E9morisation d\u2019un mot de passe ou la r\u00E9solution d\u2019une \u00E9nigme), \u00E0 moins que cette \u00E9tape ne fournisse au moins l\u2019un des \u00E9l\u00E9ments suivants :\r\n\r\nAlternative une autre m\u00E9thode d\u2019authentification, qui ne repose pas sur un test cognitif. M\u00E9canisme un m\u00E9canisme est disponible pour aider l\u2019utilisateur \u00E0 compl\u00E9ter le test cognitif. Reconnaissance d\u2019objets le test cognitif consiste \u00E0 reconna\u00EEtre des objets. Contenu personnel le test cognitif consiste \u00E0 identifier un contenu non textuel que l\u2019utilisateur a fourni au site web.\r\n\r\nNote 1La \u00AB reconnaissance d\u2019objets \u00BB et le \u00AB contenu personnel \u00BB peuvent \u00EAtre repr\u00E9sent\u00E9s par des images, des vid\u00E9os ou de l\u2019audio.\r\n\r\nNote 2 Des exemples de m\u00E9canismes qui satisfont \u00E0 ce crit\u00E8re comprennent : la possibilit\u00E9 de saisir un mot de passe par l\u2019interm\u00E9diaire d\u2019un gestionnaire de mots de passe afin de r\u00E9duire l\u2019effort de m\u00E9morisation, et la fonction copier-coller pour r\u00E9duire la charge cognitive due \u00E0 une saisie r\u00E9p\u00E9titive.",
+              "Methodology": null,
+              "Position": 82
+            }
+          ]
+        },
+        {
+          "Id": "943ce341-e628-4779-80f0-76ce8177198a",
+          "LegacySqliteId": 190,
+          "Code": "3.3.9",
+          "Level": "",
+          "Title": "Authentification accessible (am\u00E9lior\u00E9) (AAA)",
+          "TechnicalNote": "R\u00E8gle 3.3 \u2014 Assistance \u00E0 la saisie",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AAA\u0022,\u0022guidelineCode\u0022:\u00223.3\u0022,\u0022guidelineTitle\u0022:\u0022Assistance \\u00E0 la saisie\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#accessible-authentication-enhanced\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 83,
+          "Tests": [
+            {
+              "Id": "0d836081-7320-4a7f-9181-8ce1d3ff96f3",
+              "LegacySqliteId": 342,
+              "Code": "3.3.9",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 3.3.9 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Nouveau\r\n\r\nAucune \u00E9tape d\u2019un processus d\u2019authentification ne requiert de test cognitif (comme la m\u00E9morisation d\u2019un mot de passe ou la r\u00E9solution d\u2019une \u00E9nigme), \u00E0 moins que cette \u00E9tape ne fournisse au moins l\u2019un des \u00E9l\u00E9ments suivants :\r\n\r\nAlternative une autre m\u00E9thode d\u2019authentification, qui ne repose pas sur un test cognitif. M\u00E9canisme un m\u00E9canisme est disponible pour aider l\u2019utilisateur \u00E0 compl\u00E9ter le test cognitif.",
+              "Methodology": null,
+              "Position": 83
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "4ca4276c-bb74-41e1-935b-1e4881d21600",
+      "LegacySqliteId": 17,
+      "Number": "4",
+      "Title": "Robuste",
+      "Position": 3,
+      "Criteria": [
+        {
+          "Id": "14f26348-bac6-4f06-88fa-ea43e8c29d59",
+          "LegacySqliteId": 191,
+          "Code": "4.1.2",
+          "Level": "",
+          "Title": "Nom, r\u00F4le et valeur (A)",
+          "TechnicalNote": "R\u00E8gle 4.1 \u2014 Compatible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022A\u0022,\u0022guidelineCode\u0022:\u00224.1\u0022,\u0022guidelineTitle\u0022:\u0022Compatible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#name-role-value\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 84,
+          "Tests": [
+            {
+              "Id": "ab6bb338-c220-4b68-ab17-e8e90e18de6f",
+              "LegacySqliteId": 343,
+              "Code": "4.1.2",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 4.1.2 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Pour tout composant d\u2019interface utilisateur (comprenant mais n\u2019\u00E9tant pas limit\u00E9 aux \u00E9l\u00E9ments de formulaire, liens et composants g\u00E9n\u00E9r\u00E9s par des scripts), le nom et le r\u00F4le peuvent \u00EAtre d\u00E9termin\u00E9s par un programme informatique ; les \u00E9tats, les propri\u00E9t\u00E9s et les valeurs qui peuvent \u00EAtre param\u00E9tr\u00E9s par l\u2019utilisateur peuvent \u00EAtre d\u00E9finis par programmation; et la notification des changements de ces \u00E9l\u00E9ments est disponible aux agents utilisateurs, incluant les technologies d\u2019assistance.\r\n\r\nNoteCe crit\u00E8re de succ\u00E8s s\u2019adresse d\u2019abord aux auteurs web qui d\u00E9veloppent ou programment leurs propres composants d\u2019interface utilisateur. Toutefois, les contr\u00F4les HTML standards se conforment d\u00E9j\u00E0 \u00E0 ce crit\u00E8re de succ\u00E8s lorsqu\u2019ils sont utilis\u00E9s conform\u00E9ment \u00E0 la sp\u00E9cification.",
+              "Methodology": null,
+              "Position": 84
+            }
+          ]
+        },
+        {
+          "Id": "58d00d1d-8bf2-4de3-a9e5-e5cbb8ceea66",
+          "LegacySqliteId": 192,
+          "Code": "4.1.3",
+          "Level": "",
+          "Title": "Messages d\u2019\u00E9tat (AA)",
+          "TechnicalNote": "R\u00E8gle 4.1 \u2014 Compatible",
+          "ParticularCases": null,
+          "ReferencesJson": "[{\u0022wcagLevel\u0022:\u0022AA\u0022,\u0022guidelineCode\u0022:\u00224.1\u0022,\u0022guidelineTitle\u0022:\u0022Compatible\u0022,\u0022sourceUrl\u0022:\u0022https://www.w3.org/Translations/WCAG22-fr-20260922/#status-messages\u0022,\u0022englishRecommendation\u0022:\u0022https://www.w3.org/TR/2024/REC-WCAG22-20241212/\u0022}]",
+          "Position": 85,
+          "Tests": [
+            {
+              "Id": "e34e2673-ac46-470c-9a7e-871d8e783a9b",
+              "LegacySqliteId": 344,
+              "Code": "4.1.3",
+              "Question": "V\u00E9rifier le crit\u00E8re de succ\u00E8s 4.1.3 sur la page et le processus concern\u00E9s.",
+              "Requirements": "Dans un contenu impl\u00E9ment\u00E9 via un langage de balisage, les messages d\u2019\u00E9tat peuvent \u00EAtre d\u00E9termin\u00E9s par un programme informatique gr\u00E2ce \u00E0 un r\u00F4le ou des propri\u00E9t\u00E9s afin qu\u2019ils puissent \u00EAtre pr\u00E9sent\u00E9s \u00E0 l\u2019utilisateur par des technologies d\u2019assistance sans recevoir le focus.",
+              "Methodology": null,
+              "Position": 85
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,17 @@ Les changements notables de RGAA Studio sont consignés dans ce fichier. Le form
 
 Cette section regroupe les changements déjà apportés au code mais qui ne sont pas encore inclus dans une version publiée.
 
+## [1.0.0-preview.7] - 2026-11-01
+
+### Corrigé
+
+- Les référentiels RGAA 4.1.2 et WCAG 2.2 complets sont désormais inclus dans l’application et ajoutés à la base locale au premier démarrage, afin que le choix du référentiel soit disponible sur une installation Ubuntu neuve.
+- L’ajout des catalogues préserve les audits locaux et ne remplace pas les catalogues déjà complets.
+
+### Limites connues
+
+- L’installateur Windows n’est pas signé et les paquets Linux restent à valider à l’exécution sur Ubuntu 26.04 et Fedora 44.
+
 ## [1.0.0-preview.6] - 2026-10-31
 
 ### Modifié
@@ -62,7 +73,8 @@ Cette section regroupe les changements déjà apportés au code mais qui ne sont
 - L’installateur Windows n’est pas signé.
 - Les paquets Linux ont été assemblés sous Ubuntu 24.04 WSL, mais l’installation et le rendu doivent encore être validés sur Ubuntu 26.04 et Fedora 44.
 
-[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.6...HEAD
+[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.7...HEAD
+[1.0.0-preview.7]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.7
 [1.0.0-preview.6]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.6
 [1.0.0-preview.5]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.5
 [1.0.0-preview.1]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.1

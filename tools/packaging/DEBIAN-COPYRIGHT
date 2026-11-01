@@ -22,3 +22,16 @@ License: MIT
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
+
+Files: src/RgaaStudio.Core/ReferenceCatalogs/rgaa-4.1.2.json
+Copyright: Direction interministérielle du numérique (DINUM)
+License: Etalab-2.0
+ This catalog is made available under the Etalab Open License 2.0:
+ https://www.etalab.gouv.fr/licence-ouverte-open-licence/
+
+Files: src/RgaaStudio.Core/ReferenceCatalogs/wcag-2.2.json
+Copyright: World Wide Web Consortium (W3C) and French translation contributors
+License: W3C-Document-License-2023
+ This catalog follows the W3C Document License 2023:
+ https://www.w3.org/copyright/document-license-2023/
+ Source translation: https://www.w3.org/Translations/WCAG22-fr-20260922/

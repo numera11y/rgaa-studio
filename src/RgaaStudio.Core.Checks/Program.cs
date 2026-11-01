@@ -47,6 +47,35 @@ Directory.CreateDirectory(root);
 try
 {
     var databasePath = Path.Combine(root, "checks.litedb");
+    var bootstrapDatabasePath = Path.Combine(root, "catalog-bootstrap.litedb");
+    var previousSkipLegacyImport = Environment.GetEnvironmentVariable("RGAA_STUDIO_SKIP_LEGACY_IMPORT");
+    try
+    {
+        Environment.SetEnvironmentVariable("RGAA_STUDIO_SKIP_LEGACY_IMPORT", "1");
+        using (var bootstrap = new EmbeddedAuditDatabase(bootstrapDatabasePath))
+        {
+            var bundledCatalogs = bootstrap.GetReferenceVersions();
+            Check(bootstrap.List().Count == 0, "bundled catalog bootstrap does not import audit dossiers");
+            Check(bundledCatalogs.Select(item => item.FrameworkName).OrderBy(name => name).SequenceEqual(["RGAA", "WCAG"]),
+                "a fresh application database receives RGAA and WCAG framework choices");
+            Check(bundledCatalogs.Single(item => item.StableId == "rgaa:4.1.2").Themes.Sum(theme => theme.Criteria.Sum(criterion => criterion.Tests.Count)) == 258 &&
+                  bundledCatalogs.Single(item => item.StableId == "wcag:2.2").Themes.Sum(theme => theme.Criteria.Sum(criterion => criterion.Tests.Count)) == 86,
+                "fresh bundled RGAA and WCAG catalogs contain their complete expected test sets");
+            var bundledAudit = bootstrap.Create(new NewAudit("https://catalog-bootstrap.example/", "RGAA", "RGAA 4.1.2", null),
+                [new SitePageCandidate("Accueil", "https://catalog-bootstrap.example/", "Accueil", true)], null);
+            Check(bootstrap.GetAuditCriteria(bundledAudit.Id).Count == 106,
+                "an audit can use the bundled RGAA catalog immediately after first launch");
+        }
+
+        using var reopenedBootstrap = new EmbeddedAuditDatabase(bootstrapDatabasePath);
+        Check(reopenedBootstrap.GetReferenceVersions().Count == 2,
+            "bundled reference catalog bootstrap is idempotent on subsequent launches");
+    }
+    finally
+    {
+        Environment.SetEnvironmentVariable("RGAA_STUDIO_SKIP_LEGACY_IMPORT", previousSkipLegacyImport);
+    }
+
     using (var store = new EmbeddedAuditDatabase(databasePath, importLegacyData: false))
     {
         store.StoreReferenceVersion(new StoredReferenceVersion

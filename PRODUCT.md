@@ -59,7 +59,7 @@ No approved product logo or complete brand system has been supplied; the user ex
 ## Evidence on Hand
 
 - Product and technical constraints are recorded in `docs/architecture/README.md` and its decision records.
-- `spikes/windows/electron/` contains synthetic test data and a technical experiment only; it does not represent the intended UX or validate Electron as the final stack.
+- The closed Electron experiment and its test results are summarized in [`docs/architecture/ELECTRON-SPIKE-ARCHIVE.md`](docs/architecture/ELECTRON-SPIKE-ARCHIVE.md). Its prototype code is no longer kept in the active tree; it did not validate Electron as the final stack.
 - A user-provided screenshot shows the requested Windows visual direction; no complete design system has been approved.
 
 ## Product Principles

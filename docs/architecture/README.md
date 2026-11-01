@@ -3,7 +3,7 @@
 **Statut :** document de cadrage initial — les choix techniques restent à confirmer.
 **Version :** 0.1
 
-**Retour utilisateur sur l’interface :** le panneau du spike Electron est jugé inacceptable comme interface logicielle ; il reste un banc technique rudimentaire et ne choisit pas le runtime final. La maquette [`spikes/workflow-ui/`](../../spikes/workflow-ui/README.md) valide une référence de parcours, mais n’est pas l’interface de livraison voulue.
+**Retour utilisateur sur l’interface :** le panneau du spike Electron est jugé inacceptable comme interface logicielle ; l’expérience est close et ses résultats techniques sont conservés dans [l’archive du spike Electron](ELECTRON-SPIKE-ARCHIVE.md). La maquette [`spikes/workflow-ui/`](../../spikes/workflow-ui/README.md) valide une référence de parcours, mais n’est pas l’interface de livraison voulue.
 
 **Direction Windows confirmée :** application desktop frameless avec la barre supérieure de la capture utilisateur : menu hamburger/options, accès projets, onglets fermables/réordonnables, plus/nouveau, indicateur de mise à jour, bascule du panneau latéral, commandes réduire/agrandir/fermer. Aucun logo d’application. Dans la liste des dossiers, l’accès projets doit être marqué actif ; les dossiers doivent se présenter comme des blocs avec état de survol. [ADR 0013](decisions/0013-windows-native-shell-and-store-scope.md) consigne les exigences et les candidats techniques, sans choix final. La préférence actuelle de distribution est build/install communautaire ; Store n’est pas un gate pour le moment. Linux demeure dans le périmètre v1 confirmé.
 

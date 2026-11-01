@@ -42,7 +42,10 @@ public sealed class EmbeddedAuditDatabase : IDisposable
         _references.EnsureIndex(document => document.StableId, unique: true);
 
         if (importLegacyData)
+        {
             LegacyDataMigrator.ImportIfPresent(this);
+            BundledReferenceCatalogs.EnsureAvailable(this);
+        }
     }
 
     public IReadOnlyList<AuditManifest> List(bool includeArchived = false) => _audits.FindAll()

@@ -9,7 +9,9 @@ Installation Ubuntu depuis le dépôt signé numera11y : suivre APT-REPOSITORY.m
 Installation Fedora : sudo dnf install ./rgaa-studio-*.rpm
 Lancer l’application depuis le menu Applications (« RGAA Studio ») ou avec : rgaa-studio
 
-Le paquet déclare sa taille installée et inclut les métadonnées AppStream pour le nom, la licence MIT, la page d’accueil et la date de version. Installer directement un fichier .deb téléchargé peut encore déclencher l’avertissement de provenance d’Ubuntu. Le dépôt APT signé numera11y sera accessible après activation de GitHub Pages ; voir APT-REPOSITORY.md.
+Le paquet déclare sa taille installée et inclut les métadonnées AppStream pour le nom, la licence MIT, la page d’accueil et la date de version. Installer directement un fichier .deb téléchargé peut encore déclencher l’avertissement de provenance d’Ubuntu. Le dépôt APT signé numera11y est documenté dans APT-REPOSITORY.md.
+
+Les catalogues complets RGAA 4.1.2 et WCAG 2.2 sont inclus dans l’application et ajoutés à la base locale au premier démarrage. Les catalogues et leurs licences d’origine sont décrits dans le fichier copyright du paquet.
 
 Les dossiers d’audit sont conservés dans le répertoire LocalApplicationData de l’utilisateur. La désinstallation du paquet ne supprime pas ces données.
 
