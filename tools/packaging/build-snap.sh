@@ -52,6 +52,7 @@ snap_file="$snap_root/rgaa-studio_${version}_amd64.snap"
 [[ -s "$snap_file" ]] || { echo "Snapcraft did not produce $snap_file." >&2; exit 1; }
 output_dir="$repo_root/artifacts/packages/$version"
 mkdir -p "$output_dir"
-cp -f "$snap_file" "$output_dir/"
-sha256sum "$output_dir/$(basename "$snap_file")" > "$output_dir/$(basename "$snap_file").sha256"
-echo "Created experimental Snap: $output_dir/$(basename "$snap_file")"
+snap_name="$(basename "$snap_file")"
+cp -f "$snap_file" "$output_dir/$snap_name"
+(cd "$output_dir" && sha256sum "$snap_name" > "$snap_name.sha256")
+echo "Created experimental Snap: $output_dir/$snap_name"
