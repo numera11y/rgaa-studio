@@ -4,13 +4,15 @@
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 [![Préversion 1.0.0-preview.8](https://img.shields.io/badge/version-1.0.0--preview.8-orange)](https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.8)
 
-Application desktop open source pour auditer des pages web selon le RGAA et les WCAG, organiser le travail par dossier et conserver les décisions localement.
+RGAA Studio est une application de bureau multiplateforme, éditée par numera11y, destinée à réaliser et organiser des audits d’accessibilité selon le référentiel RGAA. Elle vise à faciliter le travail des auditeurs, développeurs et équipes produit dans la mise en conformité de sites et services numériques.
 
-> **Préversion — `1.0.0-preview.8`.** L’application Avalonia est disponible pour Windows et Linux. L’auditeur sélectionne un lot de pages, les inspecte séparément dans le navigateur intégré, puis consigne un résultat unique par critère pour ce lot. Applicabilité, tests, constats et preuves restent rattachés aux pages concernées. La navigation reste limitée aux pages HTTPS sélectionnées sur le même site ; le lot n’est pas une conclusion automatique sur le site entier.
+> **Préversion 1.0.0-preview.8 — disponible pour Windows et Linux.** RGAA Studio prend également en charge WCAG 2.2.
+
+L’auditeur sélectionne les pages à inclure dans un audit, les examine dans le navigateur intégré et consigne un résultat humain par critère pour le lot. L’applicabilité, les tests, les constats et les preuves restent associés aux pages concernées. Les contrôles automatiques apportent des indications, mais ne remplacent pas le jugement de l’auditeur. Un lot de pages ne constitue pas, à lui seul, une conclusion sur l’ensemble d’un site.
 
 ## Télécharger
 
-La préversion `1.0.0-preview.8` est en préparation. Ses fichiers seront publiés sur [GitHub Releases](https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.8) ; la publication comprendra :
+La préversion `1.0.0-preview.8` est publiée sur [GitHub Releases](https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.8). Elle comprend :
 
 - **Windows x64** : installateur `rgaa-studio-1.0.0-preview.8-windows-x64-setup.exe` et archive portable `.zip` ; l’installateur configure WebView2 s’il manque.
 - **Debian / Ubuntu x64** : paquet `.deb`.

@@ -8,7 +8,7 @@ adaptive
 
 ## Stack
 
-Avalonia is the selected primary desktop UI framework for Windows and Linux, by explicit user decision on 2026-10-30 after review of the client-approved Avalonia shell. The desktop app uses Avalonia 12 and the native `Avalonia.Controls.WebView` package as its current browser integration, using WebView2 on Windows and WebKitGTK/WPE WebKit on Linux; Linux runtime packaging and browser capabilities still require validation. WPF/WebView2 remains a temporary source/reference spike during migration, not a second product UI. The Electron UI spike remains rejected as a product interface. The current v1 distribution preference is a community-buildable/installable app; Microsoft Store publication is not a current requirement and remains a possible later channel.
+RGAA Studio is a desktop application for Windows and Linux with an integrated browser for auditing selected pages. Linux runtime packaging and browser capabilities still require validation. WPF/WebView2 remains a temporary source/reference spike during migration, not a second product UI. The Electron UI spike remains rejected as a product interface. The current v1 distribution preference is a community-buildable/installable app; Microsoft Store publication is not a current requirement and remains a possible later channel.
 
 ## Users
 
@@ -29,7 +29,7 @@ A lot-centered audit workflow: one human result per criterion for the selected p
 - Windows visual direction confirmed: frameless window, clean professional interface, modern menu and Lucide icon family. Preserve accessible resizing, minimize/maximize/close behavior and keyboard access; frameless must not remove operating-system window functions.
 - The user confirms a specific shell-navigation pattern: hamburger/options menu; project-access icon; open project tabs that can be closed and reordered; plus/new-project action; update-available indicator; toggle for the audit side panel; and minimize, maximize/restore, and close controls. No application logo is wanted. The attached screenshot is a structural/visual reference, not permission to copy another product’s brand.
 - When the dossier list is the current view, the project-access toolbar icon must show a persistent active state distinct from hover and keyboard focus. Dossiers are individual blocks with a visible hover state; clicking a row opens the dossier, and Enter/Space perform the same action. Do not add a redundant “Reprendre” label/button inside a row. Selected, hover and keyboard-focus states remain visually distinct.
-- Optional favicon retrieval is disclosed separately by a visible opt-out at dossier creation. It is UI metadata, not audit evidence, and is independent of page navigation. The Avalonia WebView can open HTTPS pages selected into the active dossier; it blocks unselected and cross-origin destinations.
+- Optional favicon retrieval is disclosed separately by a visible opt-out at dossier creation. It is UI metadata, not audit evidence, and is independent of page navigation. The integrated browser can open HTTPS pages selected into the active dossier; it blocks unselected and cross-origin destinations.
 - Current Windows v1 distribution preference: documented community build/install. Microsoft Store is not a gate for now; it may be reconsidered as an additional channel later. Do not assume Linux has been removed.
 - **Project/tab meaning confirmed:** one project is one audit dossier for one site and one reference. The project-access icon opens the dossier list; a top-level tab opens that dossier. Do not add a parent project container. Closing/reordering a tab changes navigation only and never deletes or changes the dossier.
 - A current top-bar “update available” icon is requested; update source, security/signature policy, and exact user flow are not selected. It must not interrupt or misrepresent audit state.
@@ -50,7 +50,7 @@ A lot-centered audit workflow: one human result per criterion for the selected p
 - Keep automated findings, manual observations, human conformity results, and review completion distinct. Non-applicable and non-verifiable results require justification.
 - Evidence is attached to the right audit, criterion, and source page. Criteria receive one result for the audit lot; applicability, tests, findings, notes, reproduction steps, screenshots, and DOM/element context remain attached to their page; cookies, tokens, and browser-profile data must never enter evidence, reports, or logs.
 - Expected report outputs are client PDF, editable ODT, and structured JSON. Jira is nonblocking.
-- No complete visual identity, screenshot policy, page-category checklist, session-isolation policy, or release-ready browser security policy has been selected. Avalonia is the chosen primary desktop UI framework; final browser profile/session guarantees and Linux packaging still require verification.
+- No complete visual identity, screenshot policy, page-category checklist, session-isolation policy, or release-ready browser security policy has been selected. Final browser profile/session guarantees and Linux packaging still require verification.
 
 ## Brand Commitments
 

@@ -66,7 +66,7 @@ Cette section regroupe les changements déjà apportés au code mais qui ne sont
 
 ### Ajouté
 
-- Nouvelle application desktop Avalonia pour Windows et Linux.
+- Nouvelle application de bureau multiplateforme pour Windows et Linux.
 - Création, listing, reprise et archivage de dossiers d’audit conservés localement.
 - Choix progressif du référentiel et de sa version ; niveau A/AA/AAA pour WCAG.
 - Shell frameless avec navigation par dossiers et onglets d’audit.
