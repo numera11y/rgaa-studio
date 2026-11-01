@@ -12,8 +12,9 @@ icon: gui/icon.png
 base: core24
 confinement: strict
 grade: devel
-architectures:
-  - build-on: [amd64]
+platforms:
+  amd64:
+    build-on: [amd64]
     build-for: [amd64]
 
 apps:
