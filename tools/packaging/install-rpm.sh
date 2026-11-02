@@ -41,8 +41,8 @@ case "${ID:-}:$version_major" in
       echo 'The CentOS RPM helper currently targets CentOS Stream 10.' >&2
       exit 1
     fi
-    echo 'Enabling CRB and EPEL repositories to obtain WebKitGTK 4.1 on CentOS Stream 10.'
-    "${dnf_cmd[@]}" install -y --enablerepo=crb epel-release epel-next-release
+    echo 'Enabling CRB and EPEL to obtain WebKitGTK 4.1 on CentOS Stream 10.'
+    "${dnf_cmd[@]}" install -y --enablerepo=crb epel-release
     "${dnf_cmd[@]}" makecache --refresh --enablerepo=crb
     install_args+=(--enablerepo=crb)
     ;;
