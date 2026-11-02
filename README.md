@@ -17,7 +17,8 @@ La préversion `1.0.0-preview.9` est en préparation. Ses fichiers seront publi�
 - **Windows x64** : installateur `rgaa-studio-1.0.0-preview.9-windows-x64-setup.exe` et archive portable `.zip` ; l’installateur configure WebView2 s’il manque.
 - **Debian / Ubuntu x64** : paquet `.deb`.
 - **Ubuntu avec APT** : [installer depuis le dépôt signé numera11y](tools/packaging/APT-REPOSITORY.md).
-- **Fedora / CentOS Stream 10 x86_64** : paquet `.rpm` et script `install-rpm.sh` pour installer les dépendances adaptées.
+- **Fedora x86_64** : paquet `.rpm`, installable directement avec `sudo dnf install ./rgaa-studio-*.rpm` depuis les dépôts Fedora activés.
+- **CentOS Stream 10 x86_64** : paquet `.rpm` et script [`install-rpm.sh`](https://github.com/numera11y/rgaa-studio/releases/download/v1.0.0-preview.9/install-rpm.sh). Télécharger les deux fichiers et lancer `bash install-rpm.sh ./rgaa-studio-1.0.0-0.preview.9.x86_64.rpm` ; le script active CRB/EPEL, puis installe WebKitGTK et l’application. L’ouverture directe du RPM ne peut pas activer EPEL avant la résolution des dépendances.
 - **SHA-256** : fichier [`SHA256SUMS.txt`](https://github.com/numera11y/rgaa-studio/releases/download/v1.0.0-preview.9/SHA256SUMS.txt), en plus des empreintes calculées et affichées par GitHub pour chaque fichier.
 
 Les paquets macOS de l’ancienne publication ne font pas partie de cette préversion. L’installateur Windows n’est pas signé. Installer le `.deb` directement depuis GitHub peut déclencher l’avertissement de provenance d’Ubuntu ; utiliser le [dépôt APT signé numera11y](tools/packaging/APT-REPOSITORY.md). Ubuntu peut encore libeller cette source comme tierce, car elle n’est pas publiée par Canonical dans son App Center. Les paquets Linux nécessitent GTK 3, WebKitGTK 4.1 et libsoup 3 ; ils ont été assemblés sous Ubuntu 24.04 WSL et ne sont pas encore validés à l’exécution sur Ubuntu 26.04 ou Fedora 44.

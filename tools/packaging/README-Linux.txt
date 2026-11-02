@@ -6,8 +6,9 @@ Le paquet inclut le runtime .NET. Le navigateur natif Avalonia utilise WebKitGTK
 - libsoup 3
 
 Installation Ubuntu depuis le dépôt signé numera11y : suivre APT-REPOSITORY.md après publication du dépôt. Installation manuelle pour tester le paquet : sudo apt install ./rgaa-studio_*.deb (Ubuntu peut afficher un avertissement de provenance pour un fichier local).
-Installation Fedora : sudo dnf install ./rgaa-studio-*.rpm
-Installation CentOS Stream 10 : bash install-rpm.sh ./rgaa-studio-*.rpm (active CRB/EPEL pour installer WebKitGTK 4.1). Le nom du paquet est rgaa-studio ; l’application installée apparaît sous le nom RGAA Studio avec son icône.
+Installation Fedora : `sudo dnf install ./rgaa-studio-*.rpm` ; DNF installe les dépendances depuis les dépôts Fedora activés.
+Installation CentOS Stream 10 : télécharger le RPM et le script `install-rpm.sh` depuis la release, puis lancer `bash install-rpm.sh ./rgaa-studio-*.rpm`. Le script active CRB/EPEL avant de demander à DNF d’installer WebKitGTK 4.1 et le RPM. Une installation directe du RPM ne peut pas activer EPEL pendant la résolution initiale des dépendances.
+Le nom du paquet est `rgaa-studio` ; l’application installée apparaît dans le menu sous le nom « RGAA Studio » avec son icône.
 Lancer l’application depuis le menu Applications (« RGAA Studio ») ou avec : rgaa-studio
 
 Le paquet déclare sa taille installée et inclut les métadonnées AppStream pour le nom, la licence MIT, la page d’accueil et la date de version. Installer directement un fichier .deb téléchargé peut encore déclencher l’avertissement de provenance d’Ubuntu. Le dépôt APT signé numera11y est documenté dans APT-REPOSITORY.md.
