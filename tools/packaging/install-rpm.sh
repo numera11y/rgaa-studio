@@ -41,8 +41,9 @@ case "${ID:-}:$version_major" in
       exit 1
     fi
     echo 'Enabling CRB and EPEL repositories to obtain WebKitGTK 4.1 on CentOS Stream 10.'
-    "${dnf_cmd[@]}" install --yes dnf-plugins-core epel-release epel-next-release
-    "${dnf_cmd[@]}" config-manager --set-enabled crb
+    "${dnf_cmd[@]}" install -y dnf5-plugins
+    "${dnf_cmd[@]}" config-manager enable crb
+    "${dnf_cmd[@]}" install -y epel-release epel-next-release
     "${dnf_cmd[@]}" makecache --refresh
     ;;
   *)
@@ -51,4 +52,4 @@ case "${ID:-}:$version_major" in
     ;;
 esac
 
-"${dnf_cmd[@]}" install --yes gtk3 webkit2gtk4.1 libsoup3 "$rpm_file"
+"${dnf_cmd[@]}" install -y gtk3 webkit2gtk4.1 libsoup3 "$rpm_file"
