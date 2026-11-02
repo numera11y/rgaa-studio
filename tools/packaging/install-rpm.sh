@@ -27,6 +27,7 @@ else
   dnf_cmd=(sudo dnf)
 fi
 
+install_args=(install -y)
 [[ -r /etc/os-release ]] || { echo 'Cannot identify the RPM distribution: /etc/os-release is missing.' >&2; exit 1; }
 . /etc/os-release
 version_major="${VERSION_ID:-}"
@@ -41,10 +42,9 @@ case "${ID:-}:$version_major" in
       exit 1
     fi
     echo 'Enabling CRB and EPEL repositories to obtain WebKitGTK 4.1 on CentOS Stream 10.'
-    "${dnf_cmd[@]}" install -y dnf5-plugins
-    "${dnf_cmd[@]}" config-manager enable crb
-    "${dnf_cmd[@]}" install -y epel-release epel-next-release
-    "${dnf_cmd[@]}" makecache --refresh
+    "${dnf_cmd[@]}" install -y --enablerepo=crb epel-release epel-next-release
+    "${dnf_cmd[@]}" makecache --refresh --enablerepo=crb
+    install_args+=(--enablerepo=crb)
     ;;
   *)
     echo "Unsupported RPM distribution: ${PRETTY_NAME:-${ID:-unknown}}. Supported targets are Fedora and CentOS Stream 10." >&2
@@ -52,4 +52,4 @@ case "${ID:-}:$version_major" in
     ;;
 esac
 
-"${dnf_cmd[@]}" install -y gtk3 webkit2gtk4.1 libsoup3 "$rpm_file"
+"${dnf_cmd[@]}" "${install_args[@]}" gtk3 webkit2gtk4.1 libsoup3 "$rpm_file"
