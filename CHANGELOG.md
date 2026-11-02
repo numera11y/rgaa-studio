@@ -6,6 +6,18 @@ Les changements notables de RGAA Studio sont consignés dans ce fichier. Le form
 
 Cette section regroupe les changements déjà apportés au code mais qui ne sont pas encore inclus dans une version publiée.
 
+## [1.0.0-preview.9] - 2026-11-01
+
+### Modifié
+
+- Le paquet RPM affiche RGAA Studio dans son résumé et la publication inclut un installateur adapté à Fedora et CentOS Stream 10.
+- Sur CentOS Stream 10, l’installateur active CRB et EPEL pour fournir WebKitGTK 4.1 avant l’installation du RPM.
+
+### Limites connues
+
+- CentOS Stream 9 et les autres distributions Enterprise Linux ne sont pas pris en charge par l’installateur expérimental.
+- L’installateur Windows n’est pas signé et les paquets Linux restent à valider à l’exécution sur Ubuntu 26.04, Fedora 44 et CentOS Stream 10.
+
 ## [1.0.0-preview.8] - 2026-11-01
 
 ### Corrigé
@@ -84,7 +96,8 @@ Cette section regroupe les changements déjà apportés au code mais qui ne sont
 - L’installateur Windows n’est pas signé.
 - Les paquets Linux ont été assemblés sous Ubuntu 24.04 WSL, mais l’installation et le rendu doivent encore être validés sur Ubuntu 26.04 et Fedora 44.
 
-[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.8...HEAD
+[À venir]: https://github.com/numera11y/rgaa-studio/compare/v1.0.0-preview.9...HEAD
+[1.0.0-preview.9]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.9
 [1.0.0-preview.8]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.8
 [1.0.0-preview.7]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.7
 [1.0.0-preview.6]: https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.6

@@ -3,7 +3,7 @@ Version:        @RPM_VERSION@
 Release:        @RPM_RELEASE@%{?dist}
 %define debug_package %{nil}
 %define _build_id_links none
-Summary:        Application de bureau pour audits d’accessibilité RGAA
+Summary:        RGAA Studio — audits d’accessibilité RGAA
 License:        MIT
 Vendor:         numera11y
 URL:            https://www.numera11y.fr

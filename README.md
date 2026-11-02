@@ -2,23 +2,23 @@
 
 [![CI](https://github.com/numera11y/rgaa-studio/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/numera11y/rgaa-studio/actions/workflows/ci.yml)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
-[![Préversion 1.0.0-preview.8](https://img.shields.io/badge/version-1.0.0--preview.8-orange)](https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.8)
+[![Préversion 1.0.0-preview.9](https://img.shields.io/badge/version-1.0.0--preview.9-orange)](https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.9)
 
 RGAA Studio est une application de bureau multiplateforme, éditée par numera11y, destinée à réaliser et organiser des audits d’accessibilité selon le référentiel RGAA. Elle vise à faciliter le travail des auditeurs, développeurs et équipes produit dans la mise en conformité de sites et services numériques.
 
-> **Préversion 1.0.0-preview.8 — disponible pour Windows et Linux.** RGAA Studio prend également en charge WCAG 2.2.
+> **Préversion 1.0.0-preview.9 — disponible pour Windows et Linux.** RGAA Studio prend également en charge WCAG 2.2.
 
 L’auditeur sélectionne les pages à inclure dans un audit, les examine dans le navigateur intégré et consigne un résultat humain par critère pour le lot. L’applicabilité, les tests, les constats et les preuves restent associés aux pages concernées. Les contrôles automatiques apportent des indications, mais ne remplacent pas le jugement de l’auditeur. Un lot de pages ne constitue pas, à lui seul, une conclusion sur l’ensemble d’un site.
 
 ## Télécharger
 
-La préversion `1.0.0-preview.8` est publiée sur [GitHub Releases](https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.8). Elle comprend :
+La préversion `1.0.0-preview.9` est en préparation. Ses fichiers seront publiés sur [GitHub Releases](https://github.com/numera11y/rgaa-studio/releases/tag/v1.0.0-preview.9) ; elle comprendra :
 
-- **Windows x64** : installateur `rgaa-studio-1.0.0-preview.8-windows-x64-setup.exe` et archive portable `.zip` ; l’installateur configure WebView2 s’il manque.
+- **Windows x64** : installateur `rgaa-studio-1.0.0-preview.9-windows-x64-setup.exe` et archive portable `.zip` ; l’installateur configure WebView2 s’il manque.
 - **Debian / Ubuntu x64** : paquet `.deb`.
 - **Ubuntu avec APT** : [installer depuis le dépôt signé numera11y](tools/packaging/APT-REPOSITORY.md).
-- **Linux x86_64** : paquet `.rpm`.
-- **SHA-256** : fichier [`SHA256SUMS.txt`](https://github.com/numera11y/rgaa-studio/releases/download/v1.0.0-preview.8/SHA256SUMS.txt), en plus des empreintes calculées et affichées par GitHub pour chaque fichier.
+- **Fedora / CentOS Stream 10 x86_64** : paquet `.rpm` et script `install-rpm.sh` pour installer les dépendances adaptées.
+- **SHA-256** : fichier [`SHA256SUMS.txt`](https://github.com/numera11y/rgaa-studio/releases/download/v1.0.0-preview.9/SHA256SUMS.txt), en plus des empreintes calculées et affichées par GitHub pour chaque fichier.
 
 Les paquets macOS de l’ancienne publication ne font pas partie de cette préversion. L’installateur Windows n’est pas signé. Installer le `.deb` directement depuis GitHub peut déclencher l’avertissement de provenance d’Ubuntu ; utiliser le [dépôt APT signé numera11y](tools/packaging/APT-REPOSITORY.md). Ubuntu peut encore libeller cette source comme tierce, car elle n’est pas publiée par Canonical dans son App Center. Les paquets Linux nécessitent GTK 3, WebKitGTK 4.1 et libsoup 3 ; ils ont été assemblés sous Ubuntu 24.04 WSL et ne sont pas encore validés à l’exécution sur Ubuntu 26.04 ou Fedora 44.
 

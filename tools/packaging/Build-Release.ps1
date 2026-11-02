@@ -188,6 +188,7 @@ $linuxPackagePath = ConvertTo-WslPath $linuxPackages
 Write-Host "Assembling Debian and RPM packages in WSL ($LinuxDistro)..."
 & wsl.exe -d $LinuxDistro -- bash $linuxPackagingScript $linuxPayloadPath $linuxPackagePath $Version $releaseDate
 if ($LASTEXITCODE -ne 0) { throw "Linux package assembly failed with exit code $LASTEXITCODE." }
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'install-rpm.sh') -Destination $linuxPackages -Force
 
 # GitHub normalizes tildes in release asset names; use the same stable filename in the checksum manifest.
 foreach ($debianPackage in Get-ChildItem -LiteralPath $linuxPackages -Filter '*.deb' -File) {
